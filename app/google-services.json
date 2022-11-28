@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "389358859722",
+    "project_id": "tradoidata",
+    "storage_bucket": "tradoidata.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389358859722:android:35cec68259e3caaa6d4b33",
+        "android_client_info": {
+          "package_name": "com.example.tradoid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389358859722-4urhv7hokdua1okvpa25gdi85o88ge4o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZsAvVrdVWY9LZU3R1v8R-AjsIRxHvZdU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "389358859722-4urhv7hokdua1okvpa25gdi85o88ge4o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
