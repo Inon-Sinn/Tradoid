@@ -5,7 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 public class Sign_In extends AppCompatActivity {
@@ -16,12 +16,16 @@ public class Sign_In extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
         // Creating a custom Toolbar
-        Toolbar sign_in_toolbar = findViewById(R.id.sign_in_toolbar);
+        Toolbar sign_in_toolbar = findViewById(R.id.toolbar_sign_in);
         setSupportActionBar(sign_in_toolbar);
 
         // Implementing the Back arrow in the Toolbar
-        ImageView back_arrow = findViewById(R.id.to_Screen_login_from_sign_in);
+        ImageView back_arrow = findViewById(R.id.sign_in_To_login);
         back_arrow.setOnClickListener(v -> sendToActivity(login.class));
+
+        // Connection to Stock Market TODO only temporary remove later
+        Button to_Stock_Market_btn = findViewById(R.id.sign_in_To_stock_market);
+        to_Stock_Market_btn.setOnClickListener(v -> sendToActivity(Stock_Market.class));
     }
 
     // Sends to other screens

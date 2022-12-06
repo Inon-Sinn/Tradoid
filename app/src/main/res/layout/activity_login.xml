@@ -17,19 +17,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/to_Screen_Sign_In"
+        android:id="@+id/login_To_sign_in"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
         android:layout_marginEnd="70dp"
         android:layout_marginBottom="30dp"
         android:text="Sign in"
-        app:layout_constraintBottom_toTopOf="@+id/to_Screen_Sign_UP"
+        app:layout_constraintBottom_toTopOf="@+id/login_To_sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/to_Screen_Sign_UP"
+        android:id="@+id/login_To_sign_up"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"

@@ -15,11 +15,11 @@ public class login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // Button that send to Sign in Activity
-        Button to_Sign_In_btn = findViewById(R.id.to_Screen_Sign_In);
+        Button to_Sign_In_btn = findViewById(R.id.login_To_sign_in);
         to_Sign_In_btn.setOnClickListener(v -> sendToActivity(Sign_In.class));
 
         // Button that sends to Sign Up Activity
-        Button to_Sign_Up_btn = findViewById(R.id.to_Screen_Sign_UP);
+        Button to_Sign_Up_btn = findViewById(R.id.login_To_sign_up);
         to_Sign_Up_btn.setOnClickListener(v -> sendToActivity(Sign_Up.class));
     }
 
