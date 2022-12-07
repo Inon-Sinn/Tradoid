@@ -26,6 +26,10 @@ public class Sign_In extends AppCompatActivity {
         // Connection to Stock Market TODO only temporary remove later
         Button to_Stock_Market_btn = findViewById(R.id.sign_in_To_stock_market);
         to_Stock_Market_btn.setOnClickListener(v -> sendToActivity(Stock_Market.class));
+
+        // Connection to User List TODO only temporary remove later
+        Button to_User_List_btn = findViewById(R.id.sign_in_To_user_list);
+        to_User_List_btn.setOnClickListener(v -> sendToActivity(User_List.class));
     }
 
     // Sends to other screens

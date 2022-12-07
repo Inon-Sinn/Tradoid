@@ -2,4 +2,7 @@
     <string name="app_name">Tradoid</string>
     <string name="stock_market">Stock Market</string>
     <string name="status_page">Status</string>
+    <string name="user_list">User List</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="logout">Logout</string>
 </resources>

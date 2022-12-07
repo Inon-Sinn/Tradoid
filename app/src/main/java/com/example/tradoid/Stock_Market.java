@@ -21,16 +21,26 @@ public class Stock_Market extends AppCompatActivity {
         setSupportActionBar(stock_market_toolbar);
     }
 
+    // Creates the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.user_menu,menu);
         return true;
     }
 
+    // Makes the menu items clickable
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menu_status_pg) {
+        if (item.getItemId() == R.id.menu_stock_market) {
+            //sendToActivity(Stock_Market.class); Already on this page
+            return true;
+        }
+        else if (item.getItemId() == R.id.menu_status_pg) {
             sendToActivity(Status_Page.class);
+            return true;
+        }
+        else if (item.getItemId() == R.id.menu_user_logout) {
+            sendToActivity(login.class);
             return true;
         }
         return super.onOptionsItemSelected(item);
