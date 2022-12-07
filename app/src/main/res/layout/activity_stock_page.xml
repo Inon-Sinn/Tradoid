@@ -18,7 +18,7 @@
             android:layout_height="match_parent">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_status_page"
+                android:id="@+id/toolbar_stock_page"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"

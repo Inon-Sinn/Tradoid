@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Tradoid</string>
+    <string name="stock_market">Stock Market</string>
+    <string name="status_page">Status</string>
 </resources>

@@ -30,39 +30,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
-            <ImageView
-                android:id="@+id/search_stock_market"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/toolbar_stock_market"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_search"
-                app:tint="@color/white" />
-
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/tv_stock_market"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Market"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/search_stock_market"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:textColor="@color/white"/>
-
-            <ImageView
-                android:id="@+id/menu_stock_market"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/toolbar_stock_market"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_menu"
-                app:tint="@color/white"/>
+                app:layout_constraintVertical_bias="0.551" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

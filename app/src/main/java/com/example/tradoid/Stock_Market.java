@@ -1,8 +1,13 @@
 package com.example.tradoid;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class Stock_Market extends AppCompatActivity {
 
@@ -10,5 +15,30 @@ public class Stock_Market extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_market);
+
+        // Creating a custom Toolbar
+        Toolbar stock_market_toolbar = findViewById(R.id.toolbar_stock_market);
+        setSupportActionBar(stock_market_toolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.user_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_status_pg) {
+            sendToActivity(Status_Page.class);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // Sends to other screens
+    public void sendToActivity(Class cls){
+        Intent intent = new Intent(this,cls);
+        startActivity(intent);
     }
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        app:showAsAction="always"
+        android:icon="@drawable/ic_white_menu"
+        android:iconTint="@color/white"
+        android:title="">
+
+        <menu>
+
+            <item android:id="@+id/menu_stock_market"
+                android:title="@string/stock_market"
+                android:icon="@drawable/ic_trending_up"
+                app:showAsAction="never"/>
+
+            <item android:id="@+id/menu_status_pg"
+                android:title="@string/status_page"
+                android:icon="@drawable/ic_identity"
+                app:showAsAction="never"/>
+
+        </menu>
+    </item>
+</menu>
