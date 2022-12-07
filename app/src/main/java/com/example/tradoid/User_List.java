@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class User_List extends AppCompatActivity {
 
@@ -19,6 +20,10 @@ public class User_List extends AppCompatActivity {
         // Creating a custom Toolbar
         Toolbar user_list_toolbar = findViewById(R.id.toolbar_user_list);
         setSupportActionBar(user_list_toolbar);
+
+        // Connection to User Status TODO only temporary remove later
+        Button to_User_Status_btn = findViewById(R.id.user_list_To_user_status);
+        to_User_Status_btn.setOnClickListener(v -> sendToActivity(User_Status.class));
     }
 
     // Creates the menu

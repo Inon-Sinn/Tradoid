@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class Stock_Market extends AppCompatActivity {
 
@@ -19,6 +20,11 @@ public class Stock_Market extends AppCompatActivity {
         // Creating a custom Toolbar
         Toolbar stock_market_toolbar = findViewById(R.id.toolbar_stock_market);
         setSupportActionBar(stock_market_toolbar);
+
+        // Connection to Stock Page TODO only temporary remove later
+        Button to_Stock_Page_btn = findViewById(R.id.stock_market_To_stock_page);
+        to_Stock_Page_btn.setOnClickListener(v -> sendToActivity(Stock_Page.class));
+
     }
 
     // Creates the menu
