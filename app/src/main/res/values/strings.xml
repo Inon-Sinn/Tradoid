@@ -1,8 +1,50 @@
 <resources>
     <string name="app_name">Tradoid</string>
+
+    // Menu Item names
     <string name="stock_market">Stock Market</string>
     <string name="status_page">Status</string>
     <string name="user_list">User List</string>
     <string name="dashboard">Dashboard</string>
     <string name="logout">Logout</string>
+
+    <!-- TODO remove this later-->
+    <string-array name="my_family">
+        <item>Samuel</item>
+        <item>Revital</item>
+        <item>Liel</item>
+        <item>Tehila</item>
+        <item>Inon</item>
+        <item>Ofir</item>
+        <item>Gilad</item>
+        <item>Noa</item>
+        <item>Yair</item>
+        <item>Mapel</item>
+    </string-array>
+
+    <string-array name="Order">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_test">test</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>
