@@ -15,21 +15,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tradoid.R;
 import com.example.tradoid.Stock_Page;
-import com.example.tradoid.fragments.Stock;
+import com.example.tradoid.Data_handling.example_Item;
+
+import java.util.ArrayList;
+import java.util.List;
 
 // The Adapter defines how the list look and its items
 public class RecycleView_Adapter extends RecyclerView.Adapter<RecycleView_Adapter.MyViewHolder> {
 
-    String data1[],data2[];
-    int images[];
+
     Context context;
+    List<example_Item> example_list = new ArrayList<>();
 
     //Constructor for the adapter
-    public RecycleView_Adapter(Context ct, String[] s1, String[] s2, int[] img) {
+    public RecycleView_Adapter(Context ct, List<example_Item> newList) {
         context = ct;
-        data1 = s1;
-        data2 = s2;
-        images = img;
+        example_list = newList;
     }
 
     @NonNull
@@ -44,19 +45,19 @@ public class RecycleView_Adapter extends RecyclerView.Adapter<RecycleView_Adapte
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         // communicates with MyViewHolder
-        holder.tv1.setText(data1[position]);
-        holder.tv2.setText(data2[position]);
-        holder.myImage.setImageResource(images[position]);
+        holder.tv1.setText(example_list.get(position).getData1());
+        holder.tv2.setText(example_list.get(position).getData2());
+        holder.myImage.setImageResource(example_list.get(position).getImage());
 
         // needed for onClick
-        holder.rowlayout.setOnClickListener(new View.OnClickListener() {
+        holder.rowLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Stock_Page.class);
                 // give it extra data
-                intent.putExtra("data1",data1[position]);
-                intent.putExtra("data2",data2[position]);
-                intent.putExtra("myImage",images[position]);
+                intent.putExtra("data1",example_list.get(position).getData1());
+                intent.putExtra("data2",example_list.get(position).getData2());
+                intent.putExtra("myImage",example_list.get(position).getImage());
                 // start the Stock Page activity
                 context.startActivity(intent);
 
@@ -66,7 +67,15 @@ public class RecycleView_Adapter extends RecyclerView.Adapter<RecycleView_Adapte
 
     @Override
     public int getItemCount() {
-        return data1.length;
+        return example_list.size();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void updateList(List<example_Item> update){
+        List<example_Item> copy = new ArrayList<>(update);
+        example_list.clear();
+        example_list.addAll(copy);
+        notifyDataSetChanged();
     }
 
     //Makes the row with layout we want
@@ -74,7 +83,7 @@ public class RecycleView_Adapter extends RecyclerView.Adapter<RecycleView_Adapte
 
         TextView tv1,tv2;
         ImageView myImage;
-        ConstraintLayout rowlayout;
+        ConstraintLayout rowLayout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -82,7 +91,7 @@ public class RecycleView_Adapter extends RecyclerView.Adapter<RecycleView_Adapte
             tv2 = itemView.findViewById(R.id.recyclerView_row_stock_subTitle);
             myImage = itemView.findViewById(R.id.recyclerView_row_stock_icon);
             // needed for onClick
-            rowlayout = itemView.findViewById(R.id.recycle_row_layout);
+            rowLayout = itemView.findViewById(R.id.recycle_row_layout);
         }
     }
 }

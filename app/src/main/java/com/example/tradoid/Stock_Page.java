@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class Stock_Page extends AppCompatActivity {
 
-    // TODO put in oncreate
+    // TODO put in oncreate and will have to be removed
     ImageView mainImageView;
     TextView title,subTitle;
 
@@ -39,11 +39,12 @@ public class Stock_Page extends AppCompatActivity {
         title = findViewById(R.id.stock_page_title);
         subTitle = findViewById(R.id.stock_page_subTitle);
 
+        // Get the data form the row it was clicked on
         getData();
         setData();
     }
 
-    // getting the data from the intent
+    // getting the data from the intent TODO needs to be changed
     private void getData(){
         if (getIntent().hasExtra("myImage") && getIntent().hasExtra("data1") && getIntent().hasExtra("data2")){
             data1 = getIntent().getStringExtra("data1");
@@ -54,7 +55,7 @@ public class Stock_Page extends AppCompatActivity {
         }
     }
 
-    // setting the data to our elements(image and text views)
+    // setting the data to our elements(image and text views) TODO needs to be changed
     private void setData(){
         title.setText(data1);
         title.setText(data2);
