@@ -88,6 +88,7 @@ public class Data_Layer {
 
 
 
+
     /*
     We will make that instead of example item we will have 2 classes stock and user
     Data layer will have all stocks and users
