@@ -7,11 +7,11 @@
     tools:context=".login">
 
     <TextView
-        android:textSize="25sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login Page"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Tradoid"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toTopOf="@+id/login_To_sign_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,9 +20,9 @@
         android:id="@+id/login_To_sign_in"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="20dp"
         android:text="Sign in"
         app:layout_constraintBottom_toTopOf="@+id/login_To_sign_up"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,8 +32,8 @@
         android:id="@+id/login_To_sign_up"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginEnd="70dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
         android:layout_marginBottom="70dp"
         android:text="Sign up"
         app:layout_constraintBottom_toBottomOf="parent"
