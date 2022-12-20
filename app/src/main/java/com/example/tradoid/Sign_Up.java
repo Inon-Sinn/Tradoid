@@ -14,10 +14,15 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ClickableSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 public class Sign_Up extends AppCompatActivity {
+
+    public String name,email,password,confirm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,30 @@ public class Sign_Up extends AppCompatActivity {
         ss.setSpan(bcs,0,text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); // Bacground stays white when clicked
         tv_sign_in.setText(ss);
         tv_sign_in.setMovementMethod(LinkMovementMethod.getInstance());
+
+        //All TextInput Editors
+        TextInputEditText et_name = findViewById(R.id.edit_text_sign_up_name);
+        TextInputEditText et_email = findViewById(R.id.edit_text_sign_up_email);
+        TextInputEditText et_password = findViewById(R.id.edit_text_sign_up_password);
+        TextInputEditText et_confirm = findViewById(R.id.edit_text_sign_up_confirm);
+
+        //Conecting the Sign up Button
+        Button btn_sign_up = findViewById(R.id.btn_sign_up);
+        btn_sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                name = et_name.getText().toString();
+                email = et_email.getText().toString();
+                password = et_password.getText().toString();
+                confirm = et_confirm.getText().toString();
+                createNewAccount();
+            }
+        });
+
+    }
+
+    public void createNewAccount(){
+
     }
 
     // Sends to other screens
