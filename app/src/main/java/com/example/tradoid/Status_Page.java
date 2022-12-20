@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.tradoid.Adapters.RecycleView_Adapter;
+import com.example.tradoid.Adapters.Stock_Market_RecycleView_Adapter;
 import com.example.tradoid.Data_handling.Data_Layer;
 
 public class Status_Page extends AppCompatActivity {
@@ -35,7 +35,7 @@ public class Status_Page extends AppCompatActivity {
         Data_Layer portfolio_data = new Data_Layer("Portfolio");
 
         // Calling the Adapter
-        RecycleView_Adapter adapter = new RecycleView_Adapter(this,portfolio_data.get_User_data());
+        Stock_Market_RecycleView_Adapter adapter = new Stock_Market_RecycleView_Adapter(this,portfolio_data.get_User_data());
         recyclerView.setAdapter(adapter);
 
     }

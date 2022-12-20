@@ -12,13 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.SearchView;
 
 import com.example.tradoid.fragments.Portfolio;
 import com.example.tradoid.fragments.Stock;
 
-import com.example.tradoid.Adapters.TabsAdapter;
+import com.example.tradoid.Adapters.Stock_Market_TabsAdapter;
 import com.example.tradoid.Data_handling.stock_market_view_model;
 import com.example.tradoid.fragments.Watchlist;
 import com.google.android.material.tabs.TabLayout;
@@ -51,9 +50,12 @@ public class Stock_Market extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabLayout_stock_market);
         viewPager2 = findViewById(R.id.view_pager_stock_market); // allows going over tabs using swipes
 
+        // Ensures us that all fragments are created so the first time search works
+        viewPager2.setOffscreenPageLimit(3);
+
         // Creating new Tabs adapter - connects tab to fragment
-        TabsAdapter tabsAdapter = new TabsAdapter(this);
-        viewPager2.setAdapter(tabsAdapter);
+        Stock_Market_TabsAdapter stockMarketTabsAdapter = new Stock_Market_TabsAdapter(this);
+        viewPager2.setAdapter(stockMarketTabsAdapter);
 
         // Define what to do in case a tab was Selected
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -95,16 +97,6 @@ public class Stock_Market extends AppCompatActivity {
         // Reference to the search view itself
         searchView = (SearchView) searchItem.getActionView();
 
-        // Restore a former query TODO does not work
-//        String pendingQuery = view_model.getQuery();
-//        if (pendingQuery != null && !pendingQuery.isEmpty()){
-//            searchItem.expandActionView();
-//            searchView.setQuery(pendingQuery,false);
-//        }else{
-//            System.out.println("Cant print this");
-//            System.out.println(view_model.getQuery());
-//        }
-
         // change the done button on the keyboard
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
@@ -121,14 +113,13 @@ public class Stock_Market extends AppCompatActivity {
                 Stock stock_frag = (Stock) getSupportFragmentManager().findFragmentByTag("f0" );
                 Watchlist watch_frag = (Watchlist) getSupportFragmentManager().findFragmentByTag("f1");
                 Portfolio portfolio_frag = (Portfolio) getSupportFragmentManager().findFragmentByTag("f2");
+                // Update the fragments
                 if(stock_frag != null && watch_frag != null && portfolio_frag != null) {
                     stock_frag.UpdateAdapter(newText);
                     watch_frag.UpdateAdapter(newText);
                     portfolio_frag.UpdateAdapter(newText);
                 }
                 else{System.out.println("Cant open frag");}
-
-                view_model.setQuery(newText);
 
                 return false;
             }

@@ -9,10 +9,10 @@ import com.example.tradoid.fragments.Portfolio;
 import com.example.tradoid.fragments.Stock;
 import com.example.tradoid.fragments.Watchlist;
 
-public class TabsAdapter extends FragmentStateAdapter {
+public class Stock_Market_TabsAdapter extends FragmentStateAdapter {
 
 
-    public TabsAdapter(@NonNull FragmentActivity fragmentActivity) {
+    public Stock_Market_TabsAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 

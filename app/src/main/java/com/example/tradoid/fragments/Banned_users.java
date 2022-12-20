@@ -12,33 +12,32 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.tradoid.Adapters.Stock_Market_RecycleView_Adapter;
+import com.example.tradoid.Adapters.User_List_RecycleView_Adapter;
 import com.example.tradoid.Data_handling.stock_market_view_model;
 import com.example.tradoid.R;
 
-// A Fragment of the Stock tab in the Stock Market Activity
-public class Stock extends Fragment{
+public class Banned_users extends Fragment {
 
     RecyclerView recyclerView;
-    stock_market_view_model view_model;
-    Stock_Market_RecycleView_Adapter adapter;
+    stock_market_view_model view_model; //TODO change
+    User_List_RecycleView_Adapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_stock, container, false);
+        View view =  inflater.inflate(R.layout.fragment_banned_users, container, false);
 
         // Connect to View Model
         view_model = new ViewModelProvider(this).get(stock_market_view_model.class);
-        view_model.setFragment("stock");
+        view_model.setFragment("banned");
 
         // Creating the Recycle View - the list
-        recyclerView = view.findViewById(R.id.recyclerView_stock);
+        recyclerView = view.findViewById(R.id.recyclerView_banned_users);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         // Calling the Adapter
-        adapter = new Stock_Market_RecycleView_Adapter(getActivity(),view_model.newData());
+        adapter = new User_List_RecycleView_Adapter(getActivity(),view_model.newData());
         recyclerView.setAdapter(adapter);
 
         return view;

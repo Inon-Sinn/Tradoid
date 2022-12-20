@@ -78,11 +78,11 @@ public class Data_Layer {
     }
 
     public void get_Users(){
-
+        get_Stocks();
     }
 
     public void get_Banned(){
-
+        get_Watchlist();
     }
 
 
