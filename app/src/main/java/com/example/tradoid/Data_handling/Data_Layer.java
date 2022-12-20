@@ -9,15 +9,44 @@ import com.example.tradoid.R;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 // This class implements all calls to the Database
 public class Data_Layer {
 
-    public List<example_Item> example_list = new ArrayList<>();
-    List<example_Item> shuffle;
+    // Stock Market data
+    public List<example_Item> example_list;
 
-    public Data_Layer() {
+    public Data_Layer(String fragment) {
+        example_list = new ArrayList<>();
+        data_by_frag(fragment);
+    }
+
+    public List<example_Item> get_Stocks_data(){
+        return example_list;
+    }
+
+    public List<example_Item> get_User_data(){
+        return example_list;
+    }
+
+    // changes the data by the fragment we are on
+    public void data_by_frag(String frag){
+        frag = frag.toLowerCase(Locale.ROOT);
+        if(frag.equals("stock"))
+            get_Stocks();
+        if (frag.equals("watchlist"))
+            get_Watchlist();
+        if (frag.equals("portfolio"))
+            get_Portfolio();
+        if (frag.equals("users"))
+            get_Users();
+        if (frag.equals("banned"))
+            get_Banned();
+    }
+
+    public void get_Stocks(){
         String s1[] = {"Samuel Sinn","Revital","Liel","Tehila","Inon","Ofir","Gilad","Noa","Yair","Mapel"};
         String s2[] = {"1","2","3","4","5","6","7","8","9","10"};
         int images[] = {R.drawable.ic_arrow_back, R.drawable.ic_ban, R.drawable.ic_bookmark,
@@ -26,61 +55,41 @@ public class Data_Layer {
         for (int i = 0; i < s1.length; i++) {
             example_list.add(new example_Item(s1[i],s2[i],images[i]));
         }
-        shuffle = new ArrayList<>(example_list);
     }
 
-    public List<example_Item> getData(){
-        return example_list;
+    public void get_Watchlist(){
+        String s1[] = {"Samuel Sinn","Revital","Liel","Tehila","Inon"};
+        String s2[] = {"1","2","3","4","5"};
+        int images[] = {R.drawable.ic_arrow_back, R.drawable.ic_ban, R.drawable.ic_bookmark,
+                R.drawable.ic_dashboard, R.drawable.ic_identity};
+        for (int i = 0; i < s1.length; i++) {
+            example_list.add(new example_Item(s1[i],s2[i],images[i]));
+        }
     }
 
-    public void setData(List<example_Item> newList){
-        example_list.clear();
-        example_list.addAll(newList);
-    };
+    public void get_Portfolio(){
+        String s1[] = {"Ofir","Gilad","Noa","Yair","Mapel"};
+        String s2[] = {"6","7","8","9","10"};
+        int images[] = {R.drawable.ic_kebab_menu,R.drawable.ic_menu, R.drawable.ic_portfolio,
+                R.drawable.ic_list, R.drawable.ic_logout};
+        for (int i = 0; i < s1.length; i++) {
+            example_list.add(new example_Item(s1[i],s2[i],images[i]));
+        }
+    }
 
-    public List<example_Item> shuffle(int seed){
-        Collections.shuffle(shuffle, new Random(seed));
-        return shuffle;
+    public void get_Users(){
+
+    }
+
+    public void get_Banned(){
+
     }
 
 
+
+
+    /*
+    We will make that instead of example item we will have 2 classes stock and user
+    Data layer will have all stocks and users
+     */
 }
-
-
-// needs to be implemented to be filterable
-//    @Override
-//    public Filter getFilter() {
-//        return examplFilter;
-//    }
-//
-//    // building our own filter, works in the background so the app wont freeze
-//    private Filter examplFilter = new Filter() {
-//        @Override
-//        protected FilterResults performFiltering(CharSequence constraint) {
-//            List<example_Item> filteredList = new ArrayList<>();
-//
-//            // if there was the search length was 0 or null(no search) just return everything
-//            if (constraint == null || constraint.length() == 0){
-//                filteredList.addAll(example_list_full);
-//            }
-//            else{
-//                String filterPattern = constraint.toString().toLowerCase().trim();
-//                for (example_Item item: example_list_full) {
-//                    if (item.getData1().toLowerCase().contains(filterPattern)){
-//                        filteredList.add(item);
-//                    }
-//                }
-//            }
-//            FilterResults results = new FilterResults();
-//            results.values = filteredList;
-//
-//            return results;
-//        }
-//
-//        @Override
-//        protected void publishResults(CharSequence constraint, FilterResults results) {
-//            example_list.clear();
-//            example_list.addAll((List) results.values);
-//            notifyDataSetChanged();
-//        }
-//    };

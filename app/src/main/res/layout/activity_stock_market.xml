@@ -28,21 +28,36 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:titleTextColor="@color/white"
                 app:title=" "
-                app:titleTextColor="@color/white" />
+                app:theme="@style/AppTheme.Toolbar">
 
-            <TextView
-                android:id="@+id/tv_stock_market"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Market"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.551" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Market"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:id="@+id/toolbar_title" />
+
+
+            </androidx.appcompat.widget.Toolbar>
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_stock_market"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Market"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="20sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintVertical_bias="0.551"-->
+<!--                app:showAsAction="ifRoom|collapseActionView"/>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

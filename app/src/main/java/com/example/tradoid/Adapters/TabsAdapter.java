@@ -20,8 +20,6 @@ public class TabsAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position){
-            case 0:
-                return new Stock();
             case 1:
                 return new Watchlist();
             case 2:

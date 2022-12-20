@@ -12,28 +12,32 @@ import com.example.tradoid.fragments.Stock;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class stock_market_view_model extends ViewModel implements Filterable {
 
-    public Data_Layer data = new Data_Layer();
-    public List<example_Item> data_list = data.getData();
-    public MutableLiveData<List<example_Item>> searchResults = new MutableLiveData<List<example_Item>>(data_list);
-    public List<example_Item> example_list_full = new ArrayList<>(data_list);
-    public int seed = 1;
+    /*
+    This View Model was changed to be more general, as i understood that each
+    fragment creates a new View Model
+     */
+
+    Data_Layer data;
+    List<example_Item> data_list;
+    List<example_Item> example_list_full;
+
+    public void setFragment(String fragment) {
+        this.data = new Data_Layer(fragment);
+        this.data_list = data.get_Stocks_data();
+        this.example_list_full = new ArrayList<>(data_list);
+    }
 
     public List<example_Item> newData(){
-//        List<example_Item> shuf = data.filter();
-        return searchResults.getValue();
+        return data_list;
     }
 
     public void filterData(String query){
         //filter outside of RecycleView Adapter through data_list
         getFilter().filter(query);
-        searchResults.setValue(data.getData());
-    }
-
-    public LiveData<List<example_Item>> getSearchResults(){
-        return searchResults;
     }
 
     @Override
