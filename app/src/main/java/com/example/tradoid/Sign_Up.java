@@ -11,13 +11,11 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
-import android.text.method.MovementMethod;
+import android.text.style.BackgroundColorSpan;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 public class Sign_Up extends AppCompatActivity {
 
@@ -35,10 +33,10 @@ public class Sign_Up extends AppCompatActivity {
         back_arrow.setOnClickListener(v -> sendToActivity(login.class));
 
         // Connecting to the Text View "sign in"
-        TextView tv_sign_in = findViewById(R.id.tv_sign_in_sign_up);
+        TextView tv_sign_in = findViewById(R.id.tv_from_sign_up_to_sign_in);
 
         // Making the Text View Clickable -> sends to Sign In
-        String text = "sign in";
+        String text = "Sign In";
         SpannableString ss = new SpannableString(text);
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
@@ -52,7 +50,9 @@ public class Sign_Up extends AppCompatActivity {
                 ds.setColor(Color.BLUE);
             }
         };
+        BackgroundColorSpan bcs = new BackgroundColorSpan(Color.WHITE);
         ss.setSpan(clickableSpan,0,text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(bcs,0,text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); // Bacground stays white when clicked
         tv_sign_in.setText(ss);
         tv_sign_in.setMovementMethod(LinkMovementMethod.getInstance());
     }
