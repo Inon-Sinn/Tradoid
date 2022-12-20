@@ -27,6 +27,7 @@ import java.util.Objects;
 
 public class Stock_Market extends AppCompatActivity {
 
+    SearchView searchView;
     stock_market_view_model view_model;
     ViewPager2 viewPager2;
 
@@ -92,7 +93,17 @@ public class Stock_Market extends AppCompatActivity {
         MenuItem searchItem = menu.findItem(R.id.menu_user_search);
 
         // Reference to the search view itself
-        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView = (SearchView) searchItem.getActionView();
+
+        // Restore a former query TODO does not work
+//        String pendingQuery = view_model.getQuery();
+//        if (pendingQuery != null && !pendingQuery.isEmpty()){
+//            searchItem.expandActionView();
+//            searchView.setQuery(pendingQuery,false);
+//        }else{
+//            System.out.println("Cant print this");
+//            System.out.println(view_model.getQuery());
+//        }
 
         // change the done button on the keyboard
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
@@ -116,6 +127,8 @@ public class Stock_Market extends AppCompatActivity {
                     portfolio_frag.UpdateAdapter(newText);
                 }
                 else{System.out.println("Cant open frag");}
+
+                view_model.setQuery(newText);
 
                 return false;
             }
@@ -147,4 +160,6 @@ public class Stock_Market extends AppCompatActivity {
         Intent intent = new Intent(this,cls);
         startActivity(intent);
     }
+
+
 }

@@ -21,6 +21,7 @@ public class stock_market_view_model extends ViewModel implements Filterable {
     fragment creates a new View Model
      */
 
+    String query = "o"; // used to safe a pending query
     Data_Layer data;
     List<example_Item> data_list;
     List<example_Item> example_list_full;
@@ -29,6 +30,14 @@ public class stock_market_view_model extends ViewModel implements Filterable {
         this.data = new Data_Layer(fragment);
         this.data_list = data.get_Stocks_data();
         this.example_list_full = new ArrayList<>(data_list);
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    public String getQuery() {
+        return query;
     }
 
     public List<example_Item> newData(){

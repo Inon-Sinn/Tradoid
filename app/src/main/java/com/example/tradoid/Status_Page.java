@@ -3,13 +3,20 @@ package com.example.tradoid;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.tradoid.Adapters.RecycleView_Adapter;
+import com.example.tradoid.Data_handling.Data_Layer;
+
 public class Status_Page extends AppCompatActivity {
+
+    Data_Layer portfolio_data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +26,18 @@ public class Status_Page extends AppCompatActivity {
         // Creating a custom Toolbar
         Toolbar status_page_toolbar = findViewById(R.id.toolbar_status_page);
         setSupportActionBar(status_page_toolbar);
+
+        // Creating the Recycle View - the list
+        RecyclerView recyclerView = findViewById(R.id.recyclerView_status_page);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Calling the portfolio data
+        Data_Layer portfolio_data = new Data_Layer("Portfolio");
+
+        // Calling the Adapter
+        RecycleView_Adapter adapter = new RecycleView_Adapter(this,portfolio_data.get_User_data());
+        recyclerView.setAdapter(adapter);
+
     }
 
     // Creates the menu
