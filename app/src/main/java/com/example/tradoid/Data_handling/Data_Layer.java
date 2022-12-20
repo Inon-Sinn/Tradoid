@@ -4,19 +4,34 @@ package com.example.tradoid.Data_handling;
 import android.widget.Filter;
 import android.widget.Filterable;
 
+import androidx.annotation.NonNull;
+
 import com.example.tradoid.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
+
+
 
 // This class implements all calls to the Database
 public class Data_Layer {
 
     // Stock Market data
     public List<example_Item> example_list;
+
+    // Firebase
+    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+    public Data_Layer(){}
 
     public Data_Layer(String fragment) {
         example_list = new ArrayList<>();
@@ -85,7 +100,24 @@ public class Data_Layer {
         get_Watchlist();
     }
 
-
+    public void sign_up(String username, String email, String password, String password_confirm){
+        Map<String, Object> users = new HashMap<String, Object>(){{
+            put("username", username);
+            put("email", email);
+            put("password", password);
+        }};
+        firestore.collection("users").add(users).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                System.out.println("Success");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println("Failure");
+            }
+        });
+    }
 
 
 

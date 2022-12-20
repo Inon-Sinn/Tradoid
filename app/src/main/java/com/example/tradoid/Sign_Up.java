@@ -18,11 +18,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.tradoid.Data_handling.Data_Layer;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class Sign_Up extends AppCompatActivity {
 
-    public String name,email,password,confirm;
+    public Data_Layer data_layer = new Data_Layer();
+
+    public String username, email, password, confirm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +75,7 @@ public class Sign_Up extends AppCompatActivity {
         btn_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                name = et_name.getText().toString();
+                username = et_name.getText().toString();
                 email = et_email.getText().toString();
                 password = et_password.getText().toString();
                 confirm = et_confirm.getText().toString();
@@ -83,7 +86,7 @@ public class Sign_Up extends AppCompatActivity {
     }
 
     public void createNewAccount(){
-
+        data_layer.sign_up(username, email, password, confirm);
     }
 
     // Sends to other screens
