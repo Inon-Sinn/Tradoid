@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,12 @@ import com.example.tradoid.Adapters.status_RecyleView_Adapter;
 import com.example.tradoid.Data_handling.Data_Layer;
 import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.Data_handling.user_data;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+import app.futured.donut.DonutProgressView;
+import app.futured.donut.DonutSection;
 
 public class Status_Page extends AppCompatActivity {
 
@@ -37,6 +44,13 @@ public class Status_Page extends AppCompatActivity {
         // Creating a custom Toolbar
         Toolbar status_page_toolbar = findViewById(R.id.toolbar_status_page);
         setSupportActionBar(status_page_toolbar);
+
+        // Connecting to donut chart
+        DonutProgressView donutView = findViewById(R.id.donut_char_status_page);
+        DonutSection section = new DonutSection("Section 1 Name", Color.parseColor("#f44336"), 80.0f);
+        donutView.setCap(100f);
+        donutView.submitData(new ArrayList<>(Collections.singleton(section)));
+        //String hex = String.format("#%02X%02X%02X", r, g, b);
 
         // Creating the Recycle View - the list
         RecyclerView recyclerView = findViewById(R.id.recyclerView_status_page);

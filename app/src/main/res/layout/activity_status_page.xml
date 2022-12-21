@@ -93,6 +93,17 @@
         app:srcCompat="@drawable/ic_portfolio"
         app:tint="@color/white" />
 
+    <app.futured.donut.DonutProgressView
+        android:id="@+id/donut_char_status_page"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginVertical="25dp"
+        app:donut_gapWidth="0"
+        app:donut_strokeWidth="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

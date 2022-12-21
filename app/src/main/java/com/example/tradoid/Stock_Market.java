@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.tradoid.fragments.Portfolio;
 import com.example.tradoid.fragments.Stock;

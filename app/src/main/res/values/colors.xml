@@ -10,4 +10,5 @@
     <color name="money_green">#118C4F</color>
     <color name="gray">#808080</color>
     <color name="red">#FF0000</color>
+    <color name="test">#00FFFF</color>
 </resources>

@@ -127,7 +127,7 @@ public class Sign_Up extends AppCompatActivity {
     }
 
     public void createNewAccount(){
-        data_layer.sign_up(username, email, password, confirm);
+//        data_layer.sign_up(username, email, password, confirm);
     }
 
     // Sends to other screens

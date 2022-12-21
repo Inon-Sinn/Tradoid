@@ -8,8 +8,11 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class stock_view_model extends ViewModel implements Filterable {
 
+    //TODO test usign static
     user_data user;
     Data_Layer data;
     List<stock_data> data_list;
