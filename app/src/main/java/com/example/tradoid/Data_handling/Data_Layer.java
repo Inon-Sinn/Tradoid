@@ -22,9 +22,6 @@ public class Data_Layer {
     // User Data
     List<user_data> users;
 
-    // Firebase
-    FirebaseFirestore fire_store = FirebaseFirestore.getInstance();
-
     public Data_Layer(){
         stocks = new ArrayList<>();
         users = new ArrayList<>();
@@ -117,24 +114,24 @@ public class Data_Layer {
         users.subList(0, 5).clear();
     }
 
-    public void sign_up(String username, String email, String password, String password_confirm){
-        Map<String, Object> users = new HashMap<String, Object>(){{
-            put("username", username);
-            put("email", email);
-            put("password", password);
-        }};
-        fire_store.collection("users").add(users).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                System.out.println("Success");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                System.out.println("Failure");
-            }
-        });
-    }
+//    public void sign_up(String username, String email, String password, String password_confirm){
+//        Map<String, Object> users = new HashMap<String, Object>(){{
+//            put("username", username);
+//            put("email", email);
+//            put("password", password);
+//        }};
+//        fire_store.collection("users").add(users).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//            @Override
+//            public void onSuccess(DocumentReference documentReference) {
+//                System.out.println("Success");
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                System.out.println("Failure");
+//            }
+//        });
+//    }
 
     /*
     We will make that instead of example item we will have 2 classes stock and user
