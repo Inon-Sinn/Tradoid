@@ -30,6 +30,7 @@
     </style>
 
     <style name="Theme.Tradoid.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="Theme.Tradoid.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
