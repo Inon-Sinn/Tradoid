@@ -19,8 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tradoid.Others.emailTextWatcher;
-import com.example.tradoid.Others.passwordTextWatcher;
+import com.example.tradoid.Business_Logic.emailTextWatcher;
+import com.example.tradoid.Business_Logic.passwordTextWatcher;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 

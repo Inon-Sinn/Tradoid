@@ -1,4 +1,4 @@
-package com.example.tradoid.Others;
+package com.example.tradoid.Business_Logic;
 
 import android.text.Editable;
 import android.text.TextWatcher;

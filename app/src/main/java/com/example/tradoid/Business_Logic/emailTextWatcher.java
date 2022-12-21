@@ -1,11 +1,9 @@
-package com.example.tradoid.Others;
+package com.example.tradoid.Business_Logic;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 
 import com.google.android.material.textfield.TextInputLayout;
-
-import org.w3c.dom.Text;
 
 import java.util.regex.Pattern;
 
