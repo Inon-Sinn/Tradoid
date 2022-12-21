@@ -42,7 +42,7 @@ public class User_List_RecycleView_Adapter extends RecyclerView.Adapter<User_Lis
     public UserList_ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater =  LayoutInflater.from(context);
         //We give it the row layout we want
-        View view = layoutInflater.inflate(R.layout.recycle_view_row, parent,false);
+        View view = layoutInflater.inflate(R.layout.example_item_row, parent,false);
         return new UserList_ViewHolder(view);
     }
 

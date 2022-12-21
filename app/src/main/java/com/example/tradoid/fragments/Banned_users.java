@@ -20,7 +20,7 @@ public class Banned_users extends Fragment {
 
     RecyclerView recyclerView;
     stock_market_view_model view_model; //TODO change
-    User_List_RecycleView_Adapter adapter;
+    Stock_Market_RecycleView_Adapter adapter; //TODO change
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,7 +37,7 @@ public class Banned_users extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         // Calling the Adapter
-        adapter = new User_List_RecycleView_Adapter(getActivity(),view_model.newData());
+        adapter = new Stock_Market_RecycleView_Adapter(getActivity(),view_model.newData());
         recyclerView.setAdapter(adapter);
 
         return view;

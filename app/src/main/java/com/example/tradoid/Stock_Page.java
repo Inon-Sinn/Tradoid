@@ -25,7 +25,7 @@ public class Stock_Page extends AppCompatActivity {
     ImageView mainImageView;
     TextView title,subTitle;
 
-    String data1,data2;
+    String data1,data2,data3,data4;
     int myImage;
 
     String[] actions = {"Buy","Sell"};
@@ -157,9 +157,11 @@ public class Stock_Page extends AppCompatActivity {
 
     // getting the data from the intent TODO needs to be changed
     private void getData(){
-        if (getIntent().hasExtra("myImage") && getIntent().hasExtra("data1") && getIntent().hasExtra("data2")){
+        if (getIntent().hasExtra("myImage") && getIntent().hasExtra("data1") && getIntent().hasExtra("data2") && getIntent().hasExtra("data3") && getIntent().hasExtra("data4")){
             data1 = getIntent().getStringExtra("data1");
             data2 = getIntent().getStringExtra("data2");
+            data3 = getIntent().getStringExtra("data1");
+            data4 = getIntent().getStringExtra("data2");
             myImage = getIntent().getIntExtra("myImage",1);
         }else{
             Toast.makeText(this,"No data",Toast.LENGTH_SHORT).show();

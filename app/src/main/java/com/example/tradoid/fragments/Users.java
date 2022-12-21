@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.tradoid.Adapters.Stock_Market_RecycleView_Adapter;
 import com.example.tradoid.Adapters.User_List_RecycleView_Adapter;
 import com.example.tradoid.Data_handling.stock_market_view_model;
 import com.example.tradoid.R;
@@ -19,7 +20,7 @@ public class Users extends Fragment {
 
     RecyclerView recyclerView;
     stock_market_view_model view_model; //TODO change
-    User_List_RecycleView_Adapter adapter;
+    Stock_Market_RecycleView_Adapter adapter;//TODO change
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,7 +37,7 @@ public class Users extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         // Calling the Adapter
-        adapter = new User_List_RecycleView_Adapter(getActivity(),view_model.newData());
+        adapter = new Stock_Market_RecycleView_Adapter(getActivity(),view_model.newData());
         recyclerView.setAdapter(adapter);
 
         return view;

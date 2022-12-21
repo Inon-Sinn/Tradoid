@@ -1,9 +1,6 @@
 package com.example.tradoid.Data_handling;
 
 
-import android.widget.Filter;
-import android.widget.Filterable;
-
 import androidx.annotation.NonNull;
 
 import com.example.tradoid.R;
@@ -13,13 +10,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
-
 
 
 // This class implements all calls to the Database
@@ -27,6 +21,7 @@ public class Data_Layer {
 
     // Stock Market data
     public List<example_Item> example_list;
+    List<stock_data> stocks;
 
     // Firebase
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -35,11 +30,12 @@ public class Data_Layer {
 
     public Data_Layer(String fragment) {
         example_list = new ArrayList<>();
+        stocks = new ArrayList<>();
         data_by_frag(fragment);
     }
 
-    public List<example_Item> get_Stocks_data(){
-        return example_list;
+    public List<stock_data> get_Stocks_data(){
+        return stocks;
     }
 
     public List<example_Item> get_User_data(){
@@ -62,34 +58,23 @@ public class Data_Layer {
     }
 
     public void get_Stocks(){
-        String s1[] = {"Samuel Sinn","Revital","Liel","Tehila","Inon","Ofir","Gilad","Noa","Yair","Mapel"};
-        String s2[] = {"1","2","3","4","5","6","7","8","9","10"};
-        int images[] = {R.drawable.ic_arrow_back, R.drawable.ic_ban, R.drawable.ic_bookmark,
-                R.drawable.ic_dashboard, R.drawable.ic_identity, R.drawable.ic_kebab_menu,
-                R.drawable.ic_menu, R.drawable.ic_portfolio, R.drawable.ic_list, R.drawable.ic_logout};
+        String s1[] = {"AAPL","MSFT","AMZN","GOOG","FB","BRK-A","V","JPM","JNJ"};
+        String s2[] = {"Apple, Inc","Microsoft Corp.","Amazon.com, Inc.","Alphabet, Inc.","Facebook, Inc.","Berkshire Hathaway, Inc.","Via, Inc.","JPMorgan Chase & Co.","Johnson & Johnson"};
+        double price[] = {148.12, 299.79, 3450, 2868.12, 376.53, 416996.01,223.03,157.07,164.8};
+        double change[] = {-1.43,2.80,-7.17,-1.18,0.02,-3804.99,-1.60,-2.79,-1.00};
         for (int i = 0; i < s1.length; i++) {
-            example_list.add(new example_Item(s1[i],s2[i],images[i]));
+            stocks.add(new stock_data(s1[i],s2[i],price[i],change[i]));
         }
     }
 
     public void get_Watchlist(){
-        String s1[] = {"Samuel Sinn","Revital","Liel","Tehila","Inon"};
-        String s2[] = {"1","2","3","4","5"};
-        int images[] = {R.drawable.ic_arrow_back, R.drawable.ic_ban, R.drawable.ic_bookmark,
-                R.drawable.ic_dashboard, R.drawable.ic_identity};
-        for (int i = 0; i < s1.length; i++) {
-            example_list.add(new example_Item(s1[i],s2[i],images[i]));
-        }
+        get_Stocks();
+        stocks.subList(0, 5).clear();
     }
 
     public void get_Portfolio(){
-        String s1[] = {"Ofir","Gilad","Noa","Yair","Mapel"};
-        String s2[] = {"6","7","8","9","10"};
-        int images[] = {R.drawable.ic_kebab_menu,R.drawable.ic_menu, R.drawable.ic_portfolio,
-                R.drawable.ic_list, R.drawable.ic_logout};
-        for (int i = 0; i < s1.length; i++) {
-            example_list.add(new example_Item(s1[i],s2[i],images[i]));
-        }
+        get_Stocks();
+        stocks.subList(stocks.size()-5, stocks.size()-1).clear();
     }
 
     public void get_Users(){
@@ -124,5 +109,17 @@ public class Data_Layer {
     /*
     We will make that instead of example item we will have 2 classes stock and user
     Data layer will have all stocks and users
+
+            String s1[] = {"Samuel Sinn","Revital","Liel","Tehila","Inon","Ofir","Gilad","Noa","Yair","Mapel"};
+        String s2[] = {"1","2","3","4","5","6","7","8","9","10"};
+        int images[] = {R.drawable.ic_arrow_back, R.drawable.ic_ban, R.drawable.ic_bookmark,
+                R.drawable.ic_dashboard, R.drawable.ic_identity, R.drawable.ic_kebab_menu,
+                R.drawable.ic_menu, R.drawable.ic_portfolio, R.drawable.ic_list, R.drawable.ic_logout};
+        for (int i = 0; i < s1.length; i++) {
+            example_list.add(new example_Item(s1[i],s2[i],images[i]));
+        }
+
      */
+
+
 }

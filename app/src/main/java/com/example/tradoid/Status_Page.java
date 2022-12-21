@@ -35,7 +35,7 @@ public class Status_Page extends AppCompatActivity {
         Data_Layer portfolio_data = new Data_Layer("Portfolio");
 
         // Calling the Adapter
-        Stock_Market_RecycleView_Adapter adapter = new Stock_Market_RecycleView_Adapter(this,portfolio_data.get_User_data());
+        Stock_Market_RecycleView_Adapter adapter = new Stock_Market_RecycleView_Adapter(this,portfolio_data.get_Stocks_data());
         recyclerView.setAdapter(adapter);
 
     }
