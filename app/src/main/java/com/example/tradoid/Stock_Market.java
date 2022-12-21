@@ -18,7 +18,7 @@ import com.example.tradoid.fragments.Portfolio;
 import com.example.tradoid.fragments.Stock;
 
 import com.example.tradoid.Adapters.Stock_Market_TabsAdapter;
-import com.example.tradoid.Data_handling.stock_market_view_model;
+import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.fragments.Watchlist;
 import com.google.android.material.tabs.TabLayout;
 
@@ -27,7 +27,7 @@ import java.util.Objects;
 public class Stock_Market extends AppCompatActivity {
 
     SearchView searchView;
-    stock_market_view_model view_model;
+    stock_view_model view_model;
     ViewPager2 viewPager2;
 
     @Override
@@ -36,7 +36,7 @@ public class Stock_Market extends AppCompatActivity {
         setContentView(R.layout.activity_stock_market);
 
         // Connect to View Model
-        view_model = new ViewModelProvider(this).get(stock_market_view_model.class);
+        view_model = new ViewModelProvider(this).get(stock_view_model.class);
 
         // Creating a custom Toolbar
         Toolbar stock_market_toolbar = findViewById(R.id.toolbar_stock_market);

@@ -14,14 +14,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.SearchView;
 
-import com.example.tradoid.Adapters.Stock_Market_TabsAdapter;
 import com.example.tradoid.Adapters.User_List_TabsAdapter;
-import com.example.tradoid.Data_handling.stock_market_view_model;
+import com.example.tradoid.Data_handling.user_view_model;
 import com.example.tradoid.fragments.Banned_users;
-import com.example.tradoid.fragments.Portfolio;
-import com.example.tradoid.fragments.Stock;
 import com.example.tradoid.fragments.Users;
-import com.example.tradoid.fragments.Watchlist;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
@@ -29,7 +25,7 @@ import java.util.Objects;
 public class User_List extends AppCompatActivity {
 
     SearchView searchView;
-    stock_market_view_model view_model;
+    user_view_model view_model;
     ViewPager2 viewPager2;
 
     @Override
@@ -38,7 +34,7 @@ public class User_List extends AppCompatActivity {
         setContentView(R.layout.activity_user_list);
 
         // Connect to View Model
-        view_model = new ViewModelProvider(this).get(stock_market_view_model.class); //TODO create new view model
+        view_model = new ViewModelProvider(this).get(user_view_model.class);
 
         // Creating a custom Toolbar
         Toolbar user_list_toolbar = findViewById(R.id.toolbar_user_list);

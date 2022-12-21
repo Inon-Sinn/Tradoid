@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class stock_market_view_model extends ViewModel implements Filterable {
+public class stock_view_model extends ViewModel implements Filterable {
 
     Data_Layer data;
     List<stock_data> data_list;

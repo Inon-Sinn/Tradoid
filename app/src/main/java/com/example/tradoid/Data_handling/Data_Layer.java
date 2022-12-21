@@ -77,11 +77,17 @@ public class Data_Layer {
     }
 
     public void get_Users(){
-        get_Stocks();
+        String[] s1 = {"Samuel Sinn","Revital","Liel","Tehila","Inon","Ofir","Gilad","Noa","Yair","Maple"};
+        String[] s2 = {"samuel@mail.com","Revital@mail.com","Liel@mail.com","Tehila@mail.com","Inon@mail.com","Ofir@mail.com","Gilad@mail.com","Noa@mail.com","Yair@mail.com","Maple@mail.com"};
+        double[] d3 = {1500000,165,15665,56975,948465,48972,1231,-6565456,999999999,.564};
+        for (int i = 0; i < s1.length; i++) {
+            users.add(new user_data(s1[i],s2[i],d3[i]));
+        }
     }
 
     public void get_Banned(){
-        get_Watchlist();
+        get_Users();
+        users.subList(0, 5).clear();
     }
 
     public void sign_up(String username, String email, String password, String password_confirm){
@@ -107,14 +113,7 @@ public class Data_Layer {
     We will make that instead of example item we will have 2 classes stock and user
     Data layer will have all stocks and users
 
-            String s1[] = {"Samuel Sinn","Revital","Liel","Tehila","Inon","Ofir","Gilad","Noa","Yair","Maple"};
-        String s2[] = {"1","2","3","4","5","6","7","8","9","10"};
-        int images[] = {R.drawable.ic_arrow_back, R.drawable.ic_ban, R.drawable.ic_bookmark,
-                R.drawable.ic_dashboard, R.drawable.ic_identity, R.drawable.ic_kebab_menu,
-                R.drawable.ic_menu, R.drawable.ic_portfolio, R.drawable.ic_list, R.drawable.ic_logout};
-        for (int i = 0; i < s1.length; i++) {
-            example_list.add(new example_Item(s1[i],s2[i],images[i]));
-        }
+
 
      */
 

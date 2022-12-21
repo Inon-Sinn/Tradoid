@@ -19,7 +19,6 @@ import java.util.List;
 // The Adapter defines how the list look and its items
 public class Stock_Market_RecycleView_Adapter extends RecyclerView.Adapter<Stock_Market_RecycleView_Adapter.MyViewHolder> {
 
-
     Context context;
     List<stock_data> item_list;
 
