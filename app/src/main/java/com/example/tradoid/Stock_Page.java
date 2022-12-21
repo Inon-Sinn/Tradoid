@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -19,23 +17,24 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.DecimalFormat;
+
 public class Stock_Page extends AppCompatActivity {
 
-    // TODO put in oncreate and will have to be removed
-    ImageView mainImageView;
-    TextView title,subTitle;
+    // Views with Dynamic values
+    TextView tv_name, tv_full_name, tv_price, tv_price_change;
+    ImageView iv_icon;
 
-    String data1,data2,data3,data4;
-    int myImage;
+    // The Dynamic values
+    String name, full_name;
+    double price, price_change;
+    int icon;
 
+    // Buy/Sell Action
     String[] actions = {"Buy","Sell"};
     String current_action;
-    double stock_in_usd = 10;
     double total_value;
     public boolean stopListening = false; // needed so don't have an infinite loop
-
-    // ------------------------------ TODO can stay
-    TextView toolbar_Title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +45,6 @@ public class Stock_Page extends AppCompatActivity {
         Toolbar stock_page_toolbar = findViewById(R.id.toolbar_stock_page);
         setSupportActionBar(stock_page_toolbar);
 
-        // Connecting to TextView in Toolbar
-        toolbar_Title = findViewById(R.id.stock_pg_name);
-
         // Implementing the Back arrow in the Toolbar
         ImageView back_arrow = findViewById(R.id.stock_pg_To_stock_market);
         back_arrow.setOnClickListener(v -> sendToActivity(Stock_Market.class));
@@ -57,21 +53,31 @@ public class Stock_Page extends AppCompatActivity {
         ImageView bookmark = findViewById(R.id.bookmark_stock_pg);
         bookmark.setOnClickListener(v -> Bookmark_stock());
 
+        // Connecting to the TextViews With Dynamic Values
+        tv_name = findViewById(R.id.stock_page_tv_name);
+        tv_full_name = findViewById(R.id.stock_page_tv_full_name);
+        tv_price = findViewById(R.id.stock_page_tv_price);
+        tv_price_change = findViewById(R.id.stock_page_tv_price_change);
+
+        // Connecting to the ImageView With Dynamic Values
+        iv_icon = findViewById(R.id.stock_page_icon_price_change);
+
+        // Get the data form the row it was clicked on
+        getData();
+        setData();
+
         // Connecting the Buy/Sell button
         Button transaction = findViewById(R.id.button_stock_page);
         transaction.setOnClickListener(v -> create_transaction());
 
         // Connecting to Action list - Buy/Sell
         AutoCompleteTextView autoCompleteTextView = findViewById(R.id.autoComplete_tv_stock_page);
-        ArrayAdapter<String> adapterItems = new ArrayAdapter<String>(this,R.layout.stock_page_action_list_item, actions);
+        ArrayAdapter<String> adapterItems = new ArrayAdapter<>(this, R.layout.stock_page_action_list_item, actions);
         autoCompleteTextView.setAdapter(adapterItems);
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
-                current_action = item;
-                transaction.setText(item);
-            }
+        autoCompleteTextView.setOnItemClickListener((parent, view, position, id) -> {
+            String item = parent.getItemAtPosition(position).toString();
+            current_action = item;
+            transaction.setText(item);
         });
 
         // Connecting to the Text View Total value
@@ -81,6 +87,7 @@ public class Stock_Page extends AppCompatActivity {
         TextInputEditText editText_usd = findViewById(R.id.edit_text_USD_stock_page);
         TextInputEditText editText_Stock = findViewById(R.id.edit_text_stocks_stock_page);
 
+        // Text Watcher for the USD value
         editText_usd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -94,9 +101,10 @@ public class Stock_Page extends AppCompatActivity {
                     stopListening = true;
                     if (s.length() != 0) {
                         double num = Double.parseDouble(s.toString());
-                        editText_Stock.setText(String.valueOf(num / stock_in_usd)); // The amount of Stock that can be bought
+                        DecimalFormat numberFormat = new DecimalFormat("#.000");
+                        editText_Stock.setText(numberFormat.format(num/price)); // The amount of Stock that can be bought
                         total_value = num;
-                        total_value_tv.setText("Total: " + String.valueOf(total_value) + " $");
+                        total_value_tv.setText("Total: " + total_value + " $");
                     } else {
                         editText_Stock.setText(""); // The amount of Stock that can be bought
                         total_value = 0;
@@ -111,6 +119,7 @@ public class Stock_Page extends AppCompatActivity {
             }
         });
 
+        // Text Watcher for the Stock value
         editText_Stock.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -124,9 +133,10 @@ public class Stock_Page extends AppCompatActivity {
                     stopListening = true;
                     if (s.length() != 0) {
                         double num = Double.parseDouble(s.toString());
-                        editText_usd.setText(String.valueOf(num * stock_in_usd)); // The amount of Stock that can be bought
-                        total_value = num * stock_in_usd;
-                        total_value_tv.setText("Total: " + String.valueOf(total_value) + " $");
+                        DecimalFormat numberFormat = new DecimalFormat("#.000");
+                        editText_usd.setText(numberFormat.format(num * price)); // The amount of Stock that can be bought
+                        total_value = num * price;
+                        total_value_tv.setText("Total: " + total_value + " $");
                     } else {
                         editText_usd.setText(""); // The amount of Stock that can be bought
                         total_value = 0;
@@ -141,41 +151,30 @@ public class Stock_Page extends AppCompatActivity {
             }
         });
 
-
-
-        //TODO all from here will be changed
-        // Creating the image view and textViews
-        mainImageView = findViewById(R.id.stock_page_image);
-        title = findViewById(R.id.stock_page_title);
-        subTitle = findViewById(R.id.stock_page_subTitle);
-
-
-        // Get the data form the row it was clicked on
-        getData(); //TODO should probably put at the beginning to avoid bugs
-        setData();
     }
 
-    // getting the data from the intent TODO needs to be changed
+    // getting the data from the intent
     private void getData(){
-        if (getIntent().hasExtra("myImage") && getIntent().hasExtra("data1") && getIntent().hasExtra("data2") && getIntent().hasExtra("data3") && getIntent().hasExtra("data4")){
-            data1 = getIntent().getStringExtra("data1");
-            data2 = getIntent().getStringExtra("data2");
-            data3 = getIntent().getStringExtra("data1");
-            data4 = getIntent().getStringExtra("data2");
-            myImage = getIntent().getIntExtra("myImage",1);
+        // Check if it received the data
+        if (getIntent().hasExtra("name") && getIntent().hasExtra("full_name") && getIntent().hasExtra("price") && getIntent().hasExtra("price_change") && getIntent().hasExtra("icon")){
+            name = getIntent().getStringExtra("name");
+            full_name = getIntent().getStringExtra("full_name");
+            price = getIntent().getDoubleExtra("price",0);
+            price_change = getIntent().getDoubleExtra("price_change",0);
+            icon = getIntent().getIntExtra("icon",1);
         }else{
-            Toast.makeText(this,"No data",Toast.LENGTH_SHORT).show();
+            // In Case something went wrong
+            Toast.makeText(this,"Error: No data",Toast.LENGTH_SHORT).show();
         }
     }
 
-    // setting the data to our elements(image and text views) TODO needs to be changed
+    // setting the data to our elements(image and text views)
     private void setData(){
-        title.setText(data1);
-        subTitle.setText(data2);
-        mainImageView.setImageResource(myImage);
-        // set The Page Title
-        toolbar_Title.setText(data1);
-
+        tv_name.setText(name);
+        tv_full_name.setText(full_name);
+        tv_price.setText(String.valueOf(price));
+        tv_price_change.setText(String.valueOf(price_change));
+        iv_icon.setImageResource(icon);
     }
 
     // The Function called when we Bookmark a stock

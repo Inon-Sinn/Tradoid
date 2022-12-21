@@ -120,7 +120,6 @@ public class Stock_Market extends AppCompatActivity {
                     portfolio_frag.UpdateAdapter(newText);
                 }
                 else{System.out.println("Cant open frag");}
-
                 return false;
             }
         });

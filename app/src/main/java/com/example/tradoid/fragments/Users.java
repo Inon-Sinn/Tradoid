@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.tradoid.Adapters.Stock_Market_RecycleView_Adapter;
-import com.example.tradoid.Adapters.User_List_RecycleView_Adapter;
 import com.example.tradoid.Data_handling.stock_market_view_model;
 import com.example.tradoid.R;
 
@@ -37,7 +36,7 @@ public class Users extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         // Calling the Adapter
-        adapter = new Stock_Market_RecycleView_Adapter(getActivity(),view_model.newData());
+        adapter = new Stock_Market_RecycleView_Adapter(getActivity(),view_model.getData_list());
         recyclerView.setAdapter(adapter);
 
         return view;
@@ -46,6 +45,6 @@ public class Users extends Fragment {
     // Update the Adapter after each search
     public void UpdateAdapter(String newText){
         view_model.filterData(newText);
-        adapter.updateList(view_model.newData());
+        adapter.updateList(view_model.getData_list());
     }
 }

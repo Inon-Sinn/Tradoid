@@ -38,7 +38,7 @@ public class Stock extends Fragment{
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         // Calling the Adapter
-        adapter = new Stock_Market_RecycleView_Adapter(getActivity(),view_model.newData());
+        adapter = new Stock_Market_RecycleView_Adapter(getActivity(),view_model.getData_list());
         recyclerView.setAdapter(adapter);
 
         return view;
@@ -47,6 +47,6 @@ public class Stock extends Fragment{
     // Update the Adapter after each search
     public void UpdateAdapter(String newText){
         view_model.filterData(newText);
-        adapter.updateList(view_model.newData());
+        adapter.updateList(view_model.getData_list());
     }
 }

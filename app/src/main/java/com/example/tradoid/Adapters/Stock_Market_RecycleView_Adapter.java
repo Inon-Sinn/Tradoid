@@ -8,17 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.tradoid.Data_handling.stock_data;
 import com.example.tradoid.R;
 import com.example.tradoid.Stock_Page;
-import com.example.tradoid.Data_handling.example_Item;
-
-import java.util.ArrayList;
 import java.util.List;
 
 // The Adapter defines how the list look and its items
@@ -26,12 +21,12 @@ public class Stock_Market_RecycleView_Adapter extends RecyclerView.Adapter<Stock
 
 
     Context context;
-    List<stock_data> example_list = new ArrayList<>();
+    List<stock_data> item_list;
 
     //Constructor for the adapter
     public Stock_Market_RecycleView_Adapter(Context ct, List<stock_data> newList) {
         context = ct;
-        example_list = newList;
+        item_list = newList;
     }
 
     @NonNull
@@ -46,45 +41,41 @@ public class Stock_Market_RecycleView_Adapter extends RecyclerView.Adapter<Stock
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         // communicates with MyViewHolder
-        holder.tv1.setText(example_list.get(position).getName());
-        holder.tv2.setText(example_list.get(position).getFull_name());
-        holder.tv3.setText(String.valueOf(example_list.get(position).getTotal_Price()));
-        holder.tv4.setText(String.valueOf(example_list.get(position).getPrice_change()));
-        holder.myImage.setImageResource(example_list.get(position).getIcon());
+        holder.tv1.setText(item_list.get(position).getName());
+        holder.tv2.setText(item_list.get(position).getFull_name());
+        holder.tv3.setText(String.valueOf(item_list.get(position).getTotal_Price()));
+        holder.tv4.setText(String.valueOf(item_list.get(position).getPrice_change()));
+        holder.myImage.setImageResource(item_list.get(position).getIcon());
 
         // needed for onClick
-        holder.rowLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, Stock_Page.class);
-                // give it extra data
-                intent.putExtra("data1",example_list.get(position).getName());
-                intent.putExtra("data2",example_list.get(position).getFull_name());
-                intent.putExtra("data3",example_list.get(position).getTotal_Price());
-                intent.putExtra("data4",example_list.get(position).getPrice_change());
-                intent.putExtra("myImage",example_list.get(position).getIcon());
-                // start the Stock Page activity
-                context.startActivity(intent);
+        holder.rowLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(context, Stock_Page.class);
+            // give it extra data
+            intent.putExtra("name", item_list.get(position).getName());
+            intent.putExtra("full_name", item_list.get(position).getFull_name());
+            intent.putExtra("price", item_list.get(position).getTotal_Price());
+            intent.putExtra("price_change", item_list.get(position).getPrice_change());
+            intent.putExtra("icon", item_list.get(position).getIcon());
+            // start the Stock Page activity
+            context.startActivity(intent);
 
-            }
         });
     }
 
     @Override
     public int getItemCount() {
-        return example_list.size();
+        return item_list.size();
     }
 
     @SuppressLint("NotifyDataSetChanged")
     public void updateList(List<stock_data> update){
-        List<stock_data> copy = new ArrayList<>(update);
-        example_list.clear();
-        example_list.addAll(copy);
+        item_list.clear();
+        item_list.addAll(update);
         notifyDataSetChanged();
     }
 
     //Makes the row with layout we want
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView tv1,tv2,tv3,tv4;
         ImageView myImage;

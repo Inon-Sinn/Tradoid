@@ -29,8 +29,6 @@ public class Stock_Market_TabsAdapter extends FragmentStateAdapter {
         }
     }
 
-    
-
     @Override
     public int getItemCount() {
         return 3;

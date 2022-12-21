@@ -1,5 +1,7 @@
 package com.example.tradoid.Data_handling;
 
+import androidx.annotation.NonNull;
+
 import com.example.tradoid.R;
 
 public class stock_data {
@@ -23,6 +25,10 @@ public class stock_data {
         }
     }
 
+    public String toFilterBy(){
+        return getName();
+    }
+
     public String getName() {
         return name;
     }
@@ -43,6 +49,7 @@ public class stock_data {
         return icon;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "stock_data{" +

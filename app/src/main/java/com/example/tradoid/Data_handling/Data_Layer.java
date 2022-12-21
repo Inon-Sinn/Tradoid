@@ -2,13 +2,10 @@ package com.example.tradoid.Data_handling;
 
 
 import androidx.annotation.NonNull;
-
-import com.example.tradoid.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,17 +17,19 @@ import java.util.Map;
 public class Data_Layer {
 
     // Stock Market data
-    public List<example_Item> example_list;
     List<stock_data> stocks;
 
+    // User Data
+    List<user_data> users;
+
     // Firebase
-    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    FirebaseFirestore fire_store = FirebaseFirestore.getInstance();
 
     public Data_Layer(){}
 
     public Data_Layer(String fragment) {
-        example_list = new ArrayList<>();
         stocks = new ArrayList<>();
+        users = new ArrayList<>();
         data_by_frag(fragment);
     }
 
@@ -38,30 +37,30 @@ public class Data_Layer {
         return stocks;
     }
 
-    public List<example_Item> get_User_data(){
-        return example_list;
+    public List<user_data> get_User_data(){
+        return users;
     }
 
     // changes the data by the fragment we are on
-    public void data_by_frag(String frag){
-        frag = frag.toLowerCase(Locale.ROOT);
-        if(frag.equals("stock"))
+    public void data_by_frag(String fragment){
+        fragment = fragment.toLowerCase(Locale.ROOT);
+        if(fragment.equals("stock"))
             get_Stocks();
-        if (frag.equals("watchlist"))
+        if (fragment.equals("watchlist"))
             get_Watchlist();
-        if (frag.equals("portfolio"))
+        if (fragment.equals("portfolio"))
             get_Portfolio();
-        if (frag.equals("users"))
+        if (fragment.equals("users"))
             get_Users();
-        if (frag.equals("banned"))
+        if (fragment.equals("banned"))
             get_Banned();
     }
 
     public void get_Stocks(){
-        String s1[] = {"AAPL","MSFT","AMZN","GOOG","FB","BRK-A","V","JPM","JNJ"};
-        String s2[] = {"Apple, Inc","Microsoft Corp.","Amazon.com, Inc.","Alphabet, Inc.","Facebook, Inc.","Berkshire Hathaway, Inc.","Via, Inc.","JPMorgan Chase & Co.","Johnson & Johnson"};
-        double price[] = {148.12, 299.79, 3450, 2868.12, 376.53, 416996.01,223.03,157.07,164.8};
-        double change[] = {-1.43,2.80,-7.17,-1.18,0.02,-3804.99,-1.60,-2.79,-1.00};
+        String[] s1 = {"AAPL","MSFT","AMZN","GOOG","FB","BRK-A","V","JPM","JNJ"};
+        String[] s2 = {"Apple, Inc","Microsoft Corp.","Amazon.com, Inc.","Alphabet, Inc.","Facebook, Inc.","Berkshire Hathaway, Inc.","Via, Inc.","JPMorgan Chase & Co.","Johnson & Johnson"};
+        double[] price = {148.12, 299.79, 3450, 2868.12, 376.53, 416996.01,223.03,157.07,164.8};
+        double[] change = {-1.43,2.80,-7.17,-1.18,0.02,-3804.99,-1.60,-2.79,-1.00};
         for (int i = 0; i < s1.length; i++) {
             stocks.add(new stock_data(s1[i],s2[i],price[i],change[i]));
         }
@@ -91,7 +90,7 @@ public class Data_Layer {
             put("email", email);
             put("password", password);
         }};
-        firestore.collection("users").add(users).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        fire_store.collection("users").add(users).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 System.out.println("Success");
@@ -104,13 +103,11 @@ public class Data_Layer {
         });
     }
 
-
-
     /*
     We will make that instead of example item we will have 2 classes stock and user
     Data layer will have all stocks and users
 
-            String s1[] = {"Samuel Sinn","Revital","Liel","Tehila","Inon","Ofir","Gilad","Noa","Yair","Mapel"};
+            String s1[] = {"Samuel Sinn","Revital","Liel","Tehila","Inon","Ofir","Gilad","Noa","Yair","Maple"};
         String s2[] = {"1","2","3","4","5","6","7","8","9","10"};
         int images[] = {R.drawable.ic_arrow_back, R.drawable.ic_ban, R.drawable.ic_bookmark,
                 R.drawable.ic_dashboard, R.drawable.ic_identity, R.drawable.ic_kebab_menu,

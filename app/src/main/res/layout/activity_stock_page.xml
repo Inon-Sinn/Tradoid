@@ -43,7 +43,7 @@
                 app:tint="@color/white" />
 
             <TextView
-                android:id="@+id/stock_pg_name"
+                android:id="@+id/stock_page_tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name"
@@ -75,7 +75,7 @@
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:background="@color/gray"
         android:text="Graph"
@@ -85,38 +85,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stock_page_subTitle" />
-
-    <TextView
-        android:id="@+id/stock_page_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="Title"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout3" />
-
-    <TextView
-        android:id="@+id/stock_page_subTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Sub Title"
-        app:layout_constraintBottom_toBottomOf="@+id/stock_page_image"
-        app:layout_constraintStart_toStartOf="@+id/stock_page_title"
-        app:layout_constraintTop_toBottomOf="@+id/stock_page_title" />
-
-    <ImageView
-        android:id="@+id/stock_page_image"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/stock_page_title"
-        app:layout_constraintTop_toTopOf="@+id/stock_page_title"
-        app:srcCompat="@drawable/ic_identity" />
+        app:layout_constraintTop_toBottomOf="@+id/stock_page_tv_price" />
 
     <TextView
         android:id="@+id/textView4"
@@ -209,5 +178,42 @@
             android:inputType="none"
             android:hint="Action"/>
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/stock_page_tv_full_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Full Name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout3" />
+
+    <TextView
+        android:id="@+id/stock_page_tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Price"
+        app:layout_constraintStart_toStartOf="@+id/stock_page_tv_full_name"
+        app:layout_constraintTop_toBottomOf="@+id/stock_page_tv_full_name" />
+
+    <TextView
+        android:id="@+id/stock_page_tv_price_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price Change"
+        app:layout_constraintBottom_toBottomOf="@+id/stock_page_tv_price"
+        app:layout_constraintStart_toEndOf="@+id/stock_page_icon_price_change" />
+
+    <ImageView
+        android:id="@+id/stock_page_icon_price_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/stock_page_tv_price_change"
+        app:layout_constraintStart_toEndOf="@+id/stock_page_tv_price"
+        app:layout_constraintTop_toTopOf="@+id/stock_page_tv_price_change"
+        app:srcCompat="@drawable/ic_green_arrow_upward" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,7 @@
 package com.example.tradoid.Data_handling;
 
+import androidx.annotation.NonNull;
+
 public class user_data {
 
     String name;
@@ -10,6 +12,10 @@ public class user_data {
         this.name = name;
         this.email = email;
         this.total_amount = total_amount;
+    }
+
+    public String toFilterBy(){
+        return getName();
     }
 
     public String getName() {
@@ -24,6 +30,7 @@ public class user_data {
         return total_amount;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "user_data{" +
