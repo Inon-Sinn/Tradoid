@@ -109,18 +109,18 @@ public class Sign_Up extends AppCompatActivity {
                 }else{
                     Toast.makeText(getApplicationContext(),"No Error",Toast.LENGTH_SHORT).show();
                     //check that passwords are equal
-                    if (et_password.getText().toString().equals(et_confirm.getText().toString()))
+                    if (et_password.getText().toString().equals(et_confirm.getText().toString())){
                         Toast.makeText(getApplicationContext(),"Passwords are equal",Toast.LENGTH_SHORT).show();
-
+                        username = et_name.getText().toString();
+                        email = et_email.getText().toString();
+                        password = et_password.getText().toString();
+                        confirm = et_confirm.getText().toString();
+//                        createNewAccount();
+                    }
+                    else{
+                        confirm_layout.setError("Passwords have to be equal"); //TODO change
+                    }
                 }
-
-
-
-//                username = et_name.getText().toString();
-//                email = et_email.getText().toString();
-//                password = et_password.getText().toString();
-//                confirm = et_confirm.getText().toString();
-//                createNewAccount();
             }
         });
 

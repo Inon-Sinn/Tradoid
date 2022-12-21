@@ -53,7 +53,7 @@
         android:layout_marginStart="25dp"
         android:text="Welcome\nBack!"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout12"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout_email_sign_in"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout6" />
 
@@ -62,12 +62,11 @@
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginStart="25dp"
-        android:layout_marginBottom="10dp"
         android:text="USER LOGIN"
-        app:layout_constraintBottom_toTopOf="@+id/tv_from_sign_in_to_sign_up"
         app:layout_constraintEnd_toStartOf="@+id/sign_in_To_user_list"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout6" />
 
     <Button
         android:id="@+id/sign_in_To_user_list"
@@ -86,22 +85,23 @@
         android:text="Sign Up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout11"
+        android:id="@+id/textInputLayout_password_sign_in"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="115dp"
-        app:layout_constraintBottom_toTopOf="@+id/sign_in_To_stock_market"
+        app:layout_constraintBottom_toTopOf="@+id/btn_sign_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_sign_in_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
@@ -110,17 +110,18 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout12"
+        android:id="@+id/textInputLayout_email_sign_in"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout11"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout_password_sign_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_sign_in_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email Address"
@@ -136,6 +137,30 @@
         android:layout_marginTop="10dp"
         android:text="Forgot Password?"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout11" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout_password_sign_in" />
+
+    <Button
+        android:id="@+id/btn_sign_in"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="10dp"
+        android:text="Sign In"
+        app:layout_constraintBottom_toTopOf="@+id/tv_from_sign_in_to_sign_up"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_error_msg_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/red"
+        android:text=""
+        app:layout_constraintBottom_toTopOf="@+id/btn_sign_in"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
