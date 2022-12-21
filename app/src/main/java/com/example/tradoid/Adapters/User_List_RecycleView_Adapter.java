@@ -41,7 +41,7 @@ public class User_List_RecycleView_Adapter extends RecyclerView.Adapter<User_Lis
         // communicates with MyViewHolder
         holder.tv1.setText(item_list.get(position).getName());
         holder.tv2.setText(item_list.get(position).getEmail());
-        holder.tv3.setText(String.valueOf(item_list.get(position).getTotal_amount()));
+        holder.tv3.setText(String.valueOf(item_list.get(position).getTotal_worth()));
 
         // needed for onClick
         holder.rowLayout.setOnClickListener(v -> {

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.tradoid.Adapters.Stock_Market_RecycleView_Adapter;
 import com.example.tradoid.Data_handling.stock_view_model;
+import com.example.tradoid.Data_handling.user_data;
 import com.example.tradoid.R;
 
 // A Fragment of the Portfolio tab in the Stock Market Activity
@@ -31,7 +32,7 @@ public class Portfolio extends Fragment {
 
         // Connect to View Model
         view_model = new ViewModelProvider(this).get(stock_view_model.class);
-        view_model.setFragment("portfolio");
+        view_model.setUser(new user_data("Temp","Temp",0),"portfolio");
 
         // Creating the Recycle View - the list
         recyclerView = view.findViewById(R.id.recyclerView_portfolio);

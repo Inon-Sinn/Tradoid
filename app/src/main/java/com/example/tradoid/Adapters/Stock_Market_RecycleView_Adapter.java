@@ -55,6 +55,8 @@ public class Stock_Market_RecycleView_Adapter extends RecyclerView.Adapter<Stock
             intent.putExtra("price", item_list.get(position).getTotal_Price());
             intent.putExtra("price_change", item_list.get(position).getPrice_change());
             intent.putExtra("icon", item_list.get(position).getIcon());
+            // give it the screen it came from
+            intent.putExtra("former Screen","Stock_Market");
             // start the Stock Page activity
             context.startActivity(intent);
 

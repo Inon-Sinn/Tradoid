@@ -2,16 +2,19 @@ package com.example.tradoid.Data_handling;
 
 import androidx.annotation.NonNull;
 
+import java.util.List;
+
 public class user_data {
 
     String name;
     String email;
-    double total_amount;
+    double total_worth;
+    List<double[]> stock_amount;
 
     public user_data(String name, String email, double total_amount) {
         this.name = name;
         this.email = email;
-        this.total_amount = total_amount;
+        this.total_worth = total_amount;
     }
 
     public String toFilterBy(){
@@ -26,8 +29,16 @@ public class user_data {
         return email;
     }
 
-    public double getTotal_amount() {
-        return total_amount;
+    public double getTotal_worth() {
+        return total_worth;
+    }
+
+    public List<double[]> getStock_amount() {
+        return stock_amount;
+    }
+
+    public void setStock_amount(List<double[]> stock_amount) {
+        this.stock_amount = stock_amount;
     }
 
     @NonNull
@@ -36,7 +47,9 @@ public class user_data {
         return "user_data{" +
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", total_amount=" + total_amount +
+                ", total_amount=" + total_worth +
                 '}';
     }
+
+
 }

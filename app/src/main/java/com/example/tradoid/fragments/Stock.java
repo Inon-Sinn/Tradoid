@@ -31,7 +31,7 @@ public class Stock extends Fragment{
 
         // Connect to View Model
         view_model = new ViewModelProvider(this).get(stock_view_model.class);
-        view_model.setFragment("stock");
+        view_model.all_stocks("stock");
 
         // Creating the Recycle View - the list
         recyclerView = view.findViewById(R.id.recyclerView_stock);

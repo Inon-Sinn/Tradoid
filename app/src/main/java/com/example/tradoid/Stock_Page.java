@@ -26,9 +26,10 @@ public class Stock_Page extends AppCompatActivity {
     ImageView iv_icon;
 
     // The Dynamic values
-    String name, full_name;
+    String name, full_name, formerScreen;
     double price, price_change;
     int icon;
+
 
     // Buy/Sell Action
     String[] actions = {"Buy","Sell"};
@@ -41,13 +42,16 @@ public class Stock_Page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_page);
 
+        // Get the data form the row it was clicked on
+        getData();
+
         // Creating a custom Toolbar
         Toolbar stock_page_toolbar = findViewById(R.id.toolbar_stock_page);
         setSupportActionBar(stock_page_toolbar);
 
         // Implementing the Back arrow in the Toolbar
         ImageView back_arrow = findViewById(R.id.stock_pg_To_stock_market);
-        back_arrow.setOnClickListener(v -> sendToActivity(Stock_Market.class));
+        back_arrow.setOnClickListener(v -> sendToActivity(regocnizeScreen()));
 
         // Implementing the Bookmark in the Toolbar
         ImageView bookmark = findViewById(R.id.bookmark_stock_pg);
@@ -62,8 +66,7 @@ public class Stock_Page extends AppCompatActivity {
         // Connecting to the ImageView With Dynamic Values
         iv_icon = findViewById(R.id.stock_page_icon_price_change);
 
-        // Get the data form the row it was clicked on
-        getData();
+        // set The dynamic views
         setData();
 
         // Connecting the Buy/Sell button
@@ -162,10 +165,14 @@ public class Stock_Page extends AppCompatActivity {
             price = getIntent().getDoubleExtra("price",0);
             price_change = getIntent().getDoubleExtra("price_change",0);
             icon = getIntent().getIntExtra("icon",1);
+
         }else{
             // In Case something went wrong
             Toast.makeText(this,"Error: No data",Toast.LENGTH_SHORT).show();
         }
+
+        if (getIntent().hasExtra("former Screen"))
+            formerScreen = getIntent().getStringExtra("former Screen");
     }
 
     // setting the data to our elements(image and text views)
@@ -184,6 +191,14 @@ public class Stock_Page extends AppCompatActivity {
 
     public void create_transaction(){
         Toast.makeText(getApplicationContext(),"Still not implemented",Toast.LENGTH_SHORT).show();
+    }
+
+    public Class regocnizeScreen(){
+        if (formerScreen.equals("Stock_Market"))
+            return Stock_Market.class;
+        if (formerScreen.equals("Status_Page"))
+            return Status_Page.class;
+        return null;
     }
 
     // Sends to other screens

@@ -10,12 +10,21 @@ import java.util.List;
 
 public class stock_view_model extends ViewModel implements Filterable {
 
+    user_data user;
     Data_Layer data;
     List<stock_data> data_list;
     List<stock_data> full_data_list;
 
-    public void setFragment(String fragment) {
+    // when we want list that
+    public void all_stocks(String fragment) {
         this.data = new Data_Layer(fragment);
+        this.data_list = data.get_Stocks_data();
+        this.full_data_list = new ArrayList<>(data_list);
+    }
+
+    public void setUser(user_data user, String fragment){
+        this.user = user;
+        this.data = new Data_Layer(user, fragment);
         this.data_list = data.get_Stocks_data();
         this.full_data_list = new ArrayList<>(data_list);
     }

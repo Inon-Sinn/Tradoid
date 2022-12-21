@@ -25,12 +25,22 @@ public class Data_Layer {
     // Firebase
     FirebaseFirestore fire_store = FirebaseFirestore.getInstance();
 
-    public Data_Layer(){}
+    public Data_Layer(){
+        stocks = new ArrayList<>();
+        users = new ArrayList<>();
+    }
 
+    // in case the user does not matter
     public Data_Layer(String fragment) {
         stocks = new ArrayList<>();
         users = new ArrayList<>();
-        data_by_frag(fragment);
+        data_for_all(fragment);
+    }
+    // In case the user does matter
+    public Data_Layer(user_data user, String fragment) {
+        stocks = new ArrayList<>();
+        users = new ArrayList<>();
+        data_for_user(user, fragment);
     }
 
     public List<stock_data> get_Stocks_data(){
@@ -42,18 +52,29 @@ public class Data_Layer {
     }
 
     // changes the data by the fragment we are on
-    public void data_by_frag(String fragment){
+    public void data_for_all(String fragment){
         fragment = fragment.toLowerCase(Locale.ROOT);
         if(fragment.equals("stock"))
             get_Stocks();
-        if (fragment.equals("watchlist"))
-            get_Watchlist();
-        if (fragment.equals("portfolio"))
-            get_Portfolio();
         if (fragment.equals("users"))
             get_Users();
         if (fragment.equals("banned"))
             get_Banned();
+    }
+
+    public void data_for_user(user_data user, String fragment){
+        if (user == null){
+            System.out.println("User Can't be null");
+        }
+        if (fragment.equals("watchlist"))
+            get_Watchlist(user);
+        if (fragment.equals("portfolio"))
+            get_Portfolio(user);
+        if (fragment.equals("status page"))
+            get_Portfolio(user);
+        if (fragment.equals("user status"))
+            get_Portfolio(user);
+
     }
 
     public void get_Stocks(){
@@ -66,14 +87,20 @@ public class Data_Layer {
         }
     }
 
-    public void get_Watchlist(){
+    public void get_Watchlist(user_data user){
         get_Stocks();
         stocks.subList(0, 5).clear();
     }
 
-    public void get_Portfolio(){
+    public void get_Portfolio(user_data user){
         get_Stocks();
         stocks.subList(stocks.size()-5, stocks.size()-1).clear();
+        //should add the amount in the user_data
+        List<double[]> amount = new ArrayList<>();
+        for (int i = 0; i < stocks.size(); i++) {
+            amount.add(new double[]{10,10});
+        }
+        user.setStock_amount(amount);
     }
 
     public void get_Users(){
