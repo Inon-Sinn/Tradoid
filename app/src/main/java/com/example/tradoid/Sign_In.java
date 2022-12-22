@@ -21,10 +21,19 @@ import android.widget.Toast;
 
 import com.example.tradoid.Business_Logic.emailTextWatcher;
 import com.example.tradoid.Business_Logic.passwordTextWatcher;
+import com.example.tradoid.firebase.model.FirebaseDBUser;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class Sign_In extends AppCompatActivity {
+
+    public DatabaseReference ref = new FirebaseDBUser().getRef();
 
     public String email, password;
 
@@ -80,7 +89,8 @@ public class Sign_In extends AppCompatActivity {
         ClickableSpan cs_forgot_pass = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
-                Toast.makeText(getApplicationContext(),"Not Implemented",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(),"Not Implemented",Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -114,29 +124,65 @@ public class Sign_In extends AppCompatActivity {
         btn_sign_up.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // Check if all fields are filled
-                if(et_email.getText().length() == 0)
-                    email_layout.setError("Field Required");
-                if(et_password.getText().length() == 0)
-                    password_layout.setError("Field Required");
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        // Check if all fields are filled
+                        if(et_email.getText().length() == 0)
+                            email_layout.setError("Field Required");
+                        if(et_password.getText().length() == 0)
+                            password_layout.setError("Field Required");
 
-                // Check if all fields have no error TODO change to setting a tv
-                if(email_layout.getError()!=null ||password_layout.getError()!=null){
-                    Toast.makeText(getApplicationContext(),"Invalid",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getApplicationContext(),"No Error",Toast.LENGTH_SHORT).show();
-                    //check that passwords are equal
-                    email = et_email.getText().toString();
-                    password = et_password.getText().toString();
-                    int signIn = sign_into_Account();
-                    System.out.println(signIn);
-                    if(signIn == 0){
-                        errortv.setText("Incorrect email or password");
+                        // Check if all fields have no error TODO change to setting a tv
+                        if(email_layout.getError()!=null ||password_layout.getError()!=null){
+                            Toast.makeText(getApplicationContext(),"Invalid",Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(getApplicationContext(),"No Error",Toast.LENGTH_SHORT).show();
+                            email = et_email.getText().toString();
+                            password = et_password.getText().toString();
+
+                            String userType = "";
+                            for (DataSnapshot user: snapshot.child("users").getChildren()){
+                                if (Objects.requireNonNull(user.child("email").getValue()).toString().equals(email) &&
+                                Objects.requireNonNull(user.child("password").getValue()).toString().equals(password)){
+                                    userType = "user";
+                                }
+                            }
+                            for (DataSnapshot admin: snapshot.child("admins").getChildren()){
+                                if (Objects.requireNonNull(admin.child("email").getValue()).toString().equals(email) &&
+                                        Objects.requireNonNull(admin.child("password").getValue()).toString().equals(password)) {
+                                    userType = "admin";
+                                }
+                            }
+
+                            if (userType.equals("user")){
+                                //TODO user log in
+                                System.out.println("FOUND USER");
+                            }
+                            else if (userType.equals("admin")){
+                                //TODO admin log in
+                                System.out.println("FOUND ADMIN");
+                            }
+                            else{
+                                //TODO user not found
+                                System.out.println("DIDN'T FIND");
+                            }
+
+                            int signIn = sign_into_Account();
+                            if(signIn == 0){
+                                errortv.setText("Incorrect email or password");
+                            }
+                            if(signIn != 0){
+                                errortv.setText("");
+                            }
+                        }
                     }
-                    if(signIn != 0){
-                        errortv.setText("");
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // keep empty for now
                     }
-                }
+                });
             }
         });
     }
