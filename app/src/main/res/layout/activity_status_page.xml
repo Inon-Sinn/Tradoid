@@ -98,5 +98,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
 
+    <TextView
+        android:id="@+id/status_page_tv_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$ Amount"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/donut_char_status_page"
+        app:layout_constraintEnd_toEndOf="@+id/donut_char_status_page"
+        app:layout_constraintStart_toStartOf="@+id/donut_char_status_page"
+        app:layout_constraintTop_toTopOf="@+id/donut_char_status_page" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,10 +37,13 @@ public class Stock extends Fragment{
         // Creating the Recycle View - the list
         recyclerView = view.findViewById(R.id.recyclerView_stock);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        // https://stackoverflow.com/questions/31242812/how-can-a-divider-line-be-added-in-an-android-recyclerview
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
         // Calling the Adapter
         adapter = new Stock_Market_RecycleView_Adapter(getActivity(),view_model.getData_list());
         recyclerView.setAdapter(adapter);
+
 
         return view;
     }
