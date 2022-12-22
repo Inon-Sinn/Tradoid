@@ -72,22 +72,6 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
-        android:background="@color/gray"
-        android:text="Graph"
-        android:textAlignment="center"
-        android:textSize="50sp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stock_page_tv_price" />
-
-    <TextView
         android:id="@+id/textView4"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -215,5 +199,16 @@
         app:layout_constraintStart_toEndOf="@+id/stock_page_tv_price"
         app:layout_constraintTop_toTopOf="@+id/stock_page_tv_price_change"
         app:srcCompat="@drawable/ic_green_arrow_upward" />
+
+    <com.github.mikephil.charting.charts.CandleStickChart
+        android:id="@+id/candle_stick_chart_stock_page"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stock_page_tv_price" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

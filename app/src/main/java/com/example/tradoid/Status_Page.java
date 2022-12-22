@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.tradoid.Adapters.Stock_Market_RecycleView_Adapter;
 import com.example.tradoid.Adapters.status_RecyleView_Adapter;
 import com.example.tradoid.Data_handling.Data_Layer;
 import com.example.tradoid.Data_handling.stock_data;
@@ -21,7 +20,6 @@ import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.Data_handling.user_data;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import app.futured.donut.DonutProgressView;
@@ -57,7 +55,7 @@ public class Status_Page extends AppCompatActivity {
         int[] colors = new int[data.size()];
         String section_name;
         for (int i = 0; i < section_num; i++) {
-            float hue = (360/(section_num))*i;
+            float hue = (90/(section_num))*i + 180; //for full color range (360/num)*pos + 0
             colors[i] = Color.HSVToColor(new float[]{hue,(float)0.9,(float) 1});
             section_name = "Section " + i;
             sections.add(new DonutSection(section_name, colors[i], (float) stock_count.get(i)[0]));
@@ -77,22 +75,22 @@ public class Status_Page extends AppCompatActivity {
     // Creates the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.user_menu,menu);
+        getMenuInflater().inflate(R.menu.user_general_menu,menu);
         return true;
     }
 
     // Makes the menu items clickable
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menu_stock_market) {
+        if (item.getItemId() == R.id.menu_general_stock_market) {
             sendToActivity(Stock_Market.class);
             return true;
         }
-        else if (item.getItemId() == R.id.menu_status_pg) {
+        else if (item.getItemId() == R.id.menu_general_status_pg) {
             //sendToActivity(Status_Page.class); Already on this page
             return true;
         }
-        else if (item.getItemId() == R.id.menu_user_logout) {
+        else if (item.getItemId() == R.id.menu_general_user_logout) {
             sendToActivity(login.class);
             return true;
         }

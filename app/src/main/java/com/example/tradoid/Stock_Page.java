@@ -5,6 +5,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Camera;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,9 +18,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.CandleStickChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.CandleData;
+import com.github.mikephil.charting.data.CandleDataSet;
+import com.github.mikephil.charting.data.CandleEntry;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.checkerframework.checker.units.qual.C;
+
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class Stock_Page extends AppCompatActivity {
 
@@ -154,6 +167,65 @@ public class Stock_Page extends AppCompatActivity {
             }
         });
 
+
+        // -----------------------------In Testing ----------------------------------------------------------------------------------
+        // https://medium.com/@neerajmoudgil/candlestick-chart-using-philjay-mpandroidchart-library-how-to-bf657ddf3a28
+
+        // Candle chart
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        CandleStickChart candleStickChart = findViewById(R.id.candle_stick_chart_stock_page);
+        candleStickChart.setHighlightPerDragEnabled(true);
+
+        // Customizing Candle chart
+        candleStickChart.setDrawBorders(true);
+        candleStickChart.setBorderColor(getResources().getColor(R.color.gray));
+
+        YAxis yAxis = candleStickChart.getAxisLeft();
+        YAxis rightAxis = candleStickChart.getAxisRight();
+        yAxis.setDrawGridLines(false);
+        rightAxis.setDrawGridLines(false);
+        candleStickChart.requestDisallowInterceptTouchEvent(true);
+
+        XAxis xAxis = candleStickChart.getXAxis();
+
+        xAxis.setDrawGridLines(false);
+        xAxis.setDrawLabels(false);
+        rightAxis.setTextColor(Color.WHITE);
+        yAxis.setDrawLabels(false);
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setAvoidFirstLastClipping(true);
+
+        Legend l = candleStickChart.getLegend();
+        l.setEnabled(false);
+
+        // Creating Data points
+        ArrayList<CandleEntry> yvalCandleStick = new ArrayList<CandleEntry>();
+        yvalCandleStick.add(new CandleEntry((float) 0, (float) 225.0, (float) 219.84, (float) 224.94, (float) 221.07));
+        yvalCandleStick.add(new CandleEntry((float)1, (float) 228.35, (float)222.57, (float)223.52, (float)226.41));
+        yvalCandleStick.add(new CandleEntry((float)2,(float)226.84,(float)222.52,(float)225.75,(float)223.84));
+        yvalCandleStick.add(new CandleEntry((float)3, (float)222.95, (float)217.27, (float)222.15, (float)217.88));
+
+        // Creating and getting dataSet
+        CandleDataSet set1 = new CandleDataSet(yvalCandleStick,"DataSet1");
+        set1.setColor(Color.rgb(80, 80, 80));
+        set1.setShadowColor(getResources().getColor(R.color.gray));
+        set1.setShadowWidth(0.8f);
+        set1.setDecreasingColor(getResources().getColor(R.color.red));
+        set1.setDecreasingPaintStyle(Paint.Style.FILL);
+        set1.setIncreasingColor(getResources().getColor(R.color.money_green));
+        set1.setIncreasingPaintStyle(Paint.Style.FILL);
+        set1.setNeutralColor(Color.LTGRAY);
+        set1.setDrawValues(false);
+
+        // create a data object with the datasets
+        CandleData data = new CandleData(set1);
+
+        // set data
+        candleStickChart.setData(data);
+        candleStickChart.invalidate();
+
+        //---------------------------------------------------------------------------------------------------------------------------------------
     }
 
     // getting the data from the intent

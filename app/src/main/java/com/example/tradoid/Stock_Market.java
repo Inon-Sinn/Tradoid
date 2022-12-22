@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.example.tradoid.fragments.Portfolio;
 import com.example.tradoid.fragments.Stock;
@@ -90,7 +89,7 @@ public class Stock_Market extends AppCompatActivity {
     // Creates the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.user_menu,menu);
+        getMenuInflater().inflate(R.menu.user_list_menu,menu);
 
         // Reference to the menu item for search
         MenuItem searchItem = menu.findItem(R.id.menu_user_search);

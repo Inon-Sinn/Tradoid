@@ -86,7 +86,7 @@ public class User_List extends AppCompatActivity {
     // Creates the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.admin_menu,menu);
+        getMenuInflater().inflate(R.menu.admin_list_menu,menu);
 
         // Reference to the menu item for search
         MenuItem searchItem = menu.findItem(R.id.menu_admin_search);

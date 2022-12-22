@@ -24,22 +24,22 @@ public class Dashboard extends AppCompatActivity {
     // Creates the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.admin_menu,menu);
+        getMenuInflater().inflate(R.menu.admin_general_menu,menu);
         return true;
     }
 
     // Makes the menu items clickable
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menu_user_list) {
+        if (item.getItemId() == R.id.menu_general_user_list) {
             sendToActivity(User_List.class);
             return true;
         }
-        else if (item.getItemId() == R.id.menu_dashboard) {
+        else if (item.getItemId() == R.id.menu_general_dashboard) {
             //sendToActivity(Dashboard.class); Already on this page
             return true;
         }
-        else if (item.getItemId() == R.id.menu_admin_logout) {
+        else if (item.getItemId() == R.id.menu_general_admin_logout) {
             sendToActivity(login.class);
             return true;
         }
