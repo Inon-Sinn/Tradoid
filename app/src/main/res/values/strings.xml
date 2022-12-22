@@ -3,12 +3,13 @@
 
     // Menu Item names
     <string name="stock_market">Stock Market</string>
-    <string name="status_page">Status</string>
+    <string name="status_page">Assets</string>
     <string name="user_list">User List</string>
     <string name="dashboard">Dashboard</string>
     <string name="logout">Logout</string>
     <string name="settings">Settings</string>
     <string name="profile">Profile</string>
+    <string name="search">Search</string>
 
     <!-- TODO remove this later-->
     <string-array name="my_family">

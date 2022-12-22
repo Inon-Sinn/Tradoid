@@ -5,7 +5,7 @@
     <item
         app:showAsAction="ifRoom|collapseActionView"
         android:icon="@drawable/ic_white_menu"
-        android:iconTint="@color/white"
+        app:iconTint="@color/white"
         android:title="">
 
         <menu>
@@ -17,6 +17,16 @@
 
             <item android:id="@+id/menu_general_status_pg"
                 android:title="@string/status_page"
+                android:icon="@drawable/ic_wallet"
+                app:showAsAction="never"/>
+
+            <item android:id="@+id/menu_general_user_settings"
+                android:title="@string/settings"
+                android:icon="@drawable/ic_settings"
+                app:showAsAction="never"/>
+
+            <item android:id="@+id/menu_general_user_profile"
+                android:title="@string/profile"
                 android:icon="@drawable/ic_identity"
                 app:showAsAction="never"/>
 

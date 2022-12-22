@@ -11,6 +11,9 @@ import android.view.MenuItem;
 
 public class Dashboard extends AppCompatActivity {
 
+    //Card View with round edges
+    //https://www.youtube.com/watch?v=kGs7e4Wb67I&t=23s&ab_channel=IJApps
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

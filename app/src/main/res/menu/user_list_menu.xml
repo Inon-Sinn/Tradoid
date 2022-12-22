@@ -7,15 +7,15 @@
         android:id="@+id/menu_user_search"
         app:showAsAction="ifRoom|collapseActionView"
         android:icon="@drawable/ic_white_search"
-        android:iconTint="@color/white"
-        android:title="Search"
+        app:iconTint="@color/white"
+        android:title="@string/search"
         app:actionViewClass="android.widget.SearchView" />
 
 
     <item
         app:showAsAction="ifRoom|collapseActionView"
         android:icon="@drawable/ic_white_menu"
-        android:iconTint="@color/white"
+        app:iconTint="@color/white"
         android:title="">
 
         <menu>
@@ -27,17 +27,22 @@
 
             <item android:id="@+id/menu_status_pg"
                 android:title="@string/status_page"
+                android:icon="@drawable/ic_wallet"
+                app:showAsAction="never"/>
+
+            <item android:id="@+id/menu_user_settings"
+                android:title="@string/settings"
+                android:icon="@drawable/ic_settings"
+                app:showAsAction="never"/>
+
+            <item android:id="@+id/menu_user_profile"
+                android:title="@string/profile"
                 android:icon="@drawable/ic_identity"
                 app:showAsAction="never"/>
 
             <item android:id="@+id/menu_user_logout"
                 android:title="@string/logout"
                 android:icon="@drawable/ic_logout"
-                app:showAsAction="never"/>
-
-            <item android:id="@+id/menu_user_settings"
-                android:title="@string/settings"
-                android:icon="@drawable/ic_settings"
                 app:showAsAction="never"/>
 
         </menu>
