@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 
 // This class implements all calls to the Database
@@ -94,8 +95,11 @@ public class Data_Layer {
         stocks.subList(stocks.size()-5, stocks.size()-1).clear();
         //should add the amount in the user_data
         List<double[]> amount = new ArrayList<>();
+        Random rand = new Random();
+        int usd_bound = 100000,randUsd;
         for (int i = 0; i < stocks.size(); i++) {
-            amount.add(new double[]{10,10});
+            randUsd = rand.nextInt(usd_bound);
+            amount.add(new double[]{randUsd,randUsd/stocks.get(i).getTotal_Price()});
         }
         user.setStock_amount(amount);
     }

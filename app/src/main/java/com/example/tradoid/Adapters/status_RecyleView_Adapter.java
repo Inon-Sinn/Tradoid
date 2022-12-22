@@ -17,6 +17,7 @@ import com.example.tradoid.Data_handling.stock_data;
 import com.example.tradoid.R;
 import com.example.tradoid.Stock_Page;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class status_RecyleView_Adapter extends RecyclerView.Adapter<status_RecyleView_Adapter.MyViewHolder>{
@@ -25,14 +26,16 @@ public class status_RecyleView_Adapter extends RecyclerView.Adapter<status_Recyl
     Context context;
     List<stock_data> item_list;
     List<double[]> amount_list;
+    int[] colors;
     boolean admin;
 
     //Constructor for the adapter
-    public status_RecyleView_Adapter(Context ct, List<stock_data> newList,List<double[]> amount_list, boolean admin) {
+    public status_RecyleView_Adapter(Context ct, List<stock_data> newList,List<double[]> amount_list,int[] colors, boolean admin) {
         context = ct;
         item_list = newList;
         this.amount_list = amount_list;
         this.admin = admin;
+        this.colors = colors;
     }
 
     @NonNull
@@ -47,11 +50,21 @@ public class status_RecyleView_Adapter extends RecyclerView.Adapter<status_Recyl
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull status_RecyleView_Adapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        // Limiting the Decimal length
+        DecimalFormat numberFormat = new DecimalFormat("#.0");
+
         // communicates with MyViewHolder
         holder.tv1.setText(item_list.get(position).getName());
         holder.tv2.setText(item_list.get(position).getFull_name());
-        holder.tv3.setText("$" + String.valueOf(item_list.get(position).getTotal_Price()));
-        holder.tv4.setText("Stocks: " + String.valueOf(item_list.get(position).getPrice_change()));
+        holder.tv3.setText("$" + numberFormat.format(amount_list.get(position)[0]));
+        holder.tv4.setText("Stocks: " + numberFormat.format(amount_list.get(position)[1]));
+//        holder.tv3.setText("$" + String.valueOf(amount_list.get(position)[0]));
+//        holder.tv4.setText("Stocks: " + String.valueOf(amount_list.get(position)[1]));
+
+        //add colors
+        holder.dot.setColorFilter(colors[position]);
+//        holder.tv3.setTextColor(colors[position]);
+//        holder.tv4.setTextColor(colors[position]);
 
         // needed for onClick
         if (!admin) {
@@ -80,6 +93,7 @@ public class status_RecyleView_Adapter extends RecyclerView.Adapter<status_Recyl
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView tv1,tv2,tv3,tv4;
+        ImageView dot;
         ConstraintLayout rowLayout;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -88,6 +102,7 @@ public class status_RecyleView_Adapter extends RecyclerView.Adapter<status_Recyl
             tv2 = itemView.findViewById(R.id.status_row_tv_full_name);
             tv3 = itemView.findViewById(R.id.status_row_tv_usd);
             tv4 = itemView.findViewById(R.id.status_row_tv_stocks);
+            dot = itemView.findViewById(R.id.status_row_color_dot);
             // needed for onClick
             rowLayout = itemView.findViewById(R.id.status_row_layout);
         }

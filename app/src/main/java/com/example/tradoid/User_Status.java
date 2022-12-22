@@ -35,6 +35,8 @@ public class User_Status extends AppCompatActivity {
         // Get the data form the row it was clicked on
         getData();
         setData();
+
+
     }
 
     // getting the data from the intent

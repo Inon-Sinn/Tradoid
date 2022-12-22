@@ -22,11 +22,11 @@
                 android:id="@+id/status_row_tv_stocks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginBottom="10dp"
                 android:text="Stocks: "
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintStart_toEndOf="@+id/status_row_color_dot" />
 
             <TextView
                 android:id="@+id/status_row_tv_name"
@@ -59,6 +59,16 @@
                 app:layout_constraintBottom_toTopOf="@+id/status_row_tv_stocks"
                 app:layout_constraintStart_toStartOf="@+id/status_row_tv_stocks"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/status_row_color_dot"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="100dp"
+                app:layout_constraintBottom_toBottomOf="@+id/status_row_tv_stocks"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/status_row_tv_usd"
+                app:srcCompat="@drawable/ic_circle" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
