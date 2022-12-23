@@ -6,6 +6,13 @@
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
 
+    // Sign In Class
+    <string name="forgot_pass">Forgot your password?</string>
+    <string name="dont_have_an_account">Don\'t have an Account?</string>
+
+    // Sign Up Class
+    <string name="have_an_account">Aldready have an Account?</string>
+
     // Menu Item names
     <string name="stock_market">Stock Market</string>
     <string name="status_page">Assets</string>

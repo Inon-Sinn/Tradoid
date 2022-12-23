@@ -9,12 +9,19 @@
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
+
+
+        <!-- _____My Own Creation_____ -->
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/black</item>
-        <!-- Customize your theme here. -->
-
         <!-- Card Background Color -->
         <item name="cardBackgroundColor">@color/card_background_dark</item>
+    </style>
+
+    <!-- _____My Own Creation_____ -->
+    <style name="clickable_tv_color" parent="Theme.Tradoid">
+        <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
 </resources>

@@ -47,7 +47,6 @@ public class Sign_In extends AppCompatActivity {
         TextView tv_back_arrow = findViewById(R.id.sign_in_back_arrow);
         tv_back_arrow.setOnClickListener(v -> sendToActivity(login.class));
 
-
         // Connection to Stock Market TODO only temporary remove later
         Button to_Stock_Market_btn = findViewById(R.id.sign_in_To_stock_market);
         to_Stock_Market_btn.setOnClickListener(v -> sendToActivity(Stock_Market.class));
@@ -60,51 +59,13 @@ public class Sign_In extends AppCompatActivity {
         Button to_Ban_msg_btn = findViewById(R.id.sign_in_To_ban_msg);
         to_Ban_msg_btn.setOnClickListener(v -> sendToActivity(Ban_msg.class));
 
-        // Connecting to the Text View
-        TextView tv_sign_in = findViewById(R.id.tv_from_sign_in_to_sign_up);
+        // Making Text View "Sign Up" Clickable
+        TextView tv_sign_up = findViewById(R.id.tv_from_sign_in_to_sign_up);
+        tv_sign_up.setOnClickListener(v -> sendToActivity(Sign_Up.class));
+
+        // Making the Text View "Forgot your password?" Clickable
         TextView tv_forgot_pass = findViewById(R.id.tv_forgot_pass_sign_in);
-
-        // Making the Text View "Sign In" Clickable
-        String sing_in_text = "Sign Up";
-        SpannableString ss_sign_in = new SpannableString(sing_in_text);
-        ClickableSpan cs_sign_in = new ClickableSpan() {
-            @Override
-            public void onClick(@NonNull View widget) {
-                sendToActivity(Sign_Up.class);
-            }
-
-            @Override
-            public void updateDrawState(@NonNull TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setColor(Color.BLUE);
-            }
-        };
-        BackgroundColorSpan bcs = new BackgroundColorSpan(Color.WHITE);
-        ss_sign_in.setSpan(cs_sign_in,0,sing_in_text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        ss_sign_in.setSpan(bcs,0,sing_in_text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); // Bacground stays white when clicked
-        tv_sign_in.setText(ss_sign_in);
-        tv_sign_in.setMovementMethod(LinkMovementMethod.getInstance());
-
-        // Making the Text View "Forgotten Password?" Clickable
-        String forgot_text = "Forgot Password?";
-        SpannableString ss_forgot_pass = new SpannableString(forgot_text);
-        ClickableSpan cs_forgot_pass = new ClickableSpan() {
-            @Override
-            public void onClick(@NonNull View widget) {
-//                Toast.makeText(getApplicationContext(),"Not Implemented",Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void updateDrawState(@NonNull TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setColor(Color.BLUE);
-            }
-        };
-        ss_forgot_pass.setSpan(cs_forgot_pass,0,forgot_text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        ss_forgot_pass.setSpan(bcs,0,forgot_text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); // Bacground stays white when clicked
-        tv_forgot_pass.setText(ss_forgot_pass);
-        tv_forgot_pass.setMovementMethod(LinkMovementMethod.getInstance());
+        tv_forgot_pass.setOnClickListener(v -> Toast.makeText(getApplicationContext(),"Not Implemented",Toast.LENGTH_SHORT).show());
 
         // TextInputLayouts
         TextInputLayout email_layout = findViewById(R.id.textInputLayout_email_sign_in);

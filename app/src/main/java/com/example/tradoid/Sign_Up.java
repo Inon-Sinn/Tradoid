@@ -49,29 +49,9 @@ public class Sign_Up extends AppCompatActivity {
         TextView tv_back_arrow = findViewById(R.id.sign_up_back_arrow);
         tv_back_arrow.setOnClickListener(v -> sendToActivity(login.class));
 
-        // Connecting to the Text View "sign in"
+        // Making Text View "Sign Up" Clickable
         TextView tv_sign_in = findViewById(R.id.tv_from_sign_up_to_sign_in);
-
-        // Making the Text View Clickable -> sends to Sign In
-        String text = "Sign In";
-        SpannableString ss = new SpannableString(text);
-        ClickableSpan clickableSpan = new ClickableSpan() {
-            @Override
-            public void onClick(@NonNull View widget) {
-                sendToActivity(Sign_In.class);
-            }
-
-            @Override
-            public void updateDrawState(@NonNull TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setColor(Color.BLUE);
-            }
-        };
-        BackgroundColorSpan bcs = new BackgroundColorSpan(Color.WHITE);
-        ss.setSpan(clickableSpan,0,text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        ss.setSpan(bcs,0,text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); // Bacground stays white when clicked
-        tv_sign_in.setText(ss);
-        tv_sign_in.setMovementMethod(LinkMovementMethod.getInstance());
+        tv_sign_in.setOnClickListener(v -> sendToActivity(Sign_In.class));
 
         // TextInputLayouts
         TextInputLayout name_layout = findViewById(R.id.textInputLayout_name_sign_up);
