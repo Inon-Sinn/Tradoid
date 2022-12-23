@@ -45,13 +45,9 @@ public class Sign_Up extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        // Creating a custom Toolbar
-        Toolbar sign_in_toolbar = findViewById(R.id.toolbar_sign_up);
-        setSupportActionBar(sign_in_toolbar);
-
-        // Implementing the Back arrow in the Toolbar
-        ImageView back_arrow = findViewById(R.id.sign_up_To_login);
-        back_arrow.setOnClickListener(v -> sendToActivity(login.class));
+        // Implementing the Back arrow
+        TextView tv_back_arrow = findViewById(R.id.sign_up_back_arrow);
+        tv_back_arrow.setOnClickListener(v -> sendToActivity(login.class));
 
         // Connecting to the Text View "sign in"
         TextView tv_sign_in = findViewById(R.id.tv_from_sign_up_to_sign_in);

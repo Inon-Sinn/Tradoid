@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Tradoid</string>
 
+    // Classes
+    <string name="login">Login</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+
     // Menu Item names
     <string name="stock_market">Stock Market</string>
     <string name="status_page">Assets</string>

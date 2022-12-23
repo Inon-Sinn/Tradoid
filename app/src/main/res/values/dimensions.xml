@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- The Back arrow -->
+    <dimen name="back_arrow_x">25dp</dimen>
+    <dimen name="back_arrow_y">25dp</dimen>
+    <dimen name="back_arrow_text_size">25sp</dimen>
+
+    <!-- Login CardView -->
+    <dimen name="card_corner_radius">20dp</dimen>
+    <dimen name="card_top_margin">200dp</dimen>
+    <dimen name="card_top_margin_behind">220dp</dimen> <!-- radius + top_margin-->
+    <dimen name="card_title_size">40sp</dimen>
+
+</resources>

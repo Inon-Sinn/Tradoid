@@ -9,9 +9,19 @@
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
+
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <item name="android:statusBarColor">@color/white</item>
+        <!-- Navigation bar color does not work somehow. -->
+        <item name="android:navigationBarColor">@color/white</item>
+        <!-- Makes your Status Bar icons change to gray - needed for white status bar. -->
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+
+        <!-- _____My Own Creation_____ -->
+
+        <!-- Card Background Color -->
+        <item name="cardBackgroundColor">@color/card_background_light</item>
+
     </style>
 
     <style name="AppTheme.Toolbar" parent="Theme.Tradoid">
@@ -22,7 +32,6 @@
         <!--This line changes the color of the input of the search View-->
         <item name="android:editTextColor">@android:color/white</item>
     </style>
-
 
     <style name="Theme.Tradoid.NoActionBar">
         <item name="windowActionBar">false</item>
