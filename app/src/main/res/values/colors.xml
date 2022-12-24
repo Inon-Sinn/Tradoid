@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_500">#FF6200EE</color>`
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
@@ -11,8 +11,28 @@
     <color name="gray">#808080</color>
     <color name="red">#FF0000</color>
 
+    <!-- Dark Mode -->
+    <color name="red_200">#EF9A9A</color>
+    <color name="red_300">#E57373</color>
+    <color name="red_400">#EF5350</color>
+    <color name="red_500">#F44336</color>
+    <color name="red_600">#E53935</color>
+    <color name="red_700">#D32F2F</color>
+
+    <color name="orange_200">#FFCC80</color>
+    <color name="orange_300">#FFB74D</color>
+    <color name="orange_400">#FFA400</color>
+    <color name="orange_500">#FF9800 </color>
+    <color name="orange_700">#E64A19</color>
+
+    <color name="yellow_200">#FFF200</color>
+    <color name="yellow_300">#FFF176</color>
+    <color name="yellow_400">#FFEE58</color>
+    <color name="yellow_500">#FFEB3B </color>
+    <color name="yellow_700">#FBC02D</color>
+
     <!-- Card Background Colors -->
     <color name="card_background_light">@color/white</color>
-    <color name="card_background_dark">#303030</color>
+    <color name="card_background_dark">#121212</color>
 
 </resources>

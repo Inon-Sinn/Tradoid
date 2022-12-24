@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.Tradoid" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/red_600</item>
+        <item name="colorPrimaryVariant">@color/red_700</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorSecondary">@color/yellow_500</item>
+        <item name="colorSecondaryVariant">@color/yellow_700</item>
         <item name="colorOnSecondary">@color/black</item>
 
 
@@ -17,6 +17,8 @@
         <item name="android:statusBarColor">@color/black</item>
         <!-- Card Background Color -->
         <item name="cardBackgroundColor">@color/card_background_dark</item>
+        <!-- Transparent Status Bar -->
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <!-- Clickable Text View Color --> <!-- _____My Own Creation_____ -->

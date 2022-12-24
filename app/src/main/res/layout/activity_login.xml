@@ -7,10 +7,13 @@
     tools:context=".login">
 
     <TextView
+        android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tradoid"
-        android:textSize="50sp"
+        android:fontFamily="@font/garamond_regular"
+        android:text="@string/app_name"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="@dimen/title_size"
         app:layout_constraintBottom_toTopOf="@+id/login_To_sign_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,6 +43,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/login_To_sign_in"
         app:layout_constraintStart_toStartOf="@+id/login_To_sign_in" />
+
+    <ImageView
+        android:id="@+id/login_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView19"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/symbol_icon"
+        android:contentDescription="@string/icon_desc" />
+    <!-- for dark mode  #121212  -->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
