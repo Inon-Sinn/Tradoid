@@ -36,9 +36,9 @@
             <Button
                 android:id="@+id/btn_sign_up"
                 android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
+                android:layout_height="@dimen/Box_height"
+                android:layout_marginStart="@dimen/horizontal_margin"
+                android:layout_marginEnd="@dimen/horizontal_margin"
                 android:layout_marginBottom="10dp"
                 android:text="@string/sign_up"
                 app:layout_constraintBottom_toTopOf="@+id/tv_from_sign_up_to_sign_in"
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Register"
+                android:text="@string/sign_up_card_Title"
                 android:textSize="@dimen/card_title_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -71,63 +71,69 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout_confirm_sign_up"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
                 app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/textInputLayout_password_sign_up"
+                app:layout_constraintStart_toStartOf="@+id/textInputLayout_password_sign_up"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout_password_sign_up"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:boxCornerRadiusBottomEnd="@dimen/box_corner_radius"
+                app:boxCornerRadiusBottomStart="@dimen/box_corner_radius"
+                app:boxCornerRadiusTopEnd="@dimen/box_corner_radius"
+                app:boxCornerRadiusTopStart="@dimen/box_corner_radius">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_sign_up_confirm"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:backgroundTint="@color/white"
-                    android:hint="Confirm Password"
+                    android:hint="@string/edits_confirm_pass"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout_password_sign_up"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
                 app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/textInputLayout_email_sign_up"
+                app:layout_constraintStart_toStartOf="@+id/textInputLayout_email_sign_up"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout_email_sign_up"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:boxCornerRadiusBottomEnd="@dimen/box_corner_radius"
+                app:boxCornerRadiusBottomStart="@dimen/box_corner_radius"
+                app:boxCornerRadiusTopEnd="@dimen/box_corner_radius"
+                app:boxCornerRadiusTopStart="@dimen/box_corner_radius">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_sign_up_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:backgroundTint="@color/white"
-                    android:hint="Password"
+                    android:hint="@string/edits_password"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout_email_sign_up"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
                 app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout_name_sign_up">
+                app:layout_constraintEnd_toEndOf="@+id/textInputLayout_name_sign_up"
+                app:layout_constraintStart_toStartOf="@+id/textInputLayout_name_sign_up"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout_name_sign_up"
+                app:boxCornerRadiusBottomEnd="@dimen/box_corner_radius"
+                app:boxCornerRadiusBottomStart="@dimen/box_corner_radius"
+                app:boxCornerRadiusTopEnd="@dimen/box_corner_radius"
+                app:boxCornerRadiusTopStart="@dimen/box_corner_radius">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_sign_up_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:backgroundTint="@color/white"
-                    android:hint="Email Address"
+                    android:hint="@string/edits_email"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -135,20 +141,24 @@
                 android:id="@+id/textInputLayout_name_sign_up"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="@dimen/horizontal_margin"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="25dp"
+                android:layout_marginEnd="@dimen/horizontal_margin"
                 app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5">
+                app:layout_constraintTop_toBottomOf="@+id/textView5"
+                app:boxCornerRadiusBottomEnd="@dimen/box_corner_radius"
+                app:boxCornerRadiusBottomStart="@dimen/box_corner_radius"
+                app:boxCornerRadiusTopEnd="@dimen/box_corner_radius"
+                app:boxCornerRadiusTopStart="@dimen/box_corner_radius"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_sign_up_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:backgroundTint="@color/white"
-                    android:hint="Name"
+                    android:hint="@string/edits_name"
                     android:inputType="text"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>

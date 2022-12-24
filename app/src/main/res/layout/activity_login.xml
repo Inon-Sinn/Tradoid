@@ -19,11 +19,11 @@
     <Button
         android:id="@+id/login_To_sign_in"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="20dp"
-        android:text="Sign in"
+        android:layout_height="@dimen/Box_height"
+        android:layout_marginStart="@dimen/horizontal_margin"
+        android:layout_marginEnd="@dimen/horizontal_margin"
+        android:layout_marginBottom="@dimen/login_top_margin"
+        android:text="@string/sign_in"
         app:layout_constraintBottom_toTopOf="@+id/login_To_sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -31,15 +31,12 @@
     <Button
         android:id="@+id/login_To_sign_up"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="70dp"
-        android:text="Sign up"
+        android:layout_height="@dimen/Box_height"
+        android:layout_marginBottom="69dp"
+        android:text="@string/sign_up"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/login_To_sign_in"
+        app:layout_constraintStart_toStartOf="@+id/login_To_sign_in" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

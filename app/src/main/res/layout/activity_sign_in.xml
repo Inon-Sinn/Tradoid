@@ -36,41 +36,47 @@
                 android:id="@+id/textInputLayout_email_sign_in"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="25dp"
+                android:layout_marginStart="@dimen/horizontal_margin"
+                android:layout_marginTop="@dimen/card_title_margin"
+                android:layout_marginEnd="@dimen/horizontal_margin"
                 app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView15">
+                app:layout_constraintTop_toBottomOf="@+id/textView15"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusBottomEnd="@dimen/box_corner_radius"
+                app:boxCornerRadiusBottomStart="@dimen/box_corner_radius"
+                app:boxCornerRadiusTopEnd="@dimen/box_corner_radius"
+                app:boxCornerRadiusTopStart="@dimen/box_corner_radius">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_sign_in_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/white"
-                    android:hint="Email Address"
+                    android:hint="@string/edits_email"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout_password_sign_in"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
                 app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/textInputLayout_email_sign_in"
+                app:layout_constraintStart_toStartOf="@+id/textInputLayout_email_sign_in"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout_email_sign_in"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:boxCornerRadiusBottomEnd="@dimen/box_corner_radius"
+                app:boxCornerRadiusBottomStart="@dimen/box_corner_radius"
+                app:boxCornerRadiusTopEnd="@dimen/box_corner_radius"
+                app:boxCornerRadiusTopStart="@dimen/box_corner_radius">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_sign_in_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/white"
-                    android:hint="Password"
+                    android:hint="@string/edits_password"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,7 +96,7 @@
             <Button
                 android:id="@+id/btn_sign_in"
                 android:layout_width="0dp"
-                android:layout_height="56dp"
+                android:layout_height="@dimen/Box_height"
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="25dp"
                 android:layout_marginBottom="10dp"
@@ -124,8 +130,8 @@
                 android:id="@+id/textView15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Welcome Back"
+                android:layout_marginTop="@dimen/card_title_margin"
+                android:text="@string/sign_in_card_Title"
                 android:textSize="@dimen/card_title_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"

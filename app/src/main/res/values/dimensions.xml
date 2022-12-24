@@ -7,12 +7,19 @@
     <dimen name="back_arrow_text_size">25sp</dimen>
 
     <!-- Login CardView -->
-    <dimen name="card_corner_radius">20dp</dimen>
-    <dimen name="card_top_margin">200dp</dimen>
-    <dimen name="card_top_margin_behind">220dp</dimen> <!-- radius + top_margin-->
+    <dimen name="card_corner_radius">25dp</dimen>
+    <dimen name="card_top_margin">150dp</dimen>
+    <dimen name="card_top_margin_behind">170dp</dimen> <!-- radius + top_margin-->
     <dimen name="card_title_size">40sp</dimen>
+    <dimen name="card_title_margin">20dp</dimen>
 
     <!-- Login String -->
     <dimen name="login_tv_text_size">14sp</dimen>
+
+    <!-- Login Box Sizes -->
+    <dimen name="horizontal_margin">25dp</dimen>
+    <dimen name="Box_height">51dp</dimen>
+    <dimen name="login_top_margin">@dimen/card_title_margin</dimen>
+    <dimen name="box_corner_radius">30dp</dimen>
 
 </resources>
