@@ -21,6 +21,11 @@
     <string name="have_an_account">Aldready have an Account?</string>
     <string name="sign_up_card_Title">Register</string>
 
+    // Ban msg Class
+    <string name="user_blocked_msg">We are sorry to tell you that you have been banned for violating section 2 in the Service Terms</string>
+    <string name="user_blocked">USER BLOCKED</string>
+    <string name="attention_sign_desc">Attention Sign for Banned user</string>
+
     // Menu Item names
     <string name="stock_market">Stock Market</string>
     <string name="status_page">Assets</string>

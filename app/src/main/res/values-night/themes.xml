@@ -19,9 +19,16 @@
         <item name="cardBackgroundColor">@color/card_background_dark</item>
     </style>
 
-    <!-- _____My Own Creation_____ -->
+    <!-- Clickable Text View Color --> <!-- _____My Own Creation_____ -->
     <style name="clickable_tv_color" parent="Theme.Tradoid">
         <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <!-- Custom Button --> <!-- _____My Own Creation_____ -->
+    <style name="Custom_Button" parent="Theme.Tradoid">
+        <item name="android:background">@drawable/round_button</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
 </resources>

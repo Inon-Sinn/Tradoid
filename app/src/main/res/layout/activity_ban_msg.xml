@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Ban_msg">
+    tools:context=".Ban_msg"
+    android:background="@drawable/gradient_background">
 
     <TextView
         android:id="@+id/ban_msg_back_arrow"
@@ -13,10 +14,10 @@
         android:layout_marginStart="@dimen/back_arrow_x"
         android:layout_marginTop="@dimen/back_arrow_y"
         android:text="@string/sign_in"
-        android:textColor="?android:attr/textColorPrimary"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="@dimen/back_arrow_text_size"
         app:drawableLeftCompat="@drawable/ic_arrow_back_ios_2"
-        app:drawableTint="?android:attr/textColorPrimary"
+        app:drawableTint="?attr/colorOnPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,6 +48,50 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="@dimen/card_title_margin"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="300dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/attention_sign"
+                app:tint="@color/red"
+                android:contentDescription="@string/attention_sign_desc" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="50dp"
+                android:text="@string/user_blocked_msg"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_blocked"
+                android:textColor="#FF0000"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

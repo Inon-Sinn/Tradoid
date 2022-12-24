@@ -16,7 +16,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/Custom_Button"
         android:id="@+id/login_To_sign_in"
         android:layout_width="0dp"
         android:layout_height="@dimen/Box_height"
@@ -24,7 +25,6 @@
         android:layout_marginEnd="@dimen/horizontal_margin"
         android:layout_marginBottom="@dimen/login_top_margin"
         android:text="@string/sign_in"
-        android:background="@drawable/round_button"
         app:layout_constraintBottom_toTopOf="@+id/login_To_sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

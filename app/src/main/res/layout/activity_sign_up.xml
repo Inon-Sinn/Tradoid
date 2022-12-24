@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Sign_Up">
+    tools:context=".Sign_Up"
+    android:background="@drawable/gradient_background">
 
     <androidx.cardview.widget.CardView
         app:cardBackgroundColor="?attr/cardBackgroundColor"
@@ -33,7 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
+                style="@style/Custom_Button"
                 android:id="@+id/btn_sign_up"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/Box_height"
@@ -66,6 +68,7 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/sign_up_card_Title"
                 android:textSize="@dimen/card_title_size"
+                android:textColor="?attr/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -187,10 +190,10 @@
         android:layout_marginStart="@dimen/back_arrow_x"
         android:layout_marginTop="@dimen/back_arrow_y"
         android:text="@string/login"
-        android:textColor="?android:attr/textColorPrimary"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="@dimen/back_arrow_text_size"
         app:drawableLeftCompat="@drawable/ic_arrow_back_ios_2"
-        app:drawableTint="?android:attr/textColorPrimary"
+        app:drawableTint="?attr/colorOnPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
