@@ -19,7 +19,7 @@
         <!-- Card Background Color -->
         <item name="cardBackgroundColor">@color/card_background_light</item>
 
-<!--        <item name="android:background">@drawable/gradient</item>-->
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <!-- Clickable Text View Color --> <!-- _____My Own Creation_____ -->
