@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -73,6 +74,9 @@ public class Status_Page extends AppCompatActivity {
             }
         });
 
+        // Checking Light Mode
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+
         // Creating the Donut chart
         DonutProgressView donutView = findViewById(R.id.donut_char_status_page);
         donutView.setCap(1f);
@@ -81,7 +85,15 @@ public class Status_Page extends AppCompatActivity {
         int[] colors = new int[data.size()];
         String section_name;
         for (int i = 0; i < section_num; i++) {
-            float hue = (90/(section_num))*i + 180; //for full color range (360/num)*pos + 0
+            float hue = 0;
+            switch (currentNightMode) {
+                case Configuration.UI_MODE_NIGHT_NO:
+                    hue = (120/(section_num))*i + 180;//we're using the light theme
+                    break;
+                case Configuration.UI_MODE_NIGHT_YES:
+                    hue = (60/(section_num))*i + 0;// we're using dark theme
+                    break;
+            }
             colors[i] = Color.HSVToColor(new float[]{hue,(float)0.9,(float) 1});
             section_name = "Section " + i;
             sections.add(new DonutSection(section_name, colors[i], (float) stock_count.get(i)[0]));
@@ -97,8 +109,6 @@ public class Status_Page extends AppCompatActivity {
         // Calling the Adapter
         status_RecyleView_Adapter adapter = new status_RecyleView_Adapter(this, data,stock_count,colors,false,user_ID);
         recyclerView.setAdapter(adapter);
-
-
 
     }
 

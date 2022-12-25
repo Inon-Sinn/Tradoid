@@ -32,5 +32,15 @@
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:textAllCaps">true</item>
     </style>
+    
+    <!-- Custom List item icon color --><!-- _____My Own Creation_____ -->
+    <style name="my_icon_color">
+        <item name="android:tint">@color/icon_color</item>
+    </style>
+
+    <!-- Custom List item arrow color --><!-- _____My Own Creation_____ -->
+    <style name="my_arrow_color">
+        <item name="android:tint">@color/arrow_icon_color</item>
+    </style>
 
 </resources>
