@@ -121,22 +121,17 @@ public class Sign_In extends AppCompatActivity {
                             if (userType.equals("user")){
                                 //TODO user log in
                                 System.out.println("FOUND USER");
+                                sendToActivity(Stock_Market.class);
                             }
                             else if (userType.equals("admin")){
                                 //TODO admin log in
                                 System.out.println("FOUND ADMIN");
+                                sendToActivity(User_List.class);
                             }
                             else{
                                 //TODO user not found
                                 System.out.println("DIDN'T FIND");
-                            }
-
-                            int signIn = sign_into_Account();
-                            if(signIn == 0){
                                 errortv.setText("Incorrect email or password");
-                            }
-                            if(signIn != 0){
-                                errortv.setText("");
                             }
                         }
                     }
@@ -150,14 +145,10 @@ public class Sign_In extends AppCompatActivity {
         });
     }
 
-    public int  sign_into_Account(){
-        return 0;
-        // TODO should probably return an int that tells if the password is incorrect
-    }
-
     // Sends to other screens
     public void sendToActivity(Class cls){
         Intent intent = new Intent(this,cls);
+        intent.putExtra("user_ID","123");
         startActivity(intent);
     }
 }

@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.tradoid.fragments.Portfolio;
 import com.example.tradoid.fragments.Stock;
@@ -33,10 +34,17 @@ public class Stock_Market extends AppCompatActivity {
     stock_view_model view_model;
     ViewPager2 viewPager2;
 
+    String user_ID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_market);
+
+        // get User ID
+        if (getIntent().hasExtra("user_ID")){
+//            Toast.makeText(this,"Stock Market: "+)
+        }
 
         // Connect to View Model
         view_model = new ViewModelProvider(this).get(stock_view_model.class);

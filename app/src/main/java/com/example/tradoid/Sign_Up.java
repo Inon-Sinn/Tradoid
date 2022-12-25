@@ -92,12 +92,12 @@ public class Sign_Up extends AppCompatActivity {
 
                         // Check if all fields have no error TODO change to setting a tv
                         if(name_layout.getError()!=null || email_layout.getError()!=null ||password_layout.getError()!=null ||confirm_layout.getError()!=null ){
-                            Toast.makeText(getApplicationContext(),"Invalid",Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(),"Invalid",Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(getApplicationContext(),"No Error",Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(),"No Error",Toast.LENGTH_SHORT).show();
                             //check that passwords are equal
                             if (et_password.getText().toString().equals(et_confirm.getText().toString())) {
-                                Toast.makeText(getApplicationContext(), "Passwords are equal", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getApplicationContext(), "Passwords are equal", Toast.LENGTH_SHORT).show();
                                 username = et_name.getText().toString();
                                 email = et_email.getText().toString();
                                 password = et_password.getText().toString();
@@ -121,6 +121,8 @@ public class Sign_Up extends AppCompatActivity {
                                 } else {
                                     UserObj userObj = new UserObj(username, email, password);
                                     ref.child("users").child(username).setValue(userObj);
+                                    // Successful sign up - gets send to Stock Market
+                                    sendToActivity(Stock_Market.class);
                                 }
                             }
                             else{
@@ -140,6 +142,7 @@ public class Sign_Up extends AppCompatActivity {
     // Sends to other screens
     public void sendToActivity(Class cls){
         Intent intent = new Intent(this,cls);
+        intent.putExtra("user_ID","123");
         startActivity(intent);
     }
 }
