@@ -5,7 +5,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Camera;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -27,12 +26,12 @@ import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.checkerframework.checker.units.qual.C;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Stock_Page extends AppCompatActivity {
+
+    String user_ID;
 
     // Views with Dynamic values
     TextView tv_name, tv_full_name, tv_price, tv_price_change;
@@ -55,6 +54,9 @@ public class Stock_Page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_page);
 
+        // get User ID
+        if (getIntent().hasExtra("user_ID")){ user_ID = getIntent().getStringExtra("user_ID");}
+
         // Get the data form the row it was clicked on
         getData();
 
@@ -64,7 +66,7 @@ public class Stock_Page extends AppCompatActivity {
 
         // Implementing the Back arrow in the Toolbar
         ImageView back_arrow = findViewById(R.id.stock_pg_To_stock_market);
-        back_arrow.setOnClickListener(v -> sendToActivity(regocnizeScreen()));
+        back_arrow.setOnClickListener(v -> sendToActivity(recognizeScreen()));
 
         // Implementing the Bookmark in the Toolbar
         ImageView bookmark = findViewById(R.id.bookmark_stock_pg);
@@ -86,9 +88,9 @@ public class Stock_Page extends AppCompatActivity {
         Button transaction = findViewById(R.id.button_stock_page);
         transaction.setOnClickListener(v -> create_transaction());
 
-        // Connecting to Action list - Buy/Sell
+        // Connecting to Action - Buy/Sell
         AutoCompleteTextView autoCompleteTextView = findViewById(R.id.autoComplete_tv_stock_page);
-        ArrayAdapter<String> adapterItems = new ArrayAdapter<>(this, R.layout.stock_page_action_list_item, actions);
+        ArrayAdapter<String> adapterItems = new ArrayAdapter<>(this, R.layout.action_list_item, actions);
         autoCompleteTextView.setAdapter(adapterItems);
         autoCompleteTextView.setOnItemClickListener((parent, view, position, id) -> {
             String item = parent.getItemAtPosition(position).toString();
@@ -200,7 +202,7 @@ public class Stock_Page extends AppCompatActivity {
         l.setEnabled(false);
 
         // Creating Data points
-        ArrayList<CandleEntry> yvalCandleStick = new ArrayList<CandleEntry>();
+        ArrayList<CandleEntry> yvalCandleStick = new ArrayList<>();
         yvalCandleStick.add(new CandleEntry((float) 0, (float) 225.0, (float) 219.84, (float) 224.94, (float) 221.07));
         yvalCandleStick.add(new CandleEntry((float)1, (float) 228.35, (float)222.57, (float)223.52, (float)226.41));
         yvalCandleStick.add(new CandleEntry((float)2,(float)226.84,(float)222.52,(float)225.75,(float)223.84));
@@ -265,7 +267,7 @@ public class Stock_Page extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"Still not implemented",Toast.LENGTH_SHORT).show();
     }
 
-    public Class regocnizeScreen(){
+    public Class recognizeScreen(){
         if (formerScreen.equals("Stock_Market"))
             return Stock_Market.class;
         if (formerScreen.equals("Status_Page"))
@@ -276,6 +278,7 @@ public class Stock_Page extends AppCompatActivity {
     // Sends to other screens
     public void sendToActivity(Class cls){
         Intent intent = new Intent(this,cls);
+        intent.putExtra("user_ID",user_ID);
         startActivity(intent);
     }
 }

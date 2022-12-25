@@ -21,11 +21,13 @@ public class Stock_Market_RecycleView_Adapter extends RecyclerView.Adapter<Stock
 
     Context context;
     List<stock_data> item_list;
+    String user_ID;
 
     //Constructor for the adapter
-    public Stock_Market_RecycleView_Adapter(Context ct, List<stock_data> newList) {
+    public Stock_Market_RecycleView_Adapter(Context ct, List<stock_data> newList, String user_ID) {
         context = ct;
         item_list = newList;
+        this.user_ID = user_ID;
     }
 
     @NonNull
@@ -57,6 +59,7 @@ public class Stock_Market_RecycleView_Adapter extends RecyclerView.Adapter<Stock
             intent.putExtra("icon", item_list.get(position).getIcon());
             // give it the screen it came from
             intent.putExtra("former Screen","Stock_Market");
+            intent.putExtra("user_ID",user_ID);
             // start the Stock Page activity
             context.startActivity(intent);
 

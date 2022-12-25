@@ -35,4 +35,8 @@
     <color name="card_background_light">@color/white</color>
     <color name="card_background_dark">#121212</color>
 
+    <!-- Recycle View Colors -->
+    <color name="icon_color">#7a808e</color>
+    <color name="arrow_icon_color">#454b59</color>
+
 </resources>

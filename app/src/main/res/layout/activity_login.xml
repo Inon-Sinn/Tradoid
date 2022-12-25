@@ -36,12 +36,13 @@
         android:id="@+id/login_To_sign_up"
         android:layout_width="0dp"
         android:layout_height="@dimen/Box_height"
-        android:layout_marginBottom="69dp"
-        android:text="@string/sign_up"
+        android:layout_marginBottom="@dimen/lower_margin_from_screen_end"
         android:background="@drawable/transparent_round_button"
+        android:text="@string/sign_up"
         android:textColor="?attr/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/login_To_sign_in"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/login_To_sign_in" />
 
     <ImageView

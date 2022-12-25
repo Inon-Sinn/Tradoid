@@ -28,14 +28,18 @@ public class status_RecyleView_Adapter extends RecyclerView.Adapter<status_Recyl
     List<double[]> amount_list;
     int[] colors;
     boolean admin;
+    String user_ID;
 
     //Constructor for the adapter
-    public status_RecyleView_Adapter(Context ct, List<stock_data> newList,List<double[]> amount_list,int[] colors, boolean admin) {
+    public status_RecyleView_Adapter(Context ct, List<stock_data> newList,List<double[]> amount_list,int[] colors, boolean admin, String user_ID) {
         context = ct;
         item_list = newList;
         this.amount_list = amount_list;
         this.admin = admin;
         this.colors = colors;
+        if (!admin){
+            this.user_ID = user_ID;
+        }
     }
 
     @NonNull
@@ -78,6 +82,7 @@ public class status_RecyleView_Adapter extends RecyclerView.Adapter<status_Recyl
                 intent.putExtra("icon", item_list.get(position).getIcon());
                 // give it the screen it came from
                 intent.putExtra("former Screen", "Status_Page");
+                intent.putExtra("user_ID",user_ID);
                 // start the Stock Page activity
                 context.startActivity(intent);
             });

@@ -24,6 +24,7 @@
     <dimen name="Box_height">51dp</dimen>
     <dimen name="login_top_margin">@dimen/card_title_margin</dimen>
     <dimen name="box_corner_radius">30dp</dimen>
+    <dimen name="lower_margin_from_screen_end">68dp</dimen>
 
     <!-- Profile picture -->
     <dimen name="outer_circle_size">120dp</dimen>
@@ -32,5 +33,9 @@
     <dimen name="picture_email_margin">5dp</dimen>
     <dimen name="picture_name_size">25sp</dimen>
     <dimen name="picture_email_size">20sp</dimen>
+
+    <!-- Balance -->
+    <dimen name="balance_text_size">40sp</dimen>
+
 
 </resources>
