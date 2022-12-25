@@ -1,40 +1,23 @@
 package com.example.tradoid;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.TextPaint;
-import android.text.method.LinkMovementMethod;
-import android.text.style.BackgroundColorSpan;
-import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tradoid.Business_Logic.emailTextWatcher;
 import com.example.tradoid.Business_Logic.passwordTextWatcher;
-import com.example.tradoid.firebase.model.FirebaseDBUser;
+import com.example.tradoid.firebase.model.SignInViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.Objects;
 
 public class Sign_In extends AppCompatActivity {
-
-    public DatabaseReference ref = new FirebaseDBUser().getRef();
 
     public String email, password;
 
@@ -87,60 +70,46 @@ public class Sign_In extends AppCompatActivity {
         btn_sign_up.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        // Check if all fields are filled
-                        if(et_email.getText().length() == 0)
-                            email_layout.setError("Field Required");
-                        if(et_password.getText().length() == 0)
-                            password_layout.setError("Field Required");
+                // connect to view model
+                SignInViewModel viewModel = new ViewModelProvider(Sign_In.this).get(SignInViewModel.class);
 
-                        // Check if all fields have no error TODO change to setting a tv
-                        if(email_layout.getError()!=null ||password_layout.getError()!=null){
-                            Toast.makeText(getApplicationContext(),"Invalid",Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(getApplicationContext(),"No Error",Toast.LENGTH_SHORT).show();
-                            email = et_email.getText().toString();
-                            password = et_password.getText().toString();
+                // Check if all fields are filled
+                if(et_email.getText().length() == 0)
+                    email_layout.setError("Field Required");
+                if(et_password.getText().length() == 0)
+                    password_layout.setError("Field Required");
 
-                            String userType = "";
-                            for (DataSnapshot user: snapshot.child("users").getChildren()){
-                                if (Objects.requireNonNull(user.child("email").getValue()).toString().equals(email) &&
-                                Objects.requireNonNull(user.child("password").getValue()).toString().equals(password)){
-                                    userType = "user";
-                                }
-                            }
-                            for (DataSnapshot admin: snapshot.child("admins").getChildren()){
-                                if (Objects.requireNonNull(admin.child("email").getValue()).toString().equals(email) &&
-                                        Objects.requireNonNull(admin.child("password").getValue()).toString().equals(password)) {
-                                    userType = "admin";
-                                }
-                            }
+                // Check if all fields have no error TODO change to setting a tv
+                if(email_layout.getError() == null && password_layout.getError() == null){
+                    email = et_email.getText().toString();
+                    password = et_password.getText().toString();
 
-                            if (userType.equals("user")){
-                                //TODO user log in
-                                System.out.println("FOUND USER");
+                    // checking if the user exists
+                    viewModel.reset();
+
+                    viewModel.signInTryUsers(email, password);
+                    viewModel.singInTryAdmins(email, password);
+
+                    viewModel.getIsUser().observe(Sign_In.this, new Observer<Boolean>() {
+                        @Override
+                        public void onChanged(Boolean aBoolean) {
+                            if (aBoolean){
                                 sendToActivity(Stock_Market.class);
-                            }
-                            else if (userType.equals("admin")){
-                                //TODO admin log in
-                                System.out.println("FOUND ADMIN");
-                                sendToActivity(User_List.class);
-                            }
-                            else{
-                                //TODO user not found
-                                System.out.println("DIDN'T FIND");
-                                errortv.setText("Incorrect email or password");
+                            } else {
+                                viewModel.getIsAdmin().observe(Sign_In.this, new Observer<Boolean>() {
+                                    @Override
+                                    public void onChanged(Boolean aBoolean) {
+                                        if (aBoolean){
+                                            sendToActivity(User_List.class);
+                                        } else{
+                                            errortv.setText("Incorrect username or password");
+                                        }
+                                    }
+                                });
                             }
                         }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        // keep empty for now
-                    }
-                });
+                    });
+                }
             }
         });
     }

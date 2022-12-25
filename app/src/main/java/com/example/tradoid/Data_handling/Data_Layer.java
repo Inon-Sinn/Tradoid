@@ -3,7 +3,6 @@ package com.example.tradoid.Data_handling;
 
 import androidx.annotation.NonNull;
 
-import com.example.tradoid.firebase.model.FirebaseDBUser;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -24,8 +23,6 @@ public class Data_Layer {
 
     // User Data
     List<user_data> users;
-
-    public FirebaseDBUser firebaseDBUser = new FirebaseDBUser();
 
     public Data_Layer(){
         stocks = new ArrayList<>();
@@ -120,14 +117,6 @@ public class Data_Layer {
     public void get_Banned(){
         get_Users();
         users.subList(0, 5).clear();
-    }
-
-    public boolean sign_up(String username, String email, String password){
-        if (firebaseDBUser.checkIfUsernameExists(username)){
-            return false;
-        }
-        firebaseDBUser.addUserToDB(username, email, password);
-        return true;
     }
 
     /*
