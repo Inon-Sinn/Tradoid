@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -36,15 +37,14 @@ public class Stock_Market extends AppCompatActivity {
 
     String user_ID;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_market);
 
         // get User ID
-        if (getIntent().hasExtra("user_ID")){
-//            Toast.makeText(this,"Stock Market: "+)
-        }
+        if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
 
         // Connect to View Model
         view_model = new ViewModelProvider(this).get(stock_view_model.class);
@@ -59,21 +59,17 @@ public class Stock_Market extends AppCompatActivity {
         // Set Home - Bottom Navigation Bar
         bottomNavigationView.setSelectedItemId(R.id.bottom_menu_stock_market);
 
-        // Perfom item selected listener
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener(){
-
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.bottom_menu_status_pg:
-                        sendToActivity(Status_Page.class);
-                        return true;
-                    case R.id.bottom_menu_profile:
-                        sendToActivity(Profile.class);
-                        return true;
-                    default:
-                        return true;
-                }
+        // Perform item selected listener
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.bottom_menu_status_pg:
+                    sendToActivity(Status_Page.class);
+                    return true;
+                case R.id.bottom_menu_profile:
+                    sendToActivity(Profile.class);
+                    return true;
+                default:
+                    return true;
             }
         });
 
@@ -115,6 +111,8 @@ public class Stock_Market extends AppCompatActivity {
             }
         });
 
+
+
     }
 
     // Creates the menu
@@ -141,16 +139,7 @@ public class Stock_Market extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 //fragment connection
-                Stock stock_frag = (Stock) getSupportFragmentManager().findFragmentByTag("f0" );
-                Watchlist watch_frag = (Watchlist) getSupportFragmentManager().findFragmentByTag("f1");
-                Portfolio portfolio_frag = (Portfolio) getSupportFragmentManager().findFragmentByTag("f2");
-                // Update the fragments
-                if(stock_frag != null && watch_frag != null && portfolio_frag != null) {
-                    stock_frag.UpdateAdapter(newText);
-                    watch_frag.UpdateAdapter(newText);
-                    portfolio_frag.UpdateAdapter(newText);
-                }
-                else{System.out.println("Cant open frag");}
+                updateFragmentsAdapter(newText);
                 return false;
             }
         });
@@ -158,9 +147,29 @@ public class Stock_Market extends AppCompatActivity {
         return true;
     }
 
+    // Used by fragments
+    public String getUserID(){
+        return user_ID;
+    }
+
+    // Updates the Fragments ViewModel
+    public void updateFragmentsAdapter(String newText){
+        Stock stock_frag = (Stock) getSupportFragmentManager().findFragmentByTag("f0" );
+        Watchlist watch_frag = (Watchlist) getSupportFragmentManager().findFragmentByTag("f1");
+        Portfolio portfolio_frag = (Portfolio) getSupportFragmentManager().findFragmentByTag("f2");
+        // Update the fragments
+        if(stock_frag != null && watch_frag != null && portfolio_frag != null) {
+            stock_frag.UpdateAdapter(newText);
+            watch_frag.UpdateAdapter(newText);
+            portfolio_frag.UpdateAdapter(newText);
+        }
+        else{System.out.println("Cant open frag");}
+    }
+
     // Sends to other screens
     public void sendToActivity(Class cls){
         Intent intent = new Intent(this,cls);
+        intent.putExtra("user_ID",user_ID);
         startActivity(intent);
     }
 

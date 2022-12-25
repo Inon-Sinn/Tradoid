@@ -11,11 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.tradoid.Adapters.Stock_Market_RecycleView_Adapter;
 import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.Data_handling.user_data;
 import com.example.tradoid.R;
+import com.example.tradoid.Stock_Market;
+
+import java.util.Objects;
 
 // A Fragment of the Portfolio tab in the Stock Market Activity
 public class Portfolio extends Fragment {
@@ -24,9 +28,14 @@ public class Portfolio extends Fragment {
     stock_view_model view_model;
     Stock_Market_RecycleView_Adapter adapter;
 
+    String user_ID;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // get UserID;
+        user_ID = ((Stock_Market) requireActivity()).getUserID();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_portfolio, container, false);
@@ -42,7 +51,7 @@ public class Portfolio extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
         // Calling the Adapter
-        adapter = new Stock_Market_RecycleView_Adapter(getActivity(),view_model.getData_list());
+        adapter = new Stock_Market_RecycleView_Adapter(getActivity(),view_model.getData_list(),user_ID);
         recyclerView.setAdapter(adapter);
 
         return view;

@@ -34,6 +34,8 @@ import java.util.ArrayList;
 
 public class Stock_Page extends AppCompatActivity {
 
+    String user_ID;
+
     // Views with Dynamic values
     TextView tv_name, tv_full_name, tv_price, tv_price_change;
     ImageView iv_icon;
@@ -54,6 +56,9 @@ public class Stock_Page extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_page);
+
+        // get User ID
+        if (getIntent().hasExtra("user_ID")){ user_ID = getIntent().getStringExtra("user_ID");}
 
         // Get the data form the row it was clicked on
         getData();
@@ -276,6 +281,7 @@ public class Stock_Page extends AppCompatActivity {
     // Sends to other screens
     public void sendToActivity(Class cls){
         Intent intent = new Intent(this,cls);
+        intent.putExtra("user_ID",user_ID);
         startActivity(intent);
     }
 }

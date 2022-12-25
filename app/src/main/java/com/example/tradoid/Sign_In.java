@@ -148,7 +148,7 @@ public class Sign_In extends AppCompatActivity {
     // Sends to other screens
     public void sendToActivity(Class cls){
         Intent intent = new Intent(this,cls);
-        intent.putExtra("user_ID","123");
+        intent.putExtra("user_ID","123456");
         startActivity(intent);
     }
 }

@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.tradoid.Adapters.status_RecyleView_Adapter;
 import com.example.tradoid.Data_handling.Data_Layer;
@@ -32,11 +33,16 @@ import app.futured.donut.DonutSection;
 
 public class Status_Page extends AppCompatActivity {
 
+    String user_ID;
+
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status_page);
+
+        // get User ID
+        if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
 
         // get user_data
         user_data user = new user_data("Temp","Temp",0);
@@ -89,14 +95,17 @@ public class Status_Page extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
         // Calling the Adapter
-        status_RecyleView_Adapter adapter = new status_RecyleView_Adapter(this, data,stock_count,colors,false);
+        status_RecyleView_Adapter adapter = new status_RecyleView_Adapter(this, data,stock_count,colors,false,user_ID);
         recyclerView.setAdapter(adapter);
+
+
 
     }
 
     // Sends to other screens
     public void sendToActivity(Class cls){
         Intent intent = new Intent(this,cls);
+        intent.putExtra("user_ID",user_ID);
         startActivity(intent);
     }
 }

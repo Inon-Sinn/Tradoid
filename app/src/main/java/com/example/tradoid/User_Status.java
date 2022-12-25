@@ -84,7 +84,7 @@ public class User_Status extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
         // Calling the Adapter
-        status_RecyleView_Adapter adapter = new status_RecyleView_Adapter(this, data,stock_count,colors,false);
+        status_RecyleView_Adapter adapter = new status_RecyleView_Adapter(this, data,stock_count,colors,true,"");
         recyclerView.setAdapter(adapter);
     }
 

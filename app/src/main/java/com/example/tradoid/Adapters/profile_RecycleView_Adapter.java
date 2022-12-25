@@ -23,9 +23,11 @@ public class profile_RecycleView_Adapter extends RecyclerView.Adapter<profile_Re
     int[] section_icons = {R.drawable.ic_notification,R.drawable.ic_history,R.drawable.ic_balance,R.drawable.ic_logout};
     Class[] section_classes = new Class[]{section_notification.class,section_history.class, section_balance.class, login.class};
     Context context;
+    String user_ID;
 
-    public profile_RecycleView_Adapter(Context ct) {
+    public profile_RecycleView_Adapter(Context ct,String user_ID) {
         this.context = ct;
+        this.user_ID = user_ID;
     }
 
     @NonNull
@@ -47,6 +49,7 @@ public class profile_RecycleView_Adapter extends RecyclerView.Adapter<profile_Re
         holder.rowLayout.setOnClickListener(v -> {
             // start the chosen activity
             Intent intent = new Intent(context, section_classes[position]);
+            intent.putExtra("user_ID",user_ID);
             context.startActivity(intent);
         });
     }
