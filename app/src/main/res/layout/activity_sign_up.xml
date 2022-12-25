@@ -192,7 +192,7 @@
         android:text="@string/login"
         android:textColor="?attr/colorOnPrimary"
         android:textSize="@dimen/back_arrow_text_size"
-        app:drawableLeftCompat="@drawable/ic_arrow_back_ios_2"
+        app:drawableLeftCompat="@drawable/ic_arrow_back_ios"
         app:drawableTint="?attr/colorOnPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

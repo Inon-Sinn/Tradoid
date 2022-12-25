@@ -5,6 +5,9 @@
     <string name="login">Login</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
+    <string name="stock_market">Stock Market</string>
+    <string name="status_page">Status Page</string>
+    <string name="profile">Profile</string>
 
     // Login
     <string name="icon_desc">App Icon</string>
@@ -29,57 +32,26 @@
     <string name="user_blocked">USER BLOCKED</string>
     <string name="attention_sign_desc">Attention Sign for Banned user</string>
 
+    // Profile Class
+    <string name="profile_user_name">User Name</string>
+    <string name="profile_email">email@email.com</string>
+    <string name="profile_pic_desc">profile picture</string>
+
     // History section Class
     <string name="history_card_Title">History</string>
 
+    // Balance section Class
+    <string name="balance_card_Title">Your Balance</string>
+
+    // Notification section Class
+    <string name="notification_card_Title">Notifications</string>
+
 
     // Menu Item names
-    <string name="stock_market">Stock Market</string>
-    <string name="status_page">Assets</string>
     <string name="user_list">User List</string>
     <string name="dashboard">Dashboard</string>
     <string name="logout">Logout</string>
     <string name="settings">Settings</string>
-    <string name="profile">Profile</string>
     <string name="search">Search</string>
 
-    <!-- TODO remove this later-->
-    <string-array name="my_family">
-        <item>Samuel</item>
-        <item>Revital</item>
-        <item>Liel</item>
-        <item>Tehila</item>
-        <item>Inon</item>
-        <item>Ofir</item>
-        <item>Gilad</item>
-        <item>Noa</item>
-        <item>Yair</item>
-        <item>Mapel</item>
-    </string-array>
-
-    <string-array name="Order">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-    </string-array>
-
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_test">test</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

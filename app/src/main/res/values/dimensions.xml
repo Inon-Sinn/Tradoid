@@ -25,4 +25,12 @@
     <dimen name="login_top_margin">@dimen/card_title_margin</dimen>
     <dimen name="box_corner_radius">30dp</dimen>
 
+    <!-- Profile picture -->
+    <dimen name="outer_circle_size">120dp</dimen>
+    <dimen name="picture_size">118dp</dimen>
+    <dimen name="picture_name_margin">70dp</dimen> <!-- 120*0.5 + 20 -->
+    <dimen name="picture_email_margin">5dp</dimen>
+    <dimen name="picture_name_size">25sp</dimen>
+    <dimen name="picture_email_size">20sp</dimen>
+
 </resources>

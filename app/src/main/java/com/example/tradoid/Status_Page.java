@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -31,8 +32,7 @@ import app.futured.donut.DonutSection;
 
 public class Status_Page extends AppCompatActivity {
 
-    Data_Layer portfolio_data;
-
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,20 +54,16 @@ public class Status_Page extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.bottom_menu_status_pg);
 
         // Perform item selected listener - Bottom Navigation Bar
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener(){
-
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.bottom_menu_stock_market:
-                        sendToActivity(Stock_Market.class);
-                        return true;
-                    case R.id.bottom_menu_profile:
-                        sendToActivity(Profile.class);
-                        return true;
-                    default:
-                        return true;
-                }
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.bottom_menu_stock_market:
+                    sendToActivity(Stock_Market.class);
+                    return true;
+                case R.id.bottom_menu_profile:
+                    sendToActivity(Profile.class);
+                    return true;
+                default:
+                    return true;
             }
         });
 

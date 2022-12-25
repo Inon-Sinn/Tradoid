@@ -11,15 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.tradoid.R;
-import com.example.tradoid.section_deposit;
+import com.example.tradoid.login;
+import com.example.tradoid.section_balance;
 import com.example.tradoid.section_history;
+import com.example.tradoid.section_notification;
 
 
 public class profile_RecycleView_Adapter extends RecyclerView.Adapter<profile_RecycleView_Adapter.MyViewHolder>{
 
-    String[] section_names = {"History","Deposit"};
-    int[] section_icons = {R.drawable.ic_history,R.drawable.ic_balance};
-    Class[] section_classes = new Class[]{section_history.class, section_deposit.class};
+    String[] section_names = {"Notification","History","Balance","Log Out"};
+    int[] section_icons = {R.drawable.ic_notification,R.drawable.ic_history,R.drawable.ic_balance,R.drawable.ic_logout};
+    Class[] section_classes = new Class[]{section_notification.class,section_history.class, section_balance.class, login.class};
     Context context;
 
     public profile_RecycleView_Adapter(Context ct) {
