@@ -42,6 +42,10 @@
 
     // Balance section Class
     <string name="balance_card_Title">Your Balance</string>
+    <string name="edits_usd">USD</string>
+    <string name="request_btn_name">Send Request</string>
+    <string name="balance_error_msg">Action or USD Amount missing</string>
+    <string name="balance_action_hint">Action</string>
 
     // Notification section Class
     <string name="notification_card_Title">Notifications</string>
