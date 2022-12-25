@@ -20,6 +20,8 @@ import com.example.tradoid.fragments.Stock;
 import com.example.tradoid.Adapters.Stock_Market_TabsAdapter;
 import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.fragments.Watchlist;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
@@ -42,9 +44,31 @@ public class Stock_Market extends AppCompatActivity {
         Toolbar stock_market_toolbar = findViewById(R.id.toolbar_stock_market);
         setSupportActionBar(stock_market_toolbar);
 
-        // Connection to Stock Page TODO only temporary remove later
-        Button to_Stock_Page_btn = findViewById(R.id.stock_market_To_stock_page);
-        to_Stock_Page_btn.setOnClickListener(v -> sendToActivity(Stock_Page.class));
+        // Creating a Bottom Navigation Bar
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+        // Set Home - Bottom Navigation Bar
+        bottomNavigationView.setSelectedItemId(R.id.bottom_menu_stock_market);
+
+        // Perfom item selected listener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()){
+                    case R.id.bottom_menu_stock_market:
+                        return true;
+                    case R.id.bottom_menu_status_pg:
+                        sendToActivity(Status_Page.class);
+                        return true;
+                    case R.id.bottom_menu_profile:
+                        sendToActivity(Profile.class);
+                        return true;
+                }
+                return false;
+            }
+        });
 
         // Creating the tab layout and view Pager
         TabLayout tabLayout = findViewById(R.id.tabLayout_stock_market);

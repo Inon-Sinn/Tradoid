@@ -19,6 +19,7 @@ import com.example.tradoid.Data_handling.Data_Layer;
 import com.example.tradoid.Data_handling.stock_data;
 import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.Data_handling.user_data;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,32 @@ public class Status_Page extends AppCompatActivity {
         // Creating a custom Toolbar
         Toolbar status_page_toolbar = findViewById(R.id.toolbar_status_page);
         setSupportActionBar(status_page_toolbar);
+
+        // Creating a Bottom Navigation Bar
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+        // Set Home - Bottom Navigation Bar
+        bottomNavigationView.setSelectedItemId(R.id.bottom_menu_status_pg);
+
+        // Perform item selected listener - Bottom Navigation Bar
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()){
+                    case R.id.bottom_menu_stock_market:
+                        sendToActivity(Stock_Market.class);
+                        return true;
+                    case R.id.bottom_menu_status_pg:
+                        return true;
+                    case R.id.bottom_menu_profile:
+                        sendToActivity(Profile.class);
+                        return true;
+                }
+                return false;
+            }
+        });
 
         // Creating the Donut chart
         DonutProgressView donutView = findViewById(R.id.donut_char_status_page);

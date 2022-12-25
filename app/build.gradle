@@ -52,4 +52,6 @@ dependencies {
     implementation 'app.futured.donut:donut:2.2.2'
     // Candlestick chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    // Bottom Navigation Bar
+    implementation 'com.google.android.material:material:1.7.0'
 }
