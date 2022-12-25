@@ -20,6 +20,8 @@ import com.example.tradoid.Data_handling.stock_data;
 import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.Data_handling.user_data;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,10 +47,6 @@ public class Status_Page extends AppCompatActivity {
         List<stock_data> data = view_model.getData_list();
         List<double[]> stock_count = user.getStock_amount();
 
-        // Creating a custom Toolbar
-        Toolbar status_page_toolbar = findViewById(R.id.toolbar_status_page);
-        setSupportActionBar(status_page_toolbar);
-
         // Creating a Bottom Navigation Bar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
@@ -56,22 +54,20 @@ public class Status_Page extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.bottom_menu_status_pg);
 
         // Perform item selected listener - Bottom Navigation Bar
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener(){
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 switch (item.getItemId()){
                     case R.id.bottom_menu_stock_market:
                         sendToActivity(Stock_Market.class);
                         return true;
-                    case R.id.bottom_menu_status_pg:
-                        return true;
                     case R.id.bottom_menu_profile:
                         sendToActivity(Profile.class);
                         return true;
+                    default:
+                        return true;
                 }
-                return false;
             }
         });
 
@@ -100,31 +96,6 @@ public class Status_Page extends AppCompatActivity {
         status_RecyleView_Adapter adapter = new status_RecyleView_Adapter(this, data,stock_count,colors,false);
         recyclerView.setAdapter(adapter);
 
-    }
-
-    // Creates the menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.user_general_menu,menu);
-        return true;
-    }
-
-    // Makes the menu items clickable
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menu_general_stock_market) {
-            sendToActivity(Stock_Market.class);
-            return true;
-        }
-        else if (item.getItemId() == R.id.menu_general_status_pg) {
-            //sendToActivity(Status_Page.class); Already on this page
-            return true;
-        }
-        else if (item.getItemId() == R.id.menu_general_user_logout) {
-            sendToActivity(login.class);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     // Sends to other screens

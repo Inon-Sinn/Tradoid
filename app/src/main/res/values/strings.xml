@@ -29,6 +29,10 @@
     <string name="user_blocked">USER BLOCKED</string>
     <string name="attention_sign_desc">Attention Sign for Banned user</string>
 
+    // History section Class
+    <string name="history_card_Title">History</string>
+
+
     // Menu Item names
     <string name="stock_market">Stock Market</string>
     <string name="status_page">Assets</string>

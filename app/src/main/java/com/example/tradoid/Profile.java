@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.example.tradoid.Adapters.Stock_Market_RecycleView_Adapter;
 import com.example.tradoid.Adapters.profile_RecycleView_Adapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class Profile extends AppCompatActivity {
 
@@ -34,12 +35,11 @@ public class Profile extends AppCompatActivity {
         // Set Home - Bottom Navigation Bar
         bottomNavigationView.setSelectedItemId(R.id.bottom_menu_profile);
 
-        // Perfom item selected listener
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
+        // Perform item selected listener
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener(){
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 switch (item.getItemId()){
                     case R.id.bottom_menu_stock_market:
                         sendToActivity(Stock_Market.class);
@@ -47,10 +47,9 @@ public class Profile extends AppCompatActivity {
                     case R.id.bottom_menu_status_pg:
                         sendToActivity(Status_Page.class);
                         return true;
-                    case R.id.bottom_menu_profile:
+                    default:
                         return true;
                 }
-                return false;
             }
         });
     }

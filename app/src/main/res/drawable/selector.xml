@@ -3,9 +3,9 @@
 
     <item
         android:state_selected="true"
-        android:color="@color/red"/>
+        android:color="?attr/colorPrimary"/>
     <item
         android:state_selected="false"
-        android:color="@color/money_green"/>
+        android:color="?attr/colorSecondaryVariant"/>
 
 </selector>

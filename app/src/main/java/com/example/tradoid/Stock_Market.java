@@ -22,6 +22,7 @@ import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.fragments.Watchlist;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
@@ -51,22 +52,20 @@ public class Stock_Market extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.bottom_menu_stock_market);
 
         // Perfom item selected listener
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener(){
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 switch (item.getItemId()){
-                    case R.id.bottom_menu_stock_market:
-                        return true;
                     case R.id.bottom_menu_status_pg:
                         sendToActivity(Status_Page.class);
                         return true;
                     case R.id.bottom_menu_profile:
                         sendToActivity(Profile.class);
                         return true;
+                    default:
+                        return true;
                 }
-                return false;
             }
         });
 
@@ -149,24 +148,6 @@ public class Stock_Market extends AppCompatActivity {
         });
 
         return true;
-    }
-
-    // Makes the menu items clickable
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menu_stock_market) {
-            //sendToActivity(Stock_Market.class); Already on this page
-            return true;
-        }
-        else if (item.getItemId() == R.id.menu_status_pg) {
-            sendToActivity(Status_Page.class);
-            return true;
-        }
-        else if (item.getItemId() == R.id.menu_user_logout) {
-            sendToActivity(login.class);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     // Sends to other screens
