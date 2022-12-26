@@ -90,17 +90,17 @@ public class Sign_Up extends AppCompatActivity {
                         viewModel.getUserStatus().observe(Sign_Up.this, new Observer<Integer>() {
                             @Override
                             public void onChanged(Integer integer) {
-                                if (integer == 1) {
+                                if (integer == SignUpViewModel.Availability.EMAIL_TAKEN.ordinal()) {
                                     email_layout.setError("email already in use!");
-                                } else if (integer == 2) {
+                                } else if (integer == SignUpViewModel.Availability.USERNAME_TAKEN.ordinal()) {
                                     name_layout.setError("username already taken!");
                                 } else {
                                     viewModel.getAdminStatus().observe(Sign_Up.this, new Observer<Integer>() {
                                         @Override
                                         public void onChanged(Integer integer) {
-                                            if (integer == 1) {
+                                            if (integer == SignUpViewModel.Availability.EMAIL_TAKEN.ordinal()) {
                                                 email_layout.setError("email already in use!");
-                                            } else if (integer == 2) {
+                                            } else if (integer == SignUpViewModel.Availability.USERNAME_TAKEN.ordinal()) {
                                                 name_layout.setError("username already taken!");
                                             } else {
                                                 viewModel.addNewUser(username, email, password);
@@ -118,7 +118,7 @@ public class Sign_Up extends AppCompatActivity {
                         });
                     }
                     else{
-                        confirm_layout.setError("Passwords have to be equal"); //TODO change
+                        confirm_layout.setError("Passwords must be equal"); //TODO change
                     }
                 }
             }

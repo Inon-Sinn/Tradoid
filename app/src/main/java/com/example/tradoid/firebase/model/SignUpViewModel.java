@@ -21,7 +21,7 @@ import java.util.Objects;
 
 public class SignUpViewModel extends ViewModel implements FirestoreBaseModel{
 
-    enum Availability{
+    public enum Availability{
         AVAILABLE,
         EMAIL_TAKEN,
         USERNAME_TAKEN
