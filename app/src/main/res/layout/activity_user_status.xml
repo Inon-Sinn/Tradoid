@@ -6,14 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".User_Status">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_user_status"
+    <TextView
+        android:id="@+id/textView10"
+        style="@style/my_circular_gradient"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/cardView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout7" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout7"
@@ -31,49 +32,65 @@
                 android:id="@+id/toolbar_user_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
+                android:layout_marginTop="@dimen/stock_market_bar_top_margin"
+                android:background="@drawable/gradient_background"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:theme="@style/AppTheme.Toolbar"
                 app:title=" "
-                app:titleTextColor="@color/white" />
+                app:titleTextColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/user_status_back_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/back_arrow_x"
+                android:layout_marginTop="@dimen/back_arrow_y"
+                android:text=""
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="@dimen/back_arrow_text_size"
+                app:drawableLeftCompat="@drawable/ic_arrow_back_ios"
+                app:drawableTint="?attr/colorOnPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text=""
+                android:background="@drawable/gradient_background"
+                app:layout_constraintBottom_toTopOf="@+id/toolbar_user_status"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/stock_market_tv_desc"/>
 
             <ImageView
                 android:id="@+id/ban_user_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="@dimen/back_arrow_x"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/toolbar_user_status"
                 app:srcCompat="@drawable/ic_ban"
-                app:tint="@color/white" />
+                app:tint="?attr/colorOnPrimary" />
 
             <TextView
                 android:id="@+id/user_status_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="User Name"
-                android:textColor="@color/white"
+                android:textColor="?attr/colorOnPrimary"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/user_status_To_user_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/toolbar_user_status"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_arrow_back"
-                app:tint="@color/white" />
-
+                app:layout_constraintTop_toTopOf="@+id/toolbar_user_status" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -86,7 +103,7 @@
         android:layout_height="0dp"
         android:layout_marginHorizontal="50dp"
         android:layout_marginVertical="25dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         app:donut_animationDuration="1500"
         app:donut_gapAngle="-90"
         app:donut_gapWidth="00"
@@ -96,83 +113,103 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout7" />
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/purple_500"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@color/purple_500"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/donut_char_user_status" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:text="Signed Up:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="Last seen:"
-        app:layout_constraintStart_toStartOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="Personal Details"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        app:drawableLeftCompat="@drawable/ic_personal_folder"
-        app:drawableTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/textView4"
-        app:layout_constraintStart_toStartOf="@+id/textView4" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="Portfolio"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        app:drawableLeftCompat="@drawable/ic_portfolio"
-        app:drawableTint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView_user_status"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
         android:id="@+id/user_page_tv_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="$ Amount"
-        android:textSize="20sp"
+        android:text="$500"
+        android:textSize="@dimen/Balance_text_size"
+        android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/donut_char_user_status"
         app:layout_constraintEnd_toEndOf="@+id/donut_char_user_status"
         app:layout_constraintStart_toStartOf="@+id/donut_char_user_status"
         app:layout_constraintTop_toTopOf="@+id/donut_char_user_status" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:cardBackgroundColor="?attr/cardBackgroundColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cardView" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="25dp"
+        app:cardBackgroundColor="?attr/cardBackgroundColor"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/donut_char_user_status">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_user_status"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/card_title_margin"
+                android:text="Assets"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="@dimen/card_sub_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Last seen:"
+                android:textColor="?android:attr/textColorPrimary"
+                app:layout_constraintStart_toStartOf="@+id/textView6"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/row_horizontal_margin"
+                android:text="Signed Up:"
+                android:textColor="@color/icon_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/card_title_margin"
+                android:text="User Details"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="@dimen/card_sub_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
