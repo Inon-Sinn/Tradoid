@@ -8,7 +8,7 @@
         app:showAsAction="never"/>
 
     <item android:id="@+id/bottom_menu_status_pg"
-        android:title="@string/status_page"
+        android:title="@string/portfolio"
         android:icon="@drawable/ic_wallet"
         app:showAsAction="never"/>
 
