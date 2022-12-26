@@ -19,9 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class SignUpViewModel extends ViewModel {
-
-    FirebaseFirestore db = new FirestoreBaseModel().getRef();
+public class SignUpViewModel extends ViewModel implements FirestoreBaseModel{
 
     enum Availability{
         AVAILABLE,

@@ -15,19 +15,20 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
 
-public class SignInViewModel extends ViewModel {
-
-    FirebaseFirestore db = new FirestoreBaseModel().getRef();
+public class SignInViewModel extends ViewModel implements FirestoreBaseModel{
 
     private MutableLiveData<Boolean> isUser = new MutableLiveData<>();
     private MutableLiveData<Boolean> isAdmin = new MutableLiveData<>();
 
     private MutableLiveData<String> userId = new MutableLiveData<>();
 
+    private MutableLiveData<Boolean> isBanned = new MutableLiveData<>();
+
     public void reset(){
         isUser = new MutableLiveData<>();
         isAdmin = new MutableLiveData<>();
         userId = new MutableLiveData<>();
+        isBanned = new MutableLiveData<>();
     }
 
     public void signInTryUsers(String email, String password){
@@ -43,6 +44,13 @@ public class SignInViewModel extends ViewModel {
                             isUser.setValue(true);
                             userId.setValue(document.getId());
                             success = true;
+
+                            if (Objects.equals(document.get("banned"), true)){
+                                isBanned.setValue(true);
+                            } else {
+                                isBanned.setValue(false);
+                            }
+
                             break;
                         }
                     }
@@ -88,5 +96,9 @@ public class SignInViewModel extends ViewModel {
 
     public LiveData<String> getUserId(){
         return userId;
+    }
+
+    public LiveData<Boolean> getIsBanned(){
+        return isBanned;
     }
 }

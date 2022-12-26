@@ -11,9 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class BalanceViewModel extends ViewModel {
-
-    FirebaseFirestore db = new FirestoreBaseModel().getRef();
+public class BalanceViewModel extends ViewModel implements FirestoreBaseModel{
 
     private MutableLiveData<Float> balance = new MutableLiveData<>();
 

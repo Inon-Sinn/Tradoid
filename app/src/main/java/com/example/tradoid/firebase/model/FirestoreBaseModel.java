@@ -1,17 +1,11 @@
 package com.example.tradoid.firebase.model;
 
-import com.google.firebase.firestore.DocumentReference;
+import android.annotation.SuppressLint;
+
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class FirestoreBaseModel {
+public interface FirestoreBaseModel {
 
-    protected FirebaseFirestore ref;
-
-    public FirestoreBaseModel(){
-        ref = FirebaseFirestore.getInstance();
-    }
-
-    public FirebaseFirestore getRef(){
-        return ref;
-    }
+    @SuppressLint("StaticFieldLeak")
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 }

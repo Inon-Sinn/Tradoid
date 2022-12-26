@@ -97,7 +97,16 @@ public class Sign_In extends AppCompatActivity {
                                 viewModel.getUserId().observe(Sign_In.this, new Observer<String>() {
                                     @Override
                                     public void onChanged(String s) {
-                                        sendToActivity(Stock_Market.class, s);
+                                        viewModel.getIsBanned().observe(Sign_In.this, new Observer<Boolean>() {
+                                            @Override
+                                            public void onChanged(Boolean aBoolean) {
+                                                if (aBoolean){
+                                                    sendToActivity(Ban_msg.class, s);
+                                                } else {
+                                                    sendToActivity(Stock_Market.class, s);
+                                                }
+                                            }
+                                        });
                                     }
                                 });
                             } else {

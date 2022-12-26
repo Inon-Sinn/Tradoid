@@ -10,9 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
-public class ProfileViewModel extends ViewModel {
-
-    FirebaseFirestore db = new FirestoreBaseModel().getRef();
+public class ProfileViewModel extends ViewModel implements FirestoreBaseModel{
 
     private MutableLiveData<String> username = new MutableLiveData<>();
     private MutableLiveData<String> email = new MutableLiveData<>();
