@@ -30,18 +30,6 @@ public class Sign_In extends AppCompatActivity {
         TextView tv_back_arrow = findViewById(R.id.sign_in_back_arrow);
         tv_back_arrow.setOnClickListener(v -> sendToActivity(login.class, ""));
 
-        // Connection to Stock Market TODO only temporary remove later
-        Button to_Stock_Market_btn = findViewById(R.id.sign_in_To_stock_market);
-        to_Stock_Market_btn.setOnClickListener(v -> sendToActivity(Stock_Market.class, ""));
-
-        // Connection to User List TODO only temporary remove later
-        Button to_User_List_btn = findViewById(R.id.sign_in_To_user_list);
-        to_User_List_btn.setOnClickListener(v -> sendToActivity(User_List.class, ""));
-
-        // Connection to Ban Msg TODO only temporary remove later
-        Button to_Ban_msg_btn = findViewById(R.id.sign_in_To_ban_msg);
-        to_Ban_msg_btn.setOnClickListener(v -> sendToActivity(Ban_msg.class, ""));
-
         // Making Text View "Sign Up" Clickable
         TextView tv_sign_up = findViewById(R.id.tv_from_sign_in_to_sign_up);
         tv_sign_up.setOnClickListener(v -> sendToActivity(Sign_Up.class, ""));

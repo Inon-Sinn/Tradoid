@@ -62,7 +62,7 @@ public class Stock_Page extends AppCompatActivity {
         setSupportActionBar(stock_page_toolbar);
 
         // Implementing the Back arrow in the Toolbar
-        ImageView back_arrow = findViewById(R.id.stock_pg_To_stock_market);
+        TextView back_arrow = findViewById(R.id.stock_page_status_back_arrow);
         back_arrow.setOnClickListener(v -> sendToActivity(recognizeScreen()));
 
         // Implementing the Bookmark in the Toolbar
@@ -76,7 +76,7 @@ public class Stock_Page extends AppCompatActivity {
         tv_price_change = findViewById(R.id.stock_page_tv_price_change);
 
         // Connecting to the ImageView With Dynamic Values
-        iv_icon = findViewById(R.id.stock_page_icon_price_change);
+//        iv_icon = findViewById(R.id.stock_page_icon_price_change);
 
         // set The dynamic views
         setData();
@@ -94,9 +94,6 @@ public class Stock_Page extends AppCompatActivity {
             current_action = item;
             transaction.setText(item);
         });
-
-        // Connecting to the Text View Total value
-        TextView total_value_tv = findViewById(R.id.tv_total_price_stock_page);
 
         // Connecting the Text Edit for USD and Coins
         TextInputEditText editText_usd = findViewById(R.id.edit_text_USD_stock_page);
@@ -119,11 +116,9 @@ public class Stock_Page extends AppCompatActivity {
                         DecimalFormat numberFormat = new DecimalFormat("#.000");
                         editText_Stock.setText(numberFormat.format(num/price)); // The amount of Stock that can be bought
                         total_value = num;
-                        total_value_tv.setText("Total: " + total_value + " $");
                     } else {
                         editText_Stock.setText(""); // The amount of Stock that can be bought
                         total_value = 0;
-                        total_value_tv.setText("Total:");
                     }
                 }
                 stopListening = false;
@@ -151,11 +146,9 @@ public class Stock_Page extends AppCompatActivity {
                         DecimalFormat numberFormat = new DecimalFormat("#.000");
                         editText_usd.setText(numberFormat.format(num * price)); // The amount of Stock that can be bought
                         total_value = num * price;
-                        total_value_tv.setText("Total: " + total_value + " $");
                     } else {
                         editText_usd.setText(""); // The amount of Stock that can be bought
                         total_value = 0;
-                        total_value_tv.setText("Total:");
                     }
                 }
                 stopListening = false;
@@ -189,7 +182,7 @@ public class Stock_Page extends AppCompatActivity {
 
         xAxis.setDrawGridLines(false);
         xAxis.setDrawLabels(false);
-        rightAxis.setTextColor(Color.WHITE);
+        rightAxis.setTextColor(R.color.tv_error);
         yAxis.setDrawLabels(false);
         xAxis.setGranularity(1f);
         xAxis.setGranularityEnabled(true);
@@ -204,6 +197,16 @@ public class Stock_Page extends AppCompatActivity {
         yvalCandleStick.add(new CandleEntry((float)1, (float) 228.35, (float)222.57, (float)223.52, (float)226.41));
         yvalCandleStick.add(new CandleEntry((float)2,(float)226.84,(float)222.52,(float)225.75,(float)223.84));
         yvalCandleStick.add(new CandleEntry((float)3, (float)222.95, (float)217.27, (float)222.15, (float)217.88));
+
+        yvalCandleStick.add(new CandleEntry((float) 4, (float) 218, (float) 214, (float) 217, (float) 215));
+        yvalCandleStick.add(new CandleEntry((float)5, (float) 216, (float)210, (float)215, (float)211));
+        yvalCandleStick.add(new CandleEntry((float)6,(float)212,(float)198,(float)211,(float)200));
+        yvalCandleStick.add(new CandleEntry((float)7, (float)210, (float)180, (float)200, (float)180));
+
+        yvalCandleStick.add(new CandleEntry((float) 8, (float) 225.0, (float) 219.84, (float) 180, (float) 179));
+        yvalCandleStick.add(new CandleEntry((float)9, (float) 179, (float)178, (float) 179, (float)178));
+        yvalCandleStick.add(new CandleEntry((float)10,(float)190,(float)178,(float)178,(float)190));
+        yvalCandleStick.add(new CandleEntry((float)11, (float)222.95, (float)190, (float)190, (float)217.88));
 
         // Creating and getting dataSet
         CandleDataSet set1 = new CandleDataSet(yvalCandleStick,"DataSet1");
@@ -249,8 +252,16 @@ public class Stock_Page extends AppCompatActivity {
         tv_name.setText(name);
         tv_full_name.setText(full_name);
         tv_price.setText(String.valueOf(price));
-        tv_price_change.setText(String.valueOf(price_change));
-        iv_icon.setImageResource(icon);
+        if(price_change>0){
+            tv_price_change.setText(String.valueOf(price_change));
+            tv_price_change.setTextColor(Color.GREEN);
+        }
+        else {
+            tv_price_change.setText(String.valueOf(price_change));
+            tv_price_change.setTextColor(Color.RED);
+        }
+
+
     }
 
     // The Function called when we Bookmark a stock

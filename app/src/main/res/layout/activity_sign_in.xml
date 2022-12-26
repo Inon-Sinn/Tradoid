@@ -158,34 +158,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/sign_in_To_stock_market"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:text="USER LOGIN"
-        app:layout_constraintEnd_toStartOf="@+id/sign_in_To_ban_msg"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_back_arrow" />
-
-    <Button
-        android:id="@+id/sign_in_To_user_list"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginEnd="25dp"
-        android:text="Admin login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sign_in_To_stock_market" />
-
-    <Button
-        android:id="@+id/sign_in_To_ban_msg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ban msg"
-        app:layout_constraintBottom_toBottomOf="@+id/sign_in_To_stock_market"
-        app:layout_constraintEnd_toStartOf="@+id/sign_in_To_user_list" />
-
     <TextView
         android:id="@+id/sign_in_back_arrow"
         android:layout_width="wrap_content"
