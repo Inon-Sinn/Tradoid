@@ -8,7 +8,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -30,9 +32,12 @@ public class SignUpViewModel extends ViewModel {
     private MutableLiveData<Integer> userStatus = new MutableLiveData<>();
     private MutableLiveData<Integer> adminStatus = new MutableLiveData<>();
 
+    private MutableLiveData<String> userId = new MutableLiveData<>();
+
     public void reset(){
         userStatus = new MutableLiveData<>();
         adminStatus = new MutableLiveData<>();
+        userId = new MutableLiveData<>();
     }
 
     public void signUpTryUsers(String username, String email){
@@ -93,8 +98,17 @@ public class SignUpViewModel extends ViewModel {
             put("username", username);
             put("email", email);
             put("password", md5);
+
+            // default values
+            put("balance", 0.0);
+            put("banned", false);
         }};
-        db.collection("users").add(newUser);
+        db.collection("users").add(newUser).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                userId.setValue(documentReference.getId());
+            }
+        });
     }
 
     public LiveData<Integer> getUserStatus(){
@@ -103,5 +117,9 @@ public class SignUpViewModel extends ViewModel {
 
     public LiveData<Integer> getAdminStatus(){
         return adminStatus;
+    }
+
+    public LiveData<String> getUserId(){
+        return userId;
     }
 }

@@ -28,23 +28,23 @@ public class Sign_In extends AppCompatActivity {
 
         // Implementing the Back arrow
         TextView tv_back_arrow = findViewById(R.id.sign_in_back_arrow);
-        tv_back_arrow.setOnClickListener(v -> sendToActivity(login.class));
+        tv_back_arrow.setOnClickListener(v -> sendToActivity(login.class, ""));
 
         // Connection to Stock Market TODO only temporary remove later
         Button to_Stock_Market_btn = findViewById(R.id.sign_in_To_stock_market);
-        to_Stock_Market_btn.setOnClickListener(v -> sendToActivity(Stock_Market.class));
+        to_Stock_Market_btn.setOnClickListener(v -> sendToActivity(Stock_Market.class, ""));
 
         // Connection to User List TODO only temporary remove later
         Button to_User_List_btn = findViewById(R.id.sign_in_To_user_list);
-        to_User_List_btn.setOnClickListener(v -> sendToActivity(User_List.class));
+        to_User_List_btn.setOnClickListener(v -> sendToActivity(User_List.class, ""));
 
         // Connection to Ban Msg TODO only temporary remove later
         Button to_Ban_msg_btn = findViewById(R.id.sign_in_To_ban_msg);
-        to_Ban_msg_btn.setOnClickListener(v -> sendToActivity(Ban_msg.class));
+        to_Ban_msg_btn.setOnClickListener(v -> sendToActivity(Ban_msg.class, ""));
 
         // Making Text View "Sign Up" Clickable
         TextView tv_sign_up = findViewById(R.id.tv_from_sign_in_to_sign_up);
-        tv_sign_up.setOnClickListener(v -> sendToActivity(Sign_Up.class));
+        tv_sign_up.setOnClickListener(v -> sendToActivity(Sign_Up.class, ""));
 
         // Making the Text View "Forgot your password?" Clickable
         TextView tv_forgot_pass = findViewById(R.id.tv_forgot_pass_sign_in);
@@ -94,13 +94,23 @@ public class Sign_In extends AppCompatActivity {
                         @Override
                         public void onChanged(Boolean aBoolean) {
                             if (aBoolean){
-                                sendToActivity(Stock_Market.class);
+                                viewModel.getUserId().observe(Sign_In.this, new Observer<String>() {
+                                    @Override
+                                    public void onChanged(String s) {
+                                        sendToActivity(Stock_Market.class, s);
+                                    }
+                                });
                             } else {
                                 viewModel.getIsAdmin().observe(Sign_In.this, new Observer<Boolean>() {
                                     @Override
                                     public void onChanged(Boolean aBoolean) {
                                         if (aBoolean){
-                                            sendToActivity(User_List.class);
+                                            viewModel.getUserId().observe(Sign_In.this, new Observer<String>() {
+                                                @Override
+                                                public void onChanged(String s) {
+                                                    sendToActivity(User_List.class, s);
+                                                }
+                                            });
                                         } else{
                                             errortv.setText("Incorrect username or password");
                                         }
@@ -115,9 +125,9 @@ public class Sign_In extends AppCompatActivity {
     }
 
     // Sends to other screens
-    public void sendToActivity(Class cls){
+    public void sendToActivity(Class cls, String userId){
         Intent intent = new Intent(this,cls);
-        intent.putExtra("user_ID","123456");
+        intent.putExtra("user_ID", userId);
         startActivity(intent);
     }
 }

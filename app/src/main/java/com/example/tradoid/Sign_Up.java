@@ -28,11 +28,11 @@ public class Sign_Up extends AppCompatActivity {
 
         // Implementing the Back arrow
         TextView tv_back_arrow = findViewById(R.id.sign_up_back_arrow);
-        tv_back_arrow.setOnClickListener(v -> sendToActivity(login.class));
+        tv_back_arrow.setOnClickListener(v -> sendToActivity(login.class, ""));
 
         // Making Text View "Sign Up" Clickable
         TextView tv_sign_in = findViewById(R.id.tv_from_sign_up_to_sign_in);
-        tv_sign_in.setOnClickListener(v -> sendToActivity(Sign_In.class));
+        tv_sign_in.setOnClickListener(v -> sendToActivity(Sign_In.class, ""));
 
         // TextInputLayouts
         TextInputLayout name_layout = findViewById(R.id.textInputLayout_name_sign_up);
@@ -104,7 +104,12 @@ public class Sign_Up extends AppCompatActivity {
                                                 name_layout.setError("username already taken!");
                                             } else {
                                                 viewModel.addNewUser(username, email, password);
-                                                sendToActivity(Stock_Market.class);
+                                                viewModel.getUserId().observe(Sign_Up.this, new Observer<String>() {
+                                                    @Override
+                                                    public void onChanged(String s) {
+                                                        sendToActivity(Stock_Market.class, s);
+                                                    }
+                                                });
                                             }
                                         }
                                     });
@@ -121,9 +126,9 @@ public class Sign_Up extends AppCompatActivity {
     }
 
     // Sends to other screens
-    public void sendToActivity(Class cls){
+    public void sendToActivity(Class cls, String userId){
         Intent intent = new Intent(this,cls);
-        intent.putExtra("user_ID","123");
+        intent.putExtra("user_ID", userId);
         startActivity(intent);
     }
 }

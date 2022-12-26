@@ -22,9 +22,12 @@ public class SignInViewModel extends ViewModel {
     private MutableLiveData<Boolean> isUser = new MutableLiveData<>();
     private MutableLiveData<Boolean> isAdmin = new MutableLiveData<>();
 
+    private MutableLiveData<String> userId = new MutableLiveData<>();
+
     public void reset(){
         isUser = new MutableLiveData<>();
         isAdmin = new MutableLiveData<>();
+        userId = new MutableLiveData<>();
     }
 
     public void signInTryUsers(String email, String password){
@@ -38,6 +41,7 @@ public class SignInViewModel extends ViewModel {
                         if (Objects.equals(document.get("email"), email) &&
                                 Objects.equals(document.get("password"), md5)) {
                             isUser.setValue(true);
+                            userId.setValue(document.getId());
                             success = true;
                             break;
                         }
@@ -61,6 +65,7 @@ public class SignInViewModel extends ViewModel {
                         if (Objects.equals(document.get("email"), email) &&
                                 Objects.equals(document.get("password"), md5)) {
                             isAdmin.setValue(true);
+                            userId.setValue(document.getId());
                             success = true;
                             break;
                         }
@@ -79,5 +84,9 @@ public class SignInViewModel extends ViewModel {
 
     public LiveData<Boolean> getIsAdmin(){
         return isAdmin;
+    }
+
+    public LiveData<String> getUserId(){
+        return userId;
     }
 }
