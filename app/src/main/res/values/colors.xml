@@ -39,4 +39,6 @@
     <color name="icon_color">#7a808e</color>
     <color name="arrow_icon_color">#454b59</color>
 
+    <color name="tv_error">?android:attr/textColorPrimary</color>
+
 </resources>
