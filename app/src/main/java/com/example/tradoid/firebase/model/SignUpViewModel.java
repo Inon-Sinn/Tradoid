@@ -100,6 +100,7 @@ public class SignUpViewModel extends ViewModel implements FirestoreBaseModel{
             // default values
             put("balance", 0.0);
             put("banned", false);
+            put("ban_msg", "");
         }};
         db.collection("users").add(newUser).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override

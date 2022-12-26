@@ -9,14 +9,12 @@ import java.util.List;
 
 public class user_view_model extends ViewModel implements Filterable {
 
-    Data_Layer data;
-    List<user_data> data_list;
-    List<user_data> full_data_list;
+    List<user_data> data_list = new ArrayList<>();
+    List<user_data> full_data_list = new ArrayList<>();
 
-    public void setFragment(String fragment) {
-        this.data = new Data_Layer(fragment);
-        this.data_list = data.get_User_data();
-        this.full_data_list = new ArrayList<>(data_list);
+    public void setUserList(List<user_data> userList){
+        data_list = new ArrayList<>(userList);
+        full_data_list = new ArrayList<>(userList);
     }
 
     // getter for the list of data

@@ -2,7 +2,9 @@ package com.example.tradoid.Data_handling;
 
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.tradoid.firebase.model.UserListViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;

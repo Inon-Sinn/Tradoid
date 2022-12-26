@@ -3,6 +3,7 @@ package com.example.tradoid.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,8 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.tradoid.Adapters.User_List_RecycleView_Adapter;
+import com.example.tradoid.Data_handling.user_data;
 import com.example.tradoid.Data_handling.user_view_model;
 import com.example.tradoid.R;
+import com.example.tradoid.firebase.model.UserListViewModel;
+
+import java.util.List;
 
 public class Banned_users extends Fragment {
 
@@ -27,7 +32,16 @@ public class Banned_users extends Fragment {
 
         // Connect to View Model
         view_model = new ViewModelProvider(this).get(user_view_model.class);
-        view_model.setFragment("banned");
+        UserListViewModel listViewModel = new ViewModelProvider(this).get(UserListViewModel.class);
+        listViewModel.reset();
+
+        listViewModel.loadBannedUserList();
+        listViewModel.getBannedList().observe(getViewLifecycleOwner(), new Observer<List<user_data>>() {
+            @Override
+            public void onChanged(List<user_data> user_data) {
+                view_model.setUserList(user_data);
+            }
+        });
 
         // Creating the Recycle View - the list
         recyclerView = view.findViewById(R.id.recyclerView_banned_users);
