@@ -48,4 +48,14 @@
         <item name="android:background">@drawable/gradient_ring_backgroung_dark</item>
     </style>
 
+    <!-- Custom Toolbar --><!-- _____My Own Creation_____ -->
+    <style name="AppTheme.Toolbar" parent="Theme.Tradoid">
+        <!--This line changes the color of text in Toolbar-->
+        <item name="android:textColorPrimary">@color/black</item>
+        <!--This line changes the color of icons in toolbar (back, overflow menu icons)-->
+        <item name="android:textColorSecondary">@color/black</item>
+        <!--This line changes the color of the input of the search View-->
+        <item name="android:editTextColor">@android:color/black</item>
+    </style>
+
 </resources>
