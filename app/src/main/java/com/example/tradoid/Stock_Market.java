@@ -15,7 +15,7 @@ import com.example.tradoid.fragments.Portfolio;
 import com.example.tradoid.fragments.Stock;
 import com.example.tradoid.Adapters.Stock_Market_TabsAdapter;
 import com.example.tradoid.Data_handling.stock_view_model;
-import com.example.tradoid.fragments.Watchlist;
+import com.example.tradoid.fragments.Bookmarks;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -146,7 +146,7 @@ public class Stock_Market extends AppCompatActivity {
     // Updates the Fragments ViewModel
     public void updateFragmentsAdapter(String newText){
         Stock stock_frag = (Stock) getSupportFragmentManager().findFragmentByTag("f0" );
-        Watchlist watch_frag = (Watchlist) getSupportFragmentManager().findFragmentByTag("f1");
+        Bookmarks watch_frag = (Bookmarks) getSupportFragmentManager().findFragmentByTag("f1");
         Portfolio portfolio_frag = (Portfolio) getSupportFragmentManager().findFragmentByTag("f2");
         // Update the fragments
         if(stock_frag != null && watch_frag != null && portfolio_frag != null) {

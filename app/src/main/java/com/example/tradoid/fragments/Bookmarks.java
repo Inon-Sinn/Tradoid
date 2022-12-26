@@ -16,7 +16,7 @@ import com.example.tradoid.R;
 import com.example.tradoid.Stock_Market;
 
 // A Fragment of the Watchlist tab in the Stock Market Activity
-public class Watchlist extends Fragment {
+public class Bookmarks extends Fragment {
 
     RecyclerView recyclerView;
     stock_view_model view_model;

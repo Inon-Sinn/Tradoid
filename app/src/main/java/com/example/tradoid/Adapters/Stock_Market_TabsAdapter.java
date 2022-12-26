@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.tradoid.fragments.Portfolio;
 import com.example.tradoid.fragments.Stock;
-import com.example.tradoid.fragments.Watchlist;
+import com.example.tradoid.fragments.Bookmarks;
 
 public class Stock_Market_TabsAdapter extends FragmentStateAdapter {
 
@@ -21,7 +21,7 @@ public class Stock_Market_TabsAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 1:
-                return new Watchlist();
+                return new Bookmarks();
             case 2:
                 return new Portfolio();
             default:
