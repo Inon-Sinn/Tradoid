@@ -49,6 +49,10 @@ public class User_List extends AppCompatActivity {
                 sendToActivity(Dashboard.class);
                 return true;
             }
+            if (item.getItemId() == R.id.bottom_menu_options) {
+                sendToActivity(admin_options.class);
+                return true;
+            }
             return true;
         });
 

@@ -14,6 +14,13 @@
         android:theme="@style/Theme.Tradoid"
         tools:targetApi="31">
         <activity
+            android:name=".admin_options"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".user_ban"
             android:exported="false">
             <meta-data

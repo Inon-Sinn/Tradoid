@@ -33,6 +33,10 @@ public class Dashboard extends AppCompatActivity {
                 sendToActivity(User_List.class);
                 return true;
             }
+            if (item.getItemId() == R.id.bottom_menu_options) {
+                sendToActivity(admin_options.class);
+                return true;
+            }
             return true;
         });
     }
