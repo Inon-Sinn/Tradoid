@@ -2,7 +2,6 @@ package com.example.tradoid;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,7 +15,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.github.mikephil.charting.charts.CandleStickChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -25,7 +23,6 @@ import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.google.android.material.textfield.TextInputEditText;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -233,13 +230,11 @@ public class Stock_Page extends AppCompatActivity {
     // getting the data from the intent
     private void getData(){
         // Check if it received the data
-        if (getIntent().hasExtra("name") && getIntent().hasExtra("full_name") && getIntent().hasExtra("price") && getIntent().hasExtra("price_change") && getIntent().hasExtra("icon")){
+        if (getIntent().hasExtra("name") && getIntent().hasExtra("full_name") && getIntent().hasExtra("price") && getIntent().hasExtra("price_change")){
             name = getIntent().getStringExtra("name");
             full_name = getIntent().getStringExtra("full_name");
             price = getIntent().getDoubleExtra("price",0);
             price_change = getIntent().getDoubleExtra("price_change",0);
-            icon = getIntent().getIntExtra("icon",1);
-
         }else{
             // In Case something went wrong
             Toast.makeText(this,"Error: No data",Toast.LENGTH_SHORT).show();

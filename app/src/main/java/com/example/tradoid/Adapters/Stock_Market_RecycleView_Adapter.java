@@ -3,10 +3,10 @@ package com.example.tradoid.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -41,12 +41,21 @@ public class Stock_Market_RecycleView_Adapter extends RecyclerView.Adapter<Stock
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        String text;
         // communicates with MyViewHolder
         holder.tv1.setText(item_list.get(position).getName());
         holder.tv2.setText(item_list.get(position).getFull_name());
         holder.tv3.setText(String.valueOf(item_list.get(position).getTotal_Price()));
-        holder.tv4.setText(String.valueOf(item_list.get(position).getPrice_change()));
-        holder.myImage.setImageResource(item_list.get(position).getIcon());
+        if(item_list.get(position).getPrice_change()<0){
+            holder.tv4.setText(String.valueOf(item_list.get(position).getPrice_change()));
+            holder.tv4.setTextColor(Color.RED);
+        }
+        else {
+            text = "+" + item_list.get(position).getPrice_change();
+            holder.tv4.setText(text);
+            holder.tv4.setTextColor(Color.GREEN);
+        }
+
 
         // needed for onClick
         holder.rowLayout.setOnClickListener(v -> {
@@ -56,7 +65,6 @@ public class Stock_Market_RecycleView_Adapter extends RecyclerView.Adapter<Stock
             intent.putExtra("full_name", item_list.get(position).getFull_name());
             intent.putExtra("price", item_list.get(position).getTotal_Price());
             intent.putExtra("price_change", item_list.get(position).getPrice_change());
-            intent.putExtra("icon", item_list.get(position).getIcon());
             // give it the screen it came from
             intent.putExtra("former Screen","Stock_Market");
             intent.putExtra("user_ID",user_ID);
@@ -82,7 +90,6 @@ public class Stock_Market_RecycleView_Adapter extends RecyclerView.Adapter<Stock
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView tv1,tv2,tv3,tv4;
-        ImageView myImage;
         ConstraintLayout rowLayout;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -91,7 +98,6 @@ public class Stock_Market_RecycleView_Adapter extends RecyclerView.Adapter<Stock
             tv2 = itemView.findViewById(R.id.stock_row_tv_full_name);
             tv3 = itemView.findViewById(R.id.stock_row_tv_stockPrice);
             tv4 = itemView.findViewById(R.id.stock_row_tv_price_change);
-            myImage = itemView.findViewById(R.id.stock_row_icon_price_change);
             // needed for onClick
             rowLayout = itemView.findViewById(R.id.stock_row_layout);
         }

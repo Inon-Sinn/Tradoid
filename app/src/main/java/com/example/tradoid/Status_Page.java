@@ -1,10 +1,7 @@
 package com.example.tradoid;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,18 +10,12 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.example.tradoid.Adapters.status_RecyleView_Adapter;
-import com.example.tradoid.Data_handling.Data_Layer;
+import com.example.tradoid.Adapters.status_RecycleView_Adapter;
 import com.example.tradoid.Data_handling.stock_data;
 import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.Data_handling.user_data;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomnavigation.LabelVisibilityMode;
-import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +96,7 @@ public class Status_Page extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Calling the Adapter
-        status_RecyleView_Adapter adapter = new status_RecyleView_Adapter(this, data,stock_count,colors,false,user_ID);
+        status_RecycleView_Adapter adapter = new status_RecycleView_Adapter(this, data,stock_count,colors,false,user_ID);
         recyclerView.setAdapter(adapter);
 
     }

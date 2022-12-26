@@ -3,25 +3,20 @@ package com.example.tradoid;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.tradoid.Adapters.status_RecyleView_Adapter;
+import com.example.tradoid.Adapters.status_RecycleView_Adapter;
 import com.example.tradoid.Data_handling.stock_data;
 import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.Data_handling.user_data;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import app.futured.donut.DonutProgressView;
 import app.futured.donut.DonutSection;
 
@@ -80,11 +75,9 @@ public class User_Status extends AppCompatActivity {
         // Creating the Recycle View - the list
         RecyclerView recyclerView = findViewById(R.id.recyclerView_user_status);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        // https://stackoverflow.com/questions/31242812/how-can-a-divider-line-be-added-in-an-android-recyclerview
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
         // Calling the Adapter
-        status_RecyleView_Adapter adapter = new status_RecyleView_Adapter(this, data,stock_count,colors,true,"");
+        status_RecycleView_Adapter adapter = new status_RecycleView_Adapter(this, data,stock_count,colors,true,"");
         recyclerView.setAdapter(adapter);
     }
 

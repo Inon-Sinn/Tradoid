@@ -24,7 +24,7 @@
     <string name="sign_in_card_Title">Welcome Back</string>
 
     // Sign Up Class
-    <string name="have_an_account">Aldready have an Account?</string>
+    <string name="have_an_account">Already have an Account?</string>
     <string name="sign_up_card_Title">Register</string>
 
     // Ban msg Class
@@ -52,6 +52,31 @@
 
     // Notification section Class
     <string name="notification_card_Title">Notifications</string>
+
+    // List item names
+        // Stock Row
+    <string name="stock_name">Name</string>
+    <string name="stock_full_name">Full Name</string>
+    <string name="stock_price">Stock Price</string>
+    <string name="stock_price_change">Price Change</string>
+        // Status Row
+    <string name="status_name">Name</string>
+    <string name="status_full_name">Full Name</string>
+    <string name="status_usd">$USD</string>
+    <string name="status_stocks">Stocks: </string>
+    <string name="status_dot_desc">Shows the color</string>
+        // User Row
+    <string name="user_name">Username</string>
+    <string name="user_email">Email</string>
+    <string name="user_balance">Balance</string>
+        // Profile Row
+    <string name="profile_section">Section Name</string>
+    <string name="profile_section_icon_desc">Section Icon</string>
+    <string name="profile_arrow_desc">Forward Arrow to other Screens</string>
+        // history Row
+    <string name="history_name">Stock Name</string>
+    <string name="history_date">Date</string>
+    <string name="history_action">Bought/Sold</string>
 
 
     // Menu Item names

@@ -20,7 +20,7 @@ import com.example.tradoid.Stock_Page;
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class status_RecyleView_Adapter extends RecyclerView.Adapter<status_RecyleView_Adapter.MyViewHolder>{
+public class status_RecycleView_Adapter extends RecyclerView.Adapter<status_RecycleView_Adapter.MyViewHolder>{
 
 
     Context context;
@@ -31,7 +31,7 @@ public class status_RecyleView_Adapter extends RecyclerView.Adapter<status_Recyl
     String user_ID;
 
     //Constructor for the adapter
-    public status_RecyleView_Adapter(Context ct, List<stock_data> newList,List<double[]> amount_list,int[] colors, boolean admin, String user_ID) {
+    public status_RecycleView_Adapter(Context ct, List<stock_data> newList, List<double[]> amount_list, int[] colors, boolean admin, String user_ID) {
         context = ct;
         item_list = newList;
         this.amount_list = amount_list;
@@ -44,16 +44,16 @@ public class status_RecyleView_Adapter extends RecyclerView.Adapter<status_Recyl
 
     @NonNull
     @Override
-    public status_RecyleView_Adapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public status_RecycleView_Adapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater =  LayoutInflater.from(context);
         //We give it the row layout we want
         View view = layoutInflater.inflate(R.layout.status_row, parent,false);
-        return new status_RecyleView_Adapter.MyViewHolder(view);
+        return new status_RecycleView_Adapter.MyViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull status_RecyleView_Adapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull status_RecycleView_Adapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         // Limiting the Decimal length
         DecimalFormat numberFormat = new DecimalFormat("#.0");
 
@@ -62,13 +62,8 @@ public class status_RecyleView_Adapter extends RecyclerView.Adapter<status_Recyl
         holder.tv2.setText(item_list.get(position).getFull_name());
         holder.tv3.setText("$" + numberFormat.format(amount_list.get(position)[0]));
         holder.tv4.setText("Stocks: " + numberFormat.format(amount_list.get(position)[1]));
-//        holder.tv3.setText("$" + String.valueOf(amount_list.get(position)[0]));
-//        holder.tv4.setText("Stocks: " + String.valueOf(amount_list.get(position)[1]));
-
         //add colors
         holder.dot.setColorFilter(colors[position]);
-//        holder.tv3.setTextColor(colors[position]);
-//        holder.tv4.setTextColor(colors[position]);
 
         // needed for onClick
         if (!admin) {
@@ -79,7 +74,6 @@ public class status_RecyleView_Adapter extends RecyclerView.Adapter<status_Recyl
                 intent.putExtra("full_name", item_list.get(position).getFull_name());
                 intent.putExtra("price", item_list.get(position).getTotal_Price());
                 intent.putExtra("price_change", item_list.get(position).getPrice_change());
-                intent.putExtra("icon", item_list.get(position).getIcon());
                 // give it the screen it came from
                 intent.putExtra("former Screen", "Status_Page");
                 intent.putExtra("user_ID",user_ID);
