@@ -4,12 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
-import android.annotation.SuppressLint;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
 import com.example.tradoid.fragments.Portfolio;
@@ -30,7 +29,6 @@ public class Stock_Market extends AppCompatActivity {
 
     String user_ID;
 
-    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,16 +52,15 @@ public class Stock_Market extends AppCompatActivity {
 
         // Perform item selected listener
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()){
-                case R.id.bottom_menu_status_pg:
-                    sendToActivity(Status_Page.class);
-                    return true;
-                case R.id.bottom_menu_profile:
-                    sendToActivity(Profile.class);
-                    return true;
-                default:
-                    return true;
+            if (item.getItemId() == R.id.bottom_menu_status_pg) {
+                sendToActivity(Status_Page.class);
+                return true;
             }
+            else if (item.getItemId() == R.id.bottom_menu_profile) {
+                sendToActivity(Profile.class);
+                return true;
+            }
+            return true;
         });
 
         // Creating the tab layout and view Pager
@@ -111,7 +108,7 @@ public class Stock_Market extends AppCompatActivity {
     // Creates the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.user_list_menu,menu);
+        getMenuInflater().inflate(R.menu.user_search_menu,menu);
 
         // Reference to the menu item for search
         MenuItem searchItem = menu.findItem(R.id.menu_user_search);

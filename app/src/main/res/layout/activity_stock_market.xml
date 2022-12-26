@@ -107,7 +107,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
-        app:menu="@menu/bottom_navigation_menu"/>
+        app:menu="@menu/user_bottom_navigation_menu"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

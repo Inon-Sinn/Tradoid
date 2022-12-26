@@ -22,22 +22,23 @@
                 android:id="@+id/toolbar_user_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
+                android:layout_marginTop="@dimen/stock_market_bar_top_margin"
+                android:background="@drawable/gradient_background"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:theme="@style/AppTheme.Toolbar"
                 app:title=" "
-                app:titleTextColor="@color/white"
-                app:theme="@style/AppTheme.Toolbar">
+                app:titleTextColor="@color/white">
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Users"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/colorOnPrimary"
                     android:textSize="20sp"
                     android:layout_gravity="center"
                     android:id="@+id/toolbar_title" />
@@ -45,21 +46,21 @@
 
             </androidx.appcompat.widget.Toolbar>
 
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text=""
+                android:background="@drawable/gradient_background"
+                app:layout_constraintBottom_toTopOf="@+id/toolbar_user_list"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="stock_market_tv_desc"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
-
-    <Button
-        android:id="@+id/user_list_To_user_status"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginBottom="70dp"
-        android:text="User Status"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout_user_list"
@@ -86,11 +87,21 @@
         android:id="@+id/view_pager_user_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationViewAdmin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout_user_list"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout_user_list" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationViewAdmin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:itemIconTint="@drawable/selector"
+        app:itemTextColor="@drawable/selector"
+        app:menu="@menu/admin_bottom_navigation_menu"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

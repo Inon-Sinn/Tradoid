@@ -20,7 +20,6 @@ public class Profile extends AppCompatActivity {
 
     String user_ID;
 
-    @SuppressLint({"NonConstantResourceId", "ResourceAsColor"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,16 +44,15 @@ public class Profile extends AppCompatActivity {
 
         // Perform item selected listener
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()){
-                case R.id.bottom_menu_stock_market:
-                    sendToActivity(Stock_Market.class);
-                    return true;
-                case R.id.bottom_menu_status_pg:
-                    sendToActivity(Status_Page.class);
-                    return true;
-                default:
-                    return true;
+            if (item.getItemId() == R.id.bottom_menu_status_pg) {
+                sendToActivity(Status_Page.class);
+                return true;
             }
+            else if (item.getItemId() == R.id.bottom_menu_stock_market) {
+                sendToActivity(Stock_Market.class);
+                return true;
+            }
+            return true;
         });
 
 
