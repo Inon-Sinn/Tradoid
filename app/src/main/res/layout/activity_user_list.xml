@@ -56,7 +56,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="stock_market_tv_desc"/>
+                android:contentDescription="@string/stock_market_tv_desc"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

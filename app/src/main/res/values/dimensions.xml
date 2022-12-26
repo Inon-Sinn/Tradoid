@@ -45,6 +45,9 @@
     <!-- Balance -->
     <dimen name="balance_text_size">40sp</dimen>
 
+    <!-- User Status -->
+    <dimen name="card_sub_title">20sp</dimen>
+
     <!-- Row Items -->
     <dimen name="row_horizontal_margin">15dp</dimen>
     <dimen name="row_text_size">14sp</dimen>
