@@ -23,12 +23,17 @@ public class Banned_users extends Fragment {
     RecyclerView recyclerView;
     user_view_model view_model;
     User_List_RecycleView_Adapter adapter;
+    boolean build = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_banned_users, container, false);
+
+        // Creating the Recycle View - the list
+        recyclerView = view.findViewById(R.id.recyclerView_banned_users);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         // Connect to View Model
         view_model = new ViewModelProvider(this).get(user_view_model.class);
@@ -40,23 +45,26 @@ public class Banned_users extends Fragment {
             @Override
             public void onChanged(List<user_data> user_data) {
                 view_model.setUserList(user_data);
+
+                // Calling the Adapter
+                adapter = new User_List_RecycleView_Adapter(getActivity(),view_model.getData_list());
+                recyclerView.setAdapter(adapter);
+
+                build = true;
             }
         });
 
-        // Creating the Recycle View - the list
-        recyclerView = view.findViewById(R.id.recyclerView_banned_users);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        
-        // Calling the Adapter
-        adapter = new User_List_RecycleView_Adapter(getActivity(),view_model.getData_list());
-        recyclerView.setAdapter(adapter);
+
+
 
         return view;
     }
 
     // Update the Adapter after each search
     public void UpdateAdapter(String newText){
-        view_model.filterData(newText);
-        adapter.updateList(view_model.getData_list());
+        if (build) {
+            view_model.filterData(newText);
+            adapter.updateList(view_model.getData_list());
+        }
     }
 }
