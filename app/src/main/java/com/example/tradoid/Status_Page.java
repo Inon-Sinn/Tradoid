@@ -34,7 +34,7 @@ public class Status_Page extends AppCompatActivity {
         setContentView(R.layout.activity_status_page);
 
         // get User ID
-        if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");} //TODO remove
+        if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
 
         // get user_data
         user_data user = new user_data("Temp","Temp",0);

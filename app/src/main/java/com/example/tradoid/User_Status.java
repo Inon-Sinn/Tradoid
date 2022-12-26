@@ -28,15 +28,23 @@ public class User_Status extends AppCompatActivity {
 
     // The Dynamic values
     String name;
+    String user_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_status);
 
+        // get User ID
+        if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
+
         // Creating a custom Toolbar
         Toolbar user_status_toolbar = findViewById(R.id.toolbar_user_status);
         setSupportActionBar(user_status_toolbar);
+
+        // Implementing connecting to user ban
+        ImageView to_ban = findViewById(R.id.ban_user_status);
+        to_ban.setOnClickListener(v->sendToActivity(user_ban.class));
 
         // Implementing the Back arrow in the Toolbar
         TextView back_arrow = findViewById(R.id.user_status_back_arrow);
@@ -112,6 +120,8 @@ public class User_Status extends AppCompatActivity {
     // Sends to other screens
     public void sendToActivity(Class cls){
         Intent intent = new Intent(this,cls);
+        intent.putExtra("name",name);
+        intent.putExtra("user_ID",user_ID);
         startActivity(intent);
     }
 }
