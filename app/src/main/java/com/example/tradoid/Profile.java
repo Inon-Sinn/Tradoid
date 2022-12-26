@@ -1,6 +1,8 @@
 package com.example.tradoid;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
@@ -9,6 +11,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.tradoid.Adapters.profile_RecycleView_Adapter;
+import com.example.tradoid.firebase.model.ProfileViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.w3c.dom.Text;
@@ -25,8 +28,6 @@ public class Profile extends AppCompatActivity {
 
         // get User ID
         if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
-        Toast.makeText(this,user_ID,Toast.LENGTH_SHORT).show();
-        System.out.println(user_ID);
 
         // Creating the Recycle View - the list
         RecyclerView recyclerView = findViewById(R.id.recyclerView_profile);
@@ -61,6 +62,22 @@ public class Profile extends AppCompatActivity {
         TextView tv_username = findViewById(R.id.profile_tv_username);
         TextView tv_email = findViewById(R.id.profile_tv_email);
 
+        ProfileViewModel viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+        viewModel.reset();
+
+        viewModel.loadProfileUsers(user_ID);
+        viewModel.getUsername().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                tv_username.setText(s);
+            }
+        });
+        viewModel.getEmail().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                tv_email.setText(s);
+            }
+        });
     }
 
     // Sends to other screens
