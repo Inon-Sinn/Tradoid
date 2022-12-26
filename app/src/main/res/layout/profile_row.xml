@@ -26,7 +26,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_arrow_forward_ios" />
+                app:srcCompat="@drawable/ic_arrow_forward_ios"
+                android:contentDescription="@string/profile_arrow_desc" />
 
             <TextView
                 android:id="@+id/profile_row_section_name"
@@ -35,7 +36,8 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:text="Section Name"
+                android:text="@string/profile_section"
+                android:textSize="@dimen/row_text_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/profile_row_section_icon"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -49,7 +51,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/profile_row_section_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/profile_row_section_name"
-                app:srcCompat="@drawable/ic_identity" />
+                app:srcCompat="@drawable/ic_identity"
+                android:contentDescription="@string/profile_section_icon_desc" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

@@ -2,13 +2,10 @@ package com.example.tradoid.Data_handling;
 
 import androidx.annotation.NonNull;
 
-import com.example.tradoid.R;
-
 public class stock_data {
 
     String name;
     String full_name;
-    int icon;
     double total_Price;
     double price_change;
 
@@ -17,12 +14,6 @@ public class stock_data {
         this.full_name = full_name;
         this.total_Price = total_Price;
         this.price_change = price_change;
-        if (price_change >= 0){
-            this.icon = R.drawable.ic_green_arrow_upward;
-        }
-        else{
-            this.icon =R.drawable.ic_red_arrow_downward;
-        }
     }
 
     public String toFilterBy(){
@@ -43,10 +34,6 @@ public class stock_data {
 
     public double getPrice_change() {
         return price_change;
-    }
-
-    public int getIcon() {
-        return icon;
     }
 
     @NonNull

@@ -4,17 +4,12 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.tradoid.Adapters.Stock_Market_RecycleView_Adapter;
 import com.example.tradoid.Adapters.User_List_RecycleView_Adapter;
-import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.Data_handling.user_view_model;
 import com.example.tradoid.R;
 
@@ -37,8 +32,6 @@ public class Users extends Fragment {
         // Creating the Recycle View - the list
         recyclerView = view.findViewById(R.id.recyclerView_users);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        // https://stackoverflow.com/questions/31242812/how-can-a-divider-line-be-added-in-an-android-recyclerview
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
         // Calling the Adapter
         adapter = new User_List_RecycleView_Adapter(getActivity(),view_model.getData_list());

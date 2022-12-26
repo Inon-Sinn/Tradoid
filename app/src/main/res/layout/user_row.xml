@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/user_row_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -11,7 +10,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardBackgroundColor="?attr/cardBackgroundColor">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -23,7 +23,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
-                android:text="Username"
+                android:text="@string/user_name"
+                android:textSize="@dimen/row_text_size"
+                android:textColor="?android:attr/textColorPrimary"
                 app:layout_constraintBottom_toTopOf="@+id/user_row_tv_email"
                 app:layout_constraintStart_toStartOf="@+id/user_row_tv_email"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -32,9 +34,11 @@
                 android:id="@+id/user_row_tv_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/row_horizontal_margin"
                 android:layout_marginBottom="10dp"
-                android:text="email or ID"
+                android:text="@string/user_email"
+                android:textSize="@dimen/row_text_size"
+                android:textColor="@color/icon_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -42,8 +46,10 @@
                 android:id="@+id/user_row_tv_total_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="Total Amount"
+                android:layout_marginEnd="@dimen/row_horizontal_margin"
+                android:text="@string/user_balance"
+                android:textSize="@dimen/row_text_size"
+                android:textColor="?android:attr/textColorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
