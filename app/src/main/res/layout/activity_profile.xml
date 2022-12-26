@@ -45,7 +45,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:itemIconTint="@drawable/selector"
                 app:itemTextColor="@drawable/selector"
-                app:menu="@menu/bottom_navigation_menu"/>
+                app:menu="@menu/user_bottom_navigation_menu"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_profile"

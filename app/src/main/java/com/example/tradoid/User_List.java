@@ -1,23 +1,20 @@
 package com.example.tradoid;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.SearchView;
-
 import com.example.tradoid.Adapters.User_List_TabsAdapter;
 import com.example.tradoid.Data_handling.user_view_model;
 import com.example.tradoid.fragments.Banned_users;
 import com.example.tradoid.fragments.Users;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
@@ -40,9 +37,20 @@ public class User_List extends AppCompatActivity {
         Toolbar user_list_toolbar = findViewById(R.id.toolbar_user_list);
         setSupportActionBar(user_list_toolbar);
 
-        // Connection to User Status TODO only temporary remove later
-        Button to_User_Status_btn = findViewById(R.id.user_list_To_user_status);
-        to_User_Status_btn.setOnClickListener(v -> sendToActivity(User_Status.class));
+        // Creating a Bottom Navigation Bar
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationViewAdmin);
+
+        // Set Home - Bottom Navigation Bar
+        bottomNavigationView.setSelectedItemId(R.id.bottom_menu_user_list);
+
+        // Perform item selected listener
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.bottom_menu_dashboard) {
+                sendToActivity(Dashboard.class);
+                return true;
+            }
+            return true;
+        });
 
         // Creating the tab layout and view Pager
         TabLayout tabLayout = findViewById(R.id.tabLayout_user_list);
@@ -86,7 +94,7 @@ public class User_List extends AppCompatActivity {
     // Creates the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.admin_list_menu,menu);
+        getMenuInflater().inflate(R.menu.admin_search_menu,menu);
 
         // Reference to the menu item for search
         MenuItem searchItem = menu.findItem(R.id.menu_admin_search);
@@ -121,24 +129,6 @@ public class User_List extends AppCompatActivity {
         });
 
         return true;
-    }
-
-    // Makes the menu items clickable
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menu_user_list) {
-            //sendToActivity(User_List.class); Already on this page
-            return true;
-        }
-        else if (item.getItemId() == R.id.menu_dashboard) {
-            sendToActivity(Dashboard.class);
-            return true;
-        }
-        else if (item.getItemId() == R.id.menu_admin_logout) {
-            sendToActivity(login.class);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     // Sends to other screens

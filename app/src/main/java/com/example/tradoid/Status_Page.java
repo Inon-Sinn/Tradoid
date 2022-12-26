@@ -15,6 +15,7 @@ import com.example.tradoid.Adapters.status_RecycleView_Adapter;
 import com.example.tradoid.Data_handling.stock_data;
 import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.Data_handling.user_data;
+import com.example.tradoid.fragments.Stock;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -27,7 +28,6 @@ public class Status_Page extends AppCompatActivity {
 
     String user_ID;
 
-    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,18 +51,17 @@ public class Status_Page extends AppCompatActivity {
         // Set Home - Bottom Navigation Bar
         bottomNavigationView.setSelectedItemId(R.id.bottom_menu_status_pg);
 
-        // Perform item selected listener - Bottom Navigation Bar
+        // Perform item selected listener
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()){
-                case R.id.bottom_menu_stock_market:
-                    sendToActivity(Stock_Market.class);
-                    return true;
-                case R.id.bottom_menu_profile:
-                    sendToActivity(Profile.class);
-                    return true;
-                default:
-                    return true;
+            if (item.getItemId() == R.id.bottom_menu_stock_market) {
+                sendToActivity(Stock_Market.class);
+                return true;
             }
+            else if (item.getItemId() == R.id.bottom_menu_profile) {
+                sendToActivity(Profile.class);
+                return true;
+            }
+            return true;
         });
 
         // Checking Light Mode
