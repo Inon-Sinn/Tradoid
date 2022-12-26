@@ -34,8 +34,14 @@
     <dimen name="picture_name_size">25sp</dimen>
     <dimen name="picture_email_size">20sp</dimen>
 
+    <!-- Status Page -->
+    <dimen name="donut_upper_margin">35dp</dimen>
+    <dimen name="donut_lower_margin">25dp</dimen>
+    <dimen name="Balance_text_size">@dimen/card_title_size</dimen>
+
     <!-- Balance -->
     <dimen name="balance_text_size">40sp</dimen>
+
 
 
 </resources>

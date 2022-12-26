@@ -43,7 +43,7 @@ public class Status_Page extends AppCompatActivity {
         setContentView(R.layout.activity_status_page);
 
         // get User ID
-        if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
+        if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");} //TODO remove
 
         // get user_data
         user_data user = new user_data("Temp","Temp",0);
@@ -103,8 +103,6 @@ public class Status_Page extends AppCompatActivity {
         // Creating the Recycle View - the list
         RecyclerView recyclerView = findViewById(R.id.recyclerView_status_page);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        // https://stackoverflow.com/questions/31242812/how-can-a-divider-line-be-added-in-an-android-recyclerview
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
         // Calling the Adapter
         status_RecyleView_Adapter adapter = new status_RecyleView_Adapter(this, data,stock_count,colors,false,user_ID);

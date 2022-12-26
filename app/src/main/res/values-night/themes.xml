@@ -43,4 +43,9 @@
         <item name="android:tint">@color/arrow_icon_color</item>
     </style>
 
+    <!-- Custom Circular Gradient --><!-- _____My Own Creation_____ -->
+    <style name="my_circular_gradient" parent="Theme.Tradoid">
+        <item name="android:background">@drawable/gradient_ring_backgroung_dark</item>
+    </style>
+
 </resources>

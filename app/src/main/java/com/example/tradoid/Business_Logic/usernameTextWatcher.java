@@ -30,7 +30,7 @@ public class usernameTextWatcher implements TextWatcher {
             layout.setError("Field Required");
         else if (s.length() < 3)
             layout.setError("Invalid Input: Min character length is 3");
-        else if (s.length() > 8)
+        else if (s.length() > 20)
             layout.setError("Invalid Input: Max character length is 8");
         else if (t.contains(" ")){
             layout.setError("Invalid Input: Username may not contain spaces!");

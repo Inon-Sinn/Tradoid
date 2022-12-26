@@ -32,6 +32,9 @@
     <string name="user_blocked">USER BLOCKED</string>
     <string name="attention_sign_desc">Attention Sign for Banned user</string>
 
+    // Status Page
+    <string name="portfolio">Portfolio</string>
+
     // Profile Class
     <string name="profile_user_name">User Name</string>
     <string name="profile_email">email@email.com</string>
