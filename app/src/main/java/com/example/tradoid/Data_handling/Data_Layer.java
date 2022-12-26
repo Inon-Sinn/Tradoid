@@ -99,7 +99,7 @@ public class Data_Layer {
         //should add the amount in the user_data
         List<double[]> amount = new ArrayList<>();
         Random rand = new Random();
-        int usd_bound = 100000,randUsd;
+        int usd_bound = 1000,randUsd;
         for (int i = 0; i < stocks.size(); i++) {
             randUsd = rand.nextInt(usd_bound);
             amount.add(new double[]{randUsd,randUsd/stocks.get(i).getTotal_Price()});
@@ -112,7 +112,7 @@ public class Data_Layer {
         String[] s2 = {"samuel@mail.com","Revital@mail.com","Liel@mail.com","Tehila@mail.com","Inon@mail.com","Ofir@mail.com","Gilad@mail.com","Noa@mail.com","Yair@mail.com","Maple@mail.com"};
         double[] d3 = {1500000,165,15665,56975,948465,48972,1231,-6565456,999999999,.564};
         for (int i = 0; i < s1.length; i++) {
-            users.add(new user_data(s1[i],s2[i],d3[i]));
+            users.add(new user_data(s1[i],s2[i],d3[i], null));
         }
     }
 

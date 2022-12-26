@@ -48,6 +48,8 @@ public class User_List_RecycleView_Adapter extends RecyclerView.Adapter<User_Lis
             Intent intent = new Intent(context, User_Status.class);
             // give it extra data
             intent.putExtra("name", item_list.get(position).getName());
+            intent.putExtra("user_ID", item_list.get(position).getID());
+            intent.putExtra("balance", Double.toString(item_list.get(position).getTotal_worth()));
             // Still not implemented
 //            intent.putExtra("signed_up", item_list.get(position));
 //            intent.putExtra("last_seen", item_list.get(position));

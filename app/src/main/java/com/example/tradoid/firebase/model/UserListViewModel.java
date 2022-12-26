@@ -32,13 +32,12 @@ public class UserListViewModel extends ViewModel implements FirestoreBaseModel{
                 if (task.isSuccessful()){
                     List<user_data> tempList = new ArrayList<>();
                     for (QueryDocumentSnapshot document: task.getResult()){
+                        String userId = document.getId();
                         String username = Objects.requireNonNull(document.get("username")).toString();
                         String email = Objects.requireNonNull(document.get("email")).toString();
                         double balance = Double.parseDouble(Objects.requireNonNull(document.get("balance")).toString());
-                        user_data newUser = new user_data(username, email, balance);
-                        if (Objects.equals(document.get("banned"), false)){
-                            tempList.add(newUser);
-                        }
+                        user_data newUser = new user_data(username, email, balance, userId);
+                        tempList.add(newUser);
                     }
                     userList.setValue(tempList);
                 }
@@ -53,11 +52,12 @@ public class UserListViewModel extends ViewModel implements FirestoreBaseModel{
                 if (task.isSuccessful()){
                     List<user_data> tempList = new ArrayList<>();
                     for (QueryDocumentSnapshot document: task.getResult()){
-                        String username = Objects.requireNonNull(document.get("username")).toString();
-                        String email = Objects.requireNonNull(document.get("email")).toString();
-                        double balance = Double.parseDouble(Objects.requireNonNull(document.get("balance")).toString());
-                        user_data newUser = new user_data(username, email, balance);
                         if (Objects.equals(document.get("banned"), true)){
+                            String userId = document.getId();;
+                            String username = Objects.requireNonNull(document.get("username")).toString();
+                            String email = Objects.requireNonNull(document.get("email")).toString();
+                            double balance = Double.parseDouble(Objects.requireNonNull(document.get("balance")).toString());
+                            user_data newUser = new user_data(username, email, balance, userId);
                             tempList.add(newUser);
                         }
                     }

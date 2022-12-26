@@ -36,7 +36,7 @@ public class Watchlist extends Fragment {
 
         // Connect to View Model
         view_model = new ViewModelProvider(this).get(stock_view_model.class);
-        view_model.setUser(new user_data("Temp","Temp",0),"watchlist");
+        view_model.setUser(new user_data("Temp","Temp",0, "Temp"),"watchlist");
 
         // Creating the Recycle View - the list
         recyclerView = view.findViewById(R.id.recyclerView_watchlist);

@@ -37,7 +37,7 @@ public class Status_Page extends AppCompatActivity {
         if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
 
         // get user_data
-        user_data user = new user_data("Temp","Temp",0);
+        user_data user = new user_data("Temp","Temp",0, "Temp");
 
         // Connect to View Model and getting data
         stock_view_model view_model = new ViewModelProvider(this).get(stock_view_model.class);

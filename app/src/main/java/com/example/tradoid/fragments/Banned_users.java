@@ -53,10 +53,6 @@ public class Banned_users extends Fragment {
                 build = true;
             }
         });
-
-
-
-
         return view;
     }
 

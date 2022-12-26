@@ -87,7 +87,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_text_sign_up_name"
+                    android:id="@+id/reason_tv"
                     android:layout_width="match_parent"
                     android:layout_height="141dp"
                     android:gravity="center"

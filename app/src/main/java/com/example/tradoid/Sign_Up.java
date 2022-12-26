@@ -42,7 +42,7 @@ public class Sign_Up extends AppCompatActivity {
 
 
         //All TextInput Editors
-        TextInputEditText et_name = findViewById(R.id.edit_text_sign_up_name);
+        TextInputEditText et_name = findViewById(R.id.reason_tv);
         TextInputEditText et_email = findViewById(R.id.edit_text_sign_up_email);
         TextInputEditText et_password = findViewById(R.id.edit_text_sign_up_password);
         TextInputEditText et_confirm = findViewById(R.id.edit_text_sign_up_confirm);

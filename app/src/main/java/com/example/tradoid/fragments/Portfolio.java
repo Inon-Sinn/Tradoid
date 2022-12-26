@@ -35,7 +35,7 @@ public class Portfolio extends Fragment {
 
         // Connect to View Model
         view_model = new ViewModelProvider(this).get(stock_view_model.class);
-        view_model.setUser(new user_data("Temp","Temp",0),"portfolio");
+        view_model.setUser(new user_data("Temp","Temp",0, "Temp"),"portfolio");
 
         // Creating the Recycle View - the list
         recyclerView = view.findViewById(R.id.recyclerView_portfolio);

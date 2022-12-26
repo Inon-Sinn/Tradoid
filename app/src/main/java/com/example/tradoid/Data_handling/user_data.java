@@ -9,12 +9,14 @@ public class user_data {
     String name;
     String email;
     double total_worth;
+    String userId;
     List<double[]> stock_amount;
 
-    public user_data(String name, String email, double total_amount) {
+    public user_data(String name, String email, double total_amount, String userId) {
         this.name = name;
         this.email = email;
         this.total_worth = total_amount;
+        this.userId = userId;
     }
 
     public String toFilterBy(){
@@ -23,6 +25,10 @@ public class user_data {
 
     public String getName() {
         return name;
+    }
+
+    public String getID(){
+        return userId;
     }
 
     public String getEmail() {

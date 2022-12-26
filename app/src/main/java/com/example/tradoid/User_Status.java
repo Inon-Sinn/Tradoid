@@ -25,18 +25,22 @@ public class User_Status extends AppCompatActivity {
 
     // Views with Dynamic values
     TextView tv_name;
+    TextView tv_balance;
 
     // The Dynamic values
     String name;
     String user_ID;
+    String balance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_status);
 
-        // get User ID
+        // get User data
         if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
+        if (getIntent().hasExtra("name")){user_ID = getIntent().getStringExtra("name");}
+        if (getIntent().hasExtra("balance")){balance = getIntent().getStringExtra("balance");}
 
         // Creating a custom Toolbar
         Toolbar user_status_toolbar = findViewById(R.id.toolbar_user_status);
@@ -52,13 +56,14 @@ public class User_Status extends AppCompatActivity {
 
         // Connecting to the TextViews With Dynamic Values
         tv_name = findViewById(R.id.user_status_name);
+        tv_balance = findViewById(R.id.user_page_tv_amount);
 
         // Get the data form the row it was clicked on
-        getData();
-        setData();
+        tv_name.setText(name);
+        tv_balance.setText("$" + balance);
 
         // get user_data
-        user_data user = new user_data("Temp","Temp",0);
+        user_data user = new user_data("Temp","Temp",0, "Temp");
 
         // Connect to Stock View Model and getting data
         stock_view_model view_model = new ViewModelProvider(this).get(stock_view_model.class);
@@ -99,22 +104,6 @@ public class User_Status extends AppCompatActivity {
         // Calling the Adapter
         status_RecycleView_Adapter adapter = new status_RecycleView_Adapter(this, data,stock_count,colors,true,"");
         recyclerView.setAdapter(adapter);
-    }
-
-    // getting the data from the intent
-    private void getData(){
-        // Check if it received the data
-        if (getIntent().hasExtra("name")){
-            name = getIntent().getStringExtra("name");
-        }else{
-            // In Case something went wrong
-            Toast.makeText(this,"Error: No data",Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    // setting the data to our elements(image and text views)
-    private void setData(){
-        tv_name.setText(name);
     }
 
     // Sends to other screens
