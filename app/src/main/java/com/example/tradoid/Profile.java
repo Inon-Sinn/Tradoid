@@ -6,9 +6,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.tradoid.Adapters.profile_RecycleView_Adapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.w3c.dom.Text;
 
 public class Profile extends AppCompatActivity {
 
@@ -22,6 +25,8 @@ public class Profile extends AppCompatActivity {
 
         // get User ID
         if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
+        Toast.makeText(this,user_ID,Toast.LENGTH_SHORT).show();
+        System.out.println(user_ID);
 
         // Creating the Recycle View - the list
         RecyclerView recyclerView = findViewById(R.id.recyclerView_profile);
@@ -50,6 +55,11 @@ public class Profile extends AppCompatActivity {
                     return true;
             }
         });
+
+
+        // Connect to Text Views for Name and Email
+        TextView tv_username = findViewById(R.id.profile_tv_username);
+        TextView tv_email = findViewById(R.id.profile_tv_email);
 
     }
 
