@@ -22,28 +22,41 @@
                 android:id="@+id/toolbar_stock_market"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
+                android:layout_marginTop="@dimen/stock_market_bar_top_margin"
+                android:background="@drawable/gradient_background"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:titleTextColor="@color/white"
+                app:theme="@style/AppTheme.Toolbar"
                 app:title=" "
-                app:theme="@style/AppTheme.Toolbar">
+                app:titleTextColor="@color/white">
 
 
                 <TextView
+                    android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Market"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
                     android:layout_gravity="center"
-                    android:id="@+id/toolbar_title" />
+                    android:text="Market"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="20sp" />
 
 
             </androidx.appcompat.widget.Toolbar>
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text=""
+                android:background="@drawable/gradient_background"
+                app:layout_constraintBottom_toTopOf="@+id/toolbar_stock_market"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="stock_market_tv_desc"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

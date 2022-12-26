@@ -1,30 +1,23 @@
 package com.example.tradoid;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.SearchView;
-import android.widget.Toast;
-
 import com.example.tradoid.fragments.Portfolio;
 import com.example.tradoid.fragments.Stock;
-
 import com.example.tradoid.Adapters.Stock_Market_TabsAdapter;
 import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.fragments.Watchlist;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
@@ -125,6 +118,7 @@ public class Stock_Market extends AppCompatActivity {
 
         // Reference to the search view itself
         searchView = (SearchView) searchItem.getActionView();
+//        searchItem.expandActionView();
 
         // change the done button on the keyboard
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);

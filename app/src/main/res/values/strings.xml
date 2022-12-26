@@ -32,6 +32,9 @@
     <string name="user_blocked">USER BLOCKED</string>
     <string name="attention_sign_desc">Attention Sign for Banned user</string>
 
+    // Stock Market
+    <string name="stock_market_tv_desc">Instead of the Status Bar</string>
+
     // Status Page
     <string name="portfolio">Portfolio</string>
 
