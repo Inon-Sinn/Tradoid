@@ -1,6 +1,7 @@
 package com.example.tradoid;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,11 +11,13 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.example.tradoid.Adapters.status_RecycleView_Adapter;
 import com.example.tradoid.Data_handling.stock_data;
 import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.Data_handling.user_data;
+import com.example.tradoid.firebase.model.BalanceViewModel;
 import com.example.tradoid.fragments.Stock;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -33,8 +36,22 @@ public class Status_Page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status_page);
 
-        // get User ID
+        // get User id and balance
         if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
+
+        // display user balance
+        TextView tv_balance = findViewById(R.id.status_page_tv_amount);
+
+        BalanceViewModel balanceViewModel = new ViewModelProvider(this).get(BalanceViewModel.class);
+        balanceViewModel.reset();
+
+        balanceViewModel.loadBalance(user_ID);
+        balanceViewModel.getBalance().observe(this, new Observer<Float>() {
+            @Override
+            public void onChanged(Float aFloat) {
+                tv_balance.setText("$" + aFloat);
+            }
+        });
 
         // get user_data
         user_data user = new user_data("Temp","Temp",0, "Temp");

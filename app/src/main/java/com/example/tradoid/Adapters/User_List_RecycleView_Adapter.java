@@ -56,7 +56,6 @@ public class User_List_RecycleView_Adapter extends RecyclerView.Adapter<User_Lis
 
             // start the Stock Page activity
             context.startActivity(intent);
-
         });
     }
 

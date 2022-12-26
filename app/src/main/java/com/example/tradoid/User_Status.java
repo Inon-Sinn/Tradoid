@@ -39,7 +39,7 @@ public class User_Status extends AppCompatActivity {
 
         // get User data
         if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
-        if (getIntent().hasExtra("name")){user_ID = getIntent().getStringExtra("name");}
+        if (getIntent().hasExtra("name")){name = getIntent().getStringExtra("name");}
         if (getIntent().hasExtra("balance")){balance = getIntent().getStringExtra("balance");}
 
         // Creating a custom Toolbar

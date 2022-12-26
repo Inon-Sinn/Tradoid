@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tradoid.firebase.model.BanUserViewModel;
 
@@ -31,10 +32,17 @@ public class user_ban extends AppCompatActivity {
         setContentView(R.layout.activity_user_ban);
 
         // get User ID
-        if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
+        if (getIntent().hasExtra("user_ID")){
+            user_ID = getIntent().getStringExtra("user_ID");
+            Toast.makeText(this,user_ID,Toast.LENGTH_SHORT).show();
+        }
 
         // get User name
-        if (getIntent().hasExtra("name")){username = getIntent().getStringExtra("name");}
+        if (getIntent().hasExtra("name")){
+            username = getIntent().getStringExtra("name");
+            Toast.makeText(this,username,Toast.LENGTH_SHORT).show();
+        }
+
 
         // Implementing the Back arrow
         TextView tv_back_arrow = findViewById(R.id.user_ban_back_arrow);
