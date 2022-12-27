@@ -31,14 +31,14 @@ public class Portfolio extends Fragment {
         user_ID = ((Stock_Market) requireActivity()).getUserID();
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_portfolio, container, false);
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
 
         // Connect to View Model
         view_model = new ViewModelProvider(this).get(stock_view_model.class);
         view_model.setUser(new user_data("Temp","Temp",0, "Temp"),"portfolio");
 
         // Creating the Recycle View - the list
-        recyclerView = view.findViewById(R.id.recyclerView_portfolio);
+        recyclerView = view.findViewById(R.id.recyclerView_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         // Calling the Adapter

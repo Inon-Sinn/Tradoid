@@ -5,20 +5,21 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.example.tradoid.Adapters.profile_RecycleView_Adapter;
+import com.example.tradoid.Adapters.optionMenu_RecycleView_Adapter;
 import com.example.tradoid.firebase.model.ProfileViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import org.w3c.dom.Text;
 
 public class Profile extends AppCompatActivity {
 
     String user_ID;
+
+    // for Adapter
+    int[] section_icons;
+    String[] section_names;
+    Class[] section_classes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,8 @@ public class Profile extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Calling the Adapter
-        profile_RecycleView_Adapter adapter = new profile_RecycleView_Adapter(this,user_ID);
+        load_Sections();
+        optionMenu_RecycleView_Adapter adapter = new optionMenu_RecycleView_Adapter(section_names,section_icons,section_classes,this,user_ID);
         recyclerView.setAdapter(adapter);
 
         // Creating a Bottom Navigation Bar
@@ -64,18 +66,14 @@ public class Profile extends AppCompatActivity {
         viewModel.reset();
 
         viewModel.loadProfileUsers(user_ID);
-        viewModel.getUsername().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                tv_username.setText(s);
-            }
-        });
-        viewModel.getEmail().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                tv_email.setText(s);
-            }
-        });
+        viewModel.getUsername().observe(this, tv_username::setText);
+        viewModel.getEmail().observe(this, tv_email::setText);
+    }
+
+    public void load_Sections(){
+        section_names = new String[]{"Notification","History","Balance","Log Out"};
+        section_icons = new int[]{R.drawable.ic_notification,R.drawable.ic_history,R.drawable.ic_balance,R.drawable.ic_logout};
+        section_classes = new Class[]{section_notification.class,section_history.class, section_balance.class, login.class};
     }
 
     // Sends to other screens

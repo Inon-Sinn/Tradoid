@@ -29,10 +29,10 @@ public class Banned_users extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_banned_users, container, false);
+        View view =  inflater.inflate(R.layout.fragment_list, container, false);
 
         // Creating the Recycle View - the list
-        recyclerView = view.findViewById(R.id.recyclerView_banned_users);
+        recyclerView = view.findViewById(R.id.recyclerView_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         // Connect to View Model
@@ -41,17 +41,14 @@ public class Banned_users extends Fragment {
         listViewModel.reset();
 
         listViewModel.loadBannedUserList();
-        listViewModel.getBannedList().observe(getViewLifecycleOwner(), new Observer<List<user_data>>() {
-            @Override
-            public void onChanged(List<user_data> user_data) {
-                view_model.setUserList(user_data);
+        listViewModel.getBannedList().observe(getViewLifecycleOwner(), user_data -> {
+            view_model.setUserList(user_data);
 
-                // Calling the Adapter
-                adapter = new User_List_RecycleView_Adapter(getActivity(),view_model.getData_list());
-                recyclerView.setAdapter(adapter);
+            // Calling the Adapter
+            adapter = new User_List_RecycleView_Adapter(getActivity(),view_model.getData_list());
+            recyclerView.setAdapter(adapter);
 
-                build = true;
-            }
+            build = true;
         });
         return view;
     }

@@ -17,7 +17,7 @@ import com.example.tradoid.section_history;
 import com.example.tradoid.section_notification;
 
 
-public class profile_RecycleView_Adapter extends RecyclerView.Adapter<profile_RecycleView_Adapter.MyViewHolder>{
+public class optionMenu_RecycleView_Adapter extends RecyclerView.Adapter<optionMenu_RecycleView_Adapter.MyViewHolder>{
 
     String[] section_names = {"Notification","History","Balance","Log Out"};
     int[] section_icons = {R.drawable.ic_notification,R.drawable.ic_history,R.drawable.ic_balance,R.drawable.ic_logout};
@@ -25,8 +25,16 @@ public class profile_RecycleView_Adapter extends RecyclerView.Adapter<profile_Re
     Context context;
     String user_ID;
 
-    public profile_RecycleView_Adapter(Context ct,String user_ID) {
+    public optionMenu_RecycleView_Adapter(Context ct, String user_ID) {
         this.context = ct;
+        this.user_ID = user_ID;
+    }
+
+    public optionMenu_RecycleView_Adapter(String[] section_names, int[] section_icons, Class[] section_classes, Context context, String user_ID) {
+        this.section_names = section_names;
+        this.section_icons = section_icons;
+        this.section_classes = section_classes;
+        this.context = context;
         this.user_ID = user_ID;
     }
 
@@ -36,7 +44,7 @@ public class profile_RecycleView_Adapter extends RecyclerView.Adapter<profile_Re
         LayoutInflater layoutInflater =  LayoutInflater.from(context);
         //We give it the row layout we want
         View view = layoutInflater.inflate(R.layout.profile_row, parent,false);
-        return new profile_RecycleView_Adapter.MyViewHolder(view);
+        return new optionMenu_RecycleView_Adapter.MyViewHolder(view);
     }
 
     @Override
@@ -44,7 +52,6 @@ public class profile_RecycleView_Adapter extends RecyclerView.Adapter<profile_Re
         // communicates with MyViewHolder
         holder.tv1.setText(section_names[position]);
         holder.icon.setImageResource(section_icons[position]);
-
         // needed for onClick
         holder.rowLayout.setOnClickListener(v -> {
             // start the chosen activity
