@@ -1,5 +1,8 @@
 package com.example.tradoid;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -7,7 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.tradoid.Adapters.optionMenu_RecycleView_Adapter;
 import com.example.tradoid.firebase.model.ProfileViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,10 +29,15 @@ public class Profile extends AppCompatActivity {
     String[] section_names;
     Class[] section_classes;
 
+    ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
+    ImageView profileIMG;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+
 
         // get User ID
         if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
@@ -57,17 +70,40 @@ public class Profile extends AppCompatActivity {
             return true;
         });
 
+//        //Connect to profile_image
+        profileIMG = findViewById(R.id.profileImage);
+        profileIMG.setOnClickListener(v -> loadFromGallary());
 
         // Connect to Text Views for Name and Email
         TextView tv_username = findViewById(R.id.profile_tv_username);
         TextView tv_email = findViewById(R.id.profile_tv_email);
 
+        // View Model to access User Data
         ProfileViewModel viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         viewModel.reset();
 
+        // Load the username and email
         viewModel.loadProfileUsers(user_ID);
         viewModel.getUsername().observe(this, tv_username::setText);
         viewModel.getEmail().observe(this, tv_email::setText);
+
+        pickMedia =
+                registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+                    // Callback is invoked after the user selects a media item or closes the
+                    // photo picker.
+                    if (uri != null) {
+                        profileIMG.setImageURI(uri);
+                        Log.d("PhotoPicker", "Selected URI: " + uri);
+                    } else {
+                        Log.d("PhotoPicker", "No media selected");
+                    }
+                });
+
+    }
+
+    public void loadFromGallary( ){
+        // Works but shows error, its a new feature that came out just 2 months ago so it still has bugs
+        pickMedia.launch(new PickVisualMediaRequest.Builder().setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE).build());
     }
 
     public void load_Sections(){

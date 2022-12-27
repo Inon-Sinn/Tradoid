@@ -28,7 +28,8 @@
 
     <!-- Profile picture -->
     <dimen name="outer_circle_size">120dp</dimen>
-    <dimen name="picture_size">118dp</dimen>
+    <dimen name="outer_circle_frame_size">122dp</dimen>
+    <dimen name="picture_size">130dp</dimen>
     <dimen name="picture_name_margin">70dp</dimen> <!-- 120*0.5 + 20 -->
     <dimen name="picture_email_margin">5dp</dimen>
     <dimen name="picture_name_size">25sp</dimen>
