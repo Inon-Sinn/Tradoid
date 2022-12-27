@@ -4,13 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tradoid.Business_Logic.GMailSender;
+import com.example.tradoid.Business_Logic.JavaMailAPI;
+import com.example.tradoid.Business_Logic.Utils;
 import com.example.tradoid.Business_Logic.emailTextWatcher;
 import com.example.tradoid.Business_Logic.passwordTextWatcher;
 import com.example.tradoid.firebase.model.SignInViewModel;
@@ -36,7 +42,7 @@ public class Sign_In extends AppCompatActivity {
 
         // Making the Text View "Forgot your password?" Clickable
         TextView tv_forgot_pass = findViewById(R.id.tv_forgot_pass_sign_in);
-        tv_forgot_pass.setOnClickListener(v -> Toast.makeText(getApplicationContext(),"Not Implemented",Toast.LENGTH_SHORT).show());
+        tv_forgot_pass.setOnClickListener(v -> sendMessage());
 
         // TextInputLayouts
         TextInputLayout email_layout = findViewById(R.id.textInputLayout_email_sign_in);
@@ -119,6 +125,40 @@ public class Sign_In extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    //send the email, first way
+    public void sendEmail(){
+        String email = "guyga8@gmail.com";
+        String subject = "Forgotten Password";
+        String message = "Fuck me, why should i tell you?";
+
+        JavaMailAPI javaMailAPI = new JavaMailAPI(this,email,subject,message);
+        javaMailAPI.execute();
+    }
+
+    //send the email, second way
+    private void sendMessage() {
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setTitle("Sending Email");
+        dialog.setMessage("Please wait");
+        dialog.show();
+        Thread sender = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    GMailSender sender = new GMailSender(Utils.EMAIL, Utils.PASSWORD);
+                    sender.sendMail("Forgotten Password",
+                            "Fuck me, why should i tell you?",
+                            "tradoidapp@gmail.com",
+                            "tradoidapp@gmail.com"); // Who gets the email
+                    dialog.dismiss();
+                } catch (Exception e) {
+                    System.out.println("DID NOT WORK");
+                }
+            }
+        });
+        sender.start();
     }
 
     // Sends to other screens
