@@ -1,14 +1,10 @@
 package com.example.tradoid;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
-
 import com.example.tradoid.firebase.model.BanMsgViewModel;
 
 public class Ban_msg extends AppCompatActivity {
@@ -31,11 +27,9 @@ public class Ban_msg extends AppCompatActivity {
         viewModel.reset();
 
         viewModel.loadBanMsg(userId);
-        viewModel.getBanMsg().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                tv_ban_msg.setText("Reason: " + s);
-            }
+        viewModel.getBanMsg().observe(this, s -> {
+            String msg = "We are sorry to tell you that you have been banned for: " + s;
+            tv_ban_msg.setText(msg);
         });
 
         // Implementing the Back arrow
