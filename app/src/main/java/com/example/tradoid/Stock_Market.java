@@ -1,14 +1,19 @@
 package com.example.tradoid;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
 import com.example.tradoid.fragments.Portfolio;
@@ -43,6 +48,8 @@ public class Stock_Market extends AppCompatActivity {
         // Creating a custom Toolbar
         Toolbar stock_market_toolbar = findViewById(R.id.toolbar_stock_market);
         setSupportActionBar(stock_market_toolbar);
+
+        // custom action bar
 
         // Creating a Bottom Navigation Bar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -115,7 +122,15 @@ public class Stock_Market extends AppCompatActivity {
 
         // Reference to the search view itself
         searchView = (SearchView) searchItem.getActionView();
-//        searchItem.expandActionView();
+
+        // Removing the search view edit text line
+        int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_plate", null, null);
+        View searchPlate = searchView.findViewById(searchPlateId);
+        searchPlate.setBackgroundResource(R.drawable.default_background);
+
+        // change the background on touch
+        searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> searchView.setBackground(getDrawable(R.drawable.searchview_background)));
+        searchView.setBackground(getDrawable(R.drawable.default_background));
 
         // change the done button on the keyboard
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);

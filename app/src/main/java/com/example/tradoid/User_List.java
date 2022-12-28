@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
 import com.example.tradoid.Adapters.User_List_TabsAdapter;
@@ -105,6 +106,15 @@ public class User_List extends AppCompatActivity {
 
         // Reference to the search view itself
         searchView = (SearchView) searchItem.getActionView();
+
+        // Removing the search view edit text line
+        int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_plate", null, null);
+        View searchPlate = searchView.findViewById(searchPlateId);
+        searchPlate.setBackgroundResource(R.drawable.default_background);
+
+        // change the background on touch
+        searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> searchView.setBackground(getDrawable(R.drawable.searchview_background)));
+        searchView.setBackground(getDrawable(R.drawable.default_background));
 
         // change the done button on the keyboard
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
