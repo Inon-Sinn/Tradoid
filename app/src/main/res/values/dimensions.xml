@@ -3,7 +3,7 @@
 
     <!-- The Back arrow -->
     <dimen name="back_arrow_x">25dp</dimen>
-    <dimen name="back_arrow_y">35dp</dimen>
+    <dimen name="back_arrow_y">43dp</dimen>
     <dimen name="back_arrow_text_size">25sp</dimen>
 
     <!-- Login Title -->
@@ -41,7 +41,7 @@
     <dimen name="Balance_text_size">@dimen/card_title_size</dimen>
 
     <!-- Stock Market -->
-    <dimen name="stock_market_bar_top_margin">25dp</dimen>
+    <dimen name="stock_market_bar_top_margin">33dp</dimen>
 
     <!-- Balance -->
     <dimen name="balance_text_size">40sp</dimen>

@@ -1,9 +1,7 @@
 package com.example.tradoid;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,8 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.tradoid.firebase.model.BanUserViewModel;
 
 public class user_ban extends AppCompatActivity {
@@ -32,16 +28,10 @@ public class user_ban extends AppCompatActivity {
         setContentView(R.layout.activity_user_ban);
 
         // get User ID
-        if (getIntent().hasExtra("user_ID")){
-            user_ID = getIntent().getStringExtra("user_ID");
-            Toast.makeText(this,user_ID,Toast.LENGTH_SHORT).show();
-        }
+        if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
 
         // get User name
-        if (getIntent().hasExtra("name")){
-            username = getIntent().getStringExtra("name");
-            Toast.makeText(this,username,Toast.LENGTH_SHORT).show();
-        }
+        if (getIntent().hasExtra("name")){username = getIntent().getStringExtra("name");}
 
 
         // Implementing the Back arrow
@@ -68,33 +58,30 @@ public class user_ban extends AppCompatActivity {
         tv_reason = findViewById(R.id.reason_tv);
     }
 
+    @SuppressLint("ResourceAsColor")
     public void applyRequest(BanUserViewModel viewModel){
+        String msg;
         tv_error.setTextColor(Color.RED);
         if (current_action == null){
-            tv_error.setText("Please choose Action");
+            msg = "Please choose Action";
+            tv_error.setText(msg);
         } else {
             if (current_action.equals("Ban")){
                 viewModel.banUser(user_ID, tv_reason.getText().toString());
-                viewModel.getFinishedBan().observe(this, new Observer<Boolean>() {
-                    @SuppressLint("ResourceAsColor")
-                    @Override
-                    public void onChanged(Boolean aBoolean) {
-                        if (aBoolean){
-                            tv_error.setTextColor(R.color.tv_error);
-                            tv_error.setText("User banned successfully");
-                        }
+                viewModel.getFinishedBan().observe(this, aBoolean -> {
+                    if (aBoolean){
+                        tv_error.setTextColor(R.color.tv_error);
+                        String ban_msg = "User banned successfully";
+                        tv_error.setText(ban_msg);
                     }
                 });
             } else if (current_action.equals("Unban")){
                 viewModel.unbanUser(user_ID);
-                viewModel.getFinishedUnban().observe(this, new Observer<Boolean>() {
-                    @SuppressLint("ResourceAsColor")
-                    @Override
-                    public void onChanged(Boolean aBoolean) {
-                        if (aBoolean){
-                            tv_error.setTextColor(R.color.tv_error);
-                            tv_error.setText("User unbanned successfully");
-                        }
+                viewModel.getFinishedUnban().observe(this, aBoolean -> {
+                    if (aBoolean){
+                        tv_error.setTextColor(R.color.tv_error);
+                        String unban_msg = "User unbanned successfully";
+                        tv_error.setText(unban_msg);
                     }
                 });
             }
