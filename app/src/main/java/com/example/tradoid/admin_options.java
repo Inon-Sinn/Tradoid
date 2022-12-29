@@ -52,9 +52,9 @@ public class admin_options extends AppCompatActivity {
     }
 
     public void load_Sections(){
-        section_names = new String[]{"Log Out"};
-        section_icons = new int[]{R.drawable.ic_logout};
-        section_classes = new Class[]{login.class};
+        section_names = new String[]{"Create Admin","Log Out"};
+        section_icons = new int[]{R.drawable.ic_create_admin,R.drawable.ic_logout};
+        section_classes = new Class[]{CreateAdmin.class,login.class};
     }
 
     // Sends to other screens

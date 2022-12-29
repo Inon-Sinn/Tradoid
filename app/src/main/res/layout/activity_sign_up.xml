@@ -59,16 +59,16 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textView20" />
+                app:layout_constraintStart_toEndOf="@+id/tv_haveAcount" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/tv_card_title_sign_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="@string/sign_up_card_Title"
-                android:textSize="@dimen/card_title_size"
                 android:textColor="?attr/colorPrimary"
+                android:textSize="@dimen/card_title_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -151,7 +151,7 @@
                 app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5"
+                app:layout_constraintTop_toBottomOf="@+id/tv_card_title_sign_up"
                 app:boxCornerRadiusBottomEnd="@dimen/box_corner_radius"
                 app:boxCornerRadiusBottomStart="@dimen/box_corner_radius"
                 app:boxCornerRadiusTopEnd="@dimen/box_corner_radius"
@@ -167,7 +167,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/textView20"
+                android:id="@+id/tv_haveAcount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
