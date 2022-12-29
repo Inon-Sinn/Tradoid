@@ -60,6 +60,9 @@
     <dimen name="dash_vertical_margin">15dp</dimen>
     <dimen name="dash_horizontal_margin">@dimen/dash_vertical_margin</dimen>
 
+    <!-- Bottom sheet Dialog -->
+    <dimen name="peek_height">80dp</dimen>
+
 
 
 </resources>

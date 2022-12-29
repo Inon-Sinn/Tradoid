@@ -127,126 +127,28 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        android:layout_marginBottom="@dimen/peek_height"
+        app:layout_constraintBottom_toBottomOf="@+id/coordinatorLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stock_page_tv_price" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        app:cardBackgroundColor="?attr/cardBackgroundColor"
+    <View
+        android:id="@+id/backgroundLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#99000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cardView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:cardBackgroundColor="?attr/cardBackgroundColor"
-        app:cardCornerRadius="@dimen/card_corner_radius"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/Custom_Button"
-                android:id="@+id/button_stock_page"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginBottom="20dp"
-                android:text="Buy/Sell"
-                android:background="@drawable/round_button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxCornerRadiusBottomEnd="@dimen/box_corner_radius"
-                app:boxCornerRadiusBottomStart="@dimen/box_corner_radius"
-                app:boxCornerRadiusTopEnd="@dimen/box_corner_radius"
-                app:boxCornerRadiusTopStart="@dimen/box_corner_radius">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_text_USD_stock_page"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="USD"
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout3"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:boxCornerRadiusBottomEnd="@dimen/box_corner_radius"
-                app:boxCornerRadiusBottomStart="@dimen/box_corner_radius"
-                app:boxCornerRadiusTopEnd="@dimen/box_corner_radius"
-                app:boxCornerRadiusTopStart="@dimen/box_corner_radius">
-
-                <AutoCompleteTextView
-                    android:id="@+id/autoComplete_tv_stock_page"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Action"
-                    android:inputType="none" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/button_stock_page"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:boxCornerRadiusBottomEnd="@dimen/box_corner_radius"
-                app:boxCornerRadiusBottomStart="@dimen/box_corner_radius"
-                app:boxCornerRadiusTopEnd="@dimen/box_corner_radius"
-                app:boxCornerRadiusTopStart="@dimen/box_corner_radius">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_text_stocks_stock_page"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Stocks"
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
+        <include layout="@layout/bottom_sheet_dialog_layout" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -107,9 +107,9 @@ public class Profile extends AppCompatActivity {
     }
 
     public void load_Sections(){
-        section_names = new String[]{"Notification","History","Balance","Log Out"};
-        section_icons = new int[]{R.drawable.ic_notification,R.drawable.ic_history,R.drawable.ic_balance,R.drawable.ic_logout};
-        section_classes = new Class[]{section_notification.class,section_history.class, section_balance.class, login.class};
+        section_names = new String[]{"Notification","History","Balance","Log Out","test"};
+        section_icons = new int[]{R.drawable.ic_notification,R.drawable.ic_history,R.drawable.ic_balance,R.drawable.ic_logout,R.drawable.ic_menu};
+        section_classes = new Class[]{section_notification.class,section_history.class, section_balance.class, login.class, test_bottom_sheet_dialog.class};
     }
 
     // Sends to other screens

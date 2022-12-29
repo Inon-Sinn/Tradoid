@@ -1,7 +1,9 @@
 package com.example.tradoid;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,6 +11,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -22,6 +25,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.textfield.TextInputEditText;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -30,21 +34,18 @@ public class Stock_Page extends AppCompatActivity {
 
     String user_ID;
 
-    // Views with Dynamic values
-    TextView tv_name, tv_full_name, tv_price, tv_price_change;
-    ImageView iv_icon;
-
     // The Dynamic values
     String name, full_name, formerScreen;
     double price, price_change;
-    int icon;
-
 
     // Buy/Sell Action
     String[] actions = {"Buy","Sell"};
     String current_action;
     double total_value;
     public boolean stopListening = false; // needed so don't have an infinite loop
+
+    // bottom sheet dialog
+    private BottomSheetBehavior sheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,16 +71,13 @@ public class Stock_Page extends AppCompatActivity {
         bookmark.setOnClickListener(v -> Bookmark_stock());
 
         // Connecting to the TextViews With Dynamic Values
-        tv_name = findViewById(R.id.stock_page_tv_name);
-        tv_full_name = findViewById(R.id.stock_page_tv_full_name);
-        tv_price = findViewById(R.id.stock_page_tv_price);
-        tv_price_change = findViewById(R.id.stock_page_tv_price_change);
-
-        // Connecting to the ImageView With Dynamic Values
-//        iv_icon = findViewById(R.id.stock_page_icon_price_change);
+        TextView tv_name = findViewById(R.id.stock_page_tv_name);
+        TextView tv_full_name = findViewById(R.id.stock_page_tv_full_name);
+        TextView tv_price = findViewById(R.id.stock_page_tv_price);
+        TextView tv_price_change = findViewById(R.id.stock_page_tv_price_change);
 
         // set The dynamic views
-        setData();
+        setData(tv_name,tv_full_name,tv_price,tv_price_change);
 
         // Connecting the Buy/Sell button
         Button transaction = findViewById(R.id.button_stock_page);
@@ -99,7 +97,7 @@ public class Stock_Page extends AppCompatActivity {
         TextInputEditText editText_usd = findViewById(R.id.edit_text_USD_stock_page);
         TextInputEditText editText_Stock = findViewById(R.id.edit_text_stocks_stock_page);
 
-        // Text Watcher for the USD value
+        // Text Watcher for the USD and Stock value
         editText_usd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -128,8 +126,6 @@ public class Stock_Page extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-
-        // Text Watcher for the Stock value
         editText_Stock.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -158,6 +154,38 @@ public class Stock_Page extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
+
+        // Connecting to the background lightening
+        View bg_lighting = findViewById(R.id.backgroundLight);
+        bg_lighting.setVisibility(View.GONE);
+
+        // Connecting to the Bottom sheet itself and its state
+        ConstraintLayout mBottomSheetLayout = findViewById(R.id.bottom_sheet_layout);
+        sheetBehavior = BottomSheetBehavior.from(mBottomSheetLayout);
+
+        // Connecting to the Title and its icon
+        TextView title = findViewById(R.id.bottom_sheet_title);
+        ImageView icon = findViewById(R.id.bottom_sheet_title_icon);
+
+        // OnClick Listeners to pull up/down the Bottom sheet Dialog
+        title.setOnClickListener(v -> bottomSheetClick());
+        icon.setOnClickListener(v -> bottomSheetClick());
+
+        //When the bottom sheet get pulled up - darkens the background and changes the icons direction
+        sheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED)
+                    bg_lighting.setVisibility(View.GONE);
+            }
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                icon.setRotation(slideOffset * 180);
+                bg_lighting.setVisibility(View.VISIBLE);
+                bg_lighting.setAlpha(slideOffset);
+            }
+        });
+
 
 
         // -----------------------------In Testing ----------------------------------------------------------------------------------
@@ -230,6 +258,15 @@ public class Stock_Page extends AppCompatActivity {
         //---------------------------------------------------------------------------------------------------------------------------------------
     }
 
+    // An Auxiliary function that pulls up/down the Bottom sheet dialog when The OnClick listeners were activated
+    public void bottomSheetClick(){
+        if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED){
+            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }else{
+            sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
+    }
+
     // getting the data from the intent
     private void getData(){
         // Check if it received the data
@@ -248,7 +285,7 @@ public class Stock_Page extends AppCompatActivity {
     }
 
     // setting the data to our elements(image and text views)
-    private void setData(){
+    private void setData(TextView tv_name, TextView tv_full_name, TextView tv_price,TextView tv_price_change){
         tv_name.setText(name);
         tv_full_name.setText(full_name);
         tv_price.setText(String.valueOf(price));
