@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".test_bottom_sheet_dialog"
-    android:id="@+id/testLayout"
-    android:background="@drawable/gradient_background">
+    tools:context=".EmailValidation"    android:background="@drawable/gradient_background">
 
     <androidx.cardview.widget.CardView
         app:cardBackgroundColor="?attr/cardBackgroundColor"
@@ -47,28 +45,40 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/validation_num1"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout_email_validation_code"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="@dimen/card_title_margin"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/horizontal_margin"
-                android:background="@null"
-                android:imeOptions="actionNext"
-                android:importantForAutofill="no"
-                android:inputType="number"
-                android:letterSpacing="1"
-                android:maxLength="6"
-                android:textColor="?attr/colorPrimary"
-                android:textSize="24sp"
-                android:textStyle="bold"
+                android:layout_marginTop="@dimen/card_title_margin"
+                android:layout_marginEnd="@dimen/horizontal_margin"
+                app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView15" />
+                app:layout_constraintTop_toBottomOf="@+id/textView15"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusBottomEnd="@dimen/box_corner_radius"
+                app:boxCornerRadiusBottomStart="@dimen/box_corner_radius"
+                app:boxCornerRadiusTopEnd="@dimen/box_corner_radius"
+                app:boxCornerRadiusTopStart="@dimen/box_corner_radius">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_email_validation_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Validation Code"
+                    android:maxLength="6"
+                    android:imeOptions="actionNext"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

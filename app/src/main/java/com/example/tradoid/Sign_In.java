@@ -6,16 +6,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.tradoid.Business_Logic.GMailSender;
-import com.example.tradoid.Business_Logic.JavaMailAPI;
 import com.example.tradoid.Business_Logic.Utils;
 import com.example.tradoid.Business_Logic.emailTextWatcher;
 import com.example.tradoid.Business_Logic.passwordTextWatcher;
@@ -40,10 +36,6 @@ public class Sign_In extends AppCompatActivity {
         TextView tv_sign_up = findViewById(R.id.tv_from_sign_in_to_sign_up);
         tv_sign_up.setOnClickListener(v -> sendToActivity(Sign_Up.class, ""));
 
-        // Making the Text View "Forgot your password?" Clickable
-        TextView tv_forgot_pass = findViewById(R.id.tv_forgot_pass_sign_in);
-        tv_forgot_pass.setOnClickListener(v -> sendMessage());
-
         // TextInputLayouts
         TextInputLayout email_layout = findViewById(R.id.textInputLayout_email_sign_in);
         TextInputLayout password_layout = findViewById(R.id.textInputLayout_password_sign_in);
@@ -51,6 +43,10 @@ public class Sign_In extends AppCompatActivity {
         //All TextInput Editors
         TextInputEditText et_email = findViewById(R.id.edit_text_sign_in_email);
         TextInputEditText et_password = findViewById(R.id.edit_text_sign_in_password);
+
+        // Making the Text View "Forgot your password?" Clickable
+        TextView tv_forgot_pass = findViewById(R.id.tv_forgot_pass_sign_in);
+        tv_forgot_pass.setOnClickListener(v -> sendMessage(String.valueOf(et_email.getText())));
 
         // Error Text Watchers for invalid input
         et_email.addTextChangedListener(new emailTextWatcher(email_layout));
@@ -127,18 +123,8 @@ public class Sign_In extends AppCompatActivity {
         });
     }
 
-    //send the email, first way
-    public void sendEmail(){
-        String email = "guyga8@gmail.com";
-        String subject = "Forgotten Password";
-        String message = "Fuck me, why should i tell you?";
-
-        JavaMailAPI javaMailAPI = new JavaMailAPI(this,email,subject,message);
-        javaMailAPI.execute();
-    }
-
     //send the email, second way
-    private void sendMessage() {
+    private void sendMessage(String email) {
         final ProgressDialog dialog = new ProgressDialog(this);
         dialog.setTitle("Sending Email");
         dialog.setMessage("Please wait");
@@ -151,7 +137,7 @@ public class Sign_In extends AppCompatActivity {
                     sender.sendMail("Forgotten Password",
                             "Fuck me, why should i tell you?",
                             "tradoidapp@gmail.com",
-                            "tradoidapp@gmail.com"); // Who gets the email
+                            email); // Who gets the email
                     dialog.dismiss();
                 } catch (Exception e) {
                     System.out.println("DID NOT WORK");
