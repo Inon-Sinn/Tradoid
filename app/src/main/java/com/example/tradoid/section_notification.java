@@ -45,7 +45,7 @@ public class section_notification extends AppCompatActivity {
         btn.setOnClickListener(v -> {
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "IT WAS ONLY A TEESSSTTTT **runs away**")
-                    .setSmallIcon(R.drawable.ic_baseline_kitesurfing_24_remove_this)
+                    .setSmallIcon(R.drawable.ic_logout)
                     .setContentTitle("Test")
                     .setContentText("It was only a test Bro.. only a test calm down! Wait put that fucking Axe down")
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)

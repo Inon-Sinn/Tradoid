@@ -1,0 +1,35 @@
+@startuml
+!pragma layout smetana
+'https://plantuml.com/use-case-diagram
+
+:Admin:
+
+User --> (sign in)
+(sign in) --> (regestration): <<include>>
+User --> (balance)
+Admin --> (balance)
+
+(balance) --> (withdraw): <<extend>>
+(balance) --> (deposit): <<extend>>
+
+Admin --> (sign in)
+Admin ----> (Ban)
+User --> (Ban)
+(Ban) --> (naughty list): <<include>>
+
+worm <---> (digs)
+worm <---> (digs)
+worm <---> (digs)
+worm <---> (digs)
+worm <---> (digs)
+worm <---> (digs)
+worm <---> (digs)
+worm <---> (digs)
+worm <---> (digs)
+worm <---> (digs)
+worm <---> (digs)
+worm <---> (digs)
+
+
+
+@enduml
