@@ -1,0 +1,127 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+rectangle AdminSection{
+
+class User_list{
+    SearchView searchView
+    user_view_model view_model
+    ViewPager2 viewPager2
+
+    +onCreate()
+    +onCreateOptionsMenu()
+    +sendToActivity()
+}
+class Dashboard{
+    +onCreate()
+    +sendToActivity()
+}
+class admin_options{
+    int[] section_icons
+    String[] section_names
+    +onCreate()
+    +load_Sections()
+    +sendToActivity()
+}
+
+AppCompatActivity <|-- User_list
+AppCompatActivity <|-- Dashboard
+AppCompatActivity <|-- admin_options
+
+User_list <-> Dashboard: Bottom Menu
+User_list <-> admin_options: Bottom Menu
+admin_options <-> Dashboard: Bottom Menu
+
+
+rectangle UserList_Section{
+
+    class User_List_TabsAdapter{
+    +User_List_TabsAdapter()
+    +createFragment()
+    +getItemCount()
+    }
+
+    class Users {
+    RecyclerView recyclerView;
+    user_view_model view_model;
+    User_List_RecycleView_Adapter adapter;
+
+        +onCreateView()
+        +UpdateAdapter()
+    }
+
+    class BannedUsers {
+    RecyclerView recyclerView;
+    user_view_model view_model;
+    User_List_RecycleView_Adapter adapter;
+
+        +onCreateView()
+        +UpdateAdapter()
+    }
+
+    class User_List_RecycleView_Adapter{
+        +User_List_RecycleView_Adapter()
+        +onCreateViewHolder()
+        +onBindViewHolder()
+        +getItemCount()
+        +updateList()
+    }
+
+    class user_status{
+            String name
+            String user_ID
+            String balance
+
+            +onCreate()
+            +sendToActivity()
+    }
+
+    class user_ban{
+    String user_ID,username
+    +onCreate()
+    +applyRequest()
+    }
+
+    user_status --> user_ban: ban user
+    User_List_RecycleView_Adapter --> user_status: Sends to
+
+
+        Fragment <|-- Users
+        Fragment <|-- BannedUsers
+
+    User_List_TabsAdapter --> Users: Fragment in Tab Layout
+    User_List_TabsAdapter --> BannedUsers: Fragment in Tab Layout
+
+    Users --> User_List_RecycleView_Adapter: RecyclerView
+    BannedUsers --> User_List_RecycleView_Adapter: RecyclerView
+
+    User_list --> User_List_TabsAdapter
+}
+
+rectangle Options_Section{
+
+class optionMenu_RecycleView_Adapter{
+    String[] section_names
+    int[] section_icons;
+    String user_ID;
+
+    +optionMenu_RecycleView_Adapter()
+    +onCreateViewHolder()
+    +onBindViewHolder()
+    +getItemCount()
+    +updateList()
+}
+
+class CreateAdmin{
+String username, email, password, confirm
++onCreate()
+}
+
+admin_options --* optionMenu_RecycleView_Adapter: Recycle view
+
+optionMenu_RecycleView_Adapter --> CreateAdmin: Sends To
+}
+
+}
+
+@enduml
