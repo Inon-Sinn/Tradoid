@@ -1,0 +1,62 @@
+@startuml
+
+left to right direction
+
+object Users {
+    # userId
+    __
+    * username
+    __
+    * email
+    __
+    * password
+    __
+    * Balance
+    __
+    * Bookmarked: collection
+    __
+    * Portfolio: collection
+}
+object Banned {
+    # userId
+    __
+    * reason
+}
+object Stocks {
+    # stockId
+    __
+    * name
+    __
+    * full name
+    __
+    * price
+    __
+    * change
+}
+object Admins {
+    # adminId
+    __
+    * username
+    __
+    * email
+    __
+    * password
+}
+object Portfolio {
+    # stockId
+    __
+    * amount
+}
+object Bookmarked {
+    # stockId
+}
+
+Users::userId ||-up-o| Banned::userId
+
+Users::Portfolio -up-> Portfolio
+Portfolio::stockId ||-up-|| Stocks::stockId
+
+Users::Bookmarked -up-> Bookmarked
+Bookmarked::stockId ||-up-|| Stocks::stockId
+
+@enduml
