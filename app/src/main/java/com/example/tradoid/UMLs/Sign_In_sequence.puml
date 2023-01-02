@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User as user
+participant UI as ui
+participant ViewModel as vm
+database Database as db
+
+user -> ui: enter(email, password)
+user -> ui: click Sign In  Button
+
+ui -> vm: get user
+
+vm -> db: get Admins
+db-> vm: admin Database
+vm -> db: get Users
+db-> vm: user Database
+
+vm -> ui: error (Not in Database)
+ui -> user: error Text (Wrong email or Password)
+
+vm -> db: get User Data
+db-> vm: User Data
+
+vm -> ui: result( User Data and destination)
+ui -> user: Display Destination
+
+@enduml

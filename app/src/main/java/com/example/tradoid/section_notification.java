@@ -97,11 +97,13 @@ public class section_notification extends AppCompatActivity {
                     SharedPreferences.Editor editor = getSharedPreferences("testSwitch",MODE_PRIVATE).edit();
                     editor.putBoolean("value",true);
                     editor.apply();
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), 60 * 1000,pendingIntent);
                 }
                 else{
                     SharedPreferences.Editor editor = getSharedPreferences("testSwitch",MODE_PRIVATE).edit();
                     editor.putBoolean("value",false);
                     editor.apply();
+                    alarmManager.cancel(pendingIntent);
                 }
             }
         });
@@ -114,7 +116,6 @@ public class section_notification extends AppCompatActivity {
 
         Button cancelBtn3 = findViewById(R.id.button4);
         cancelBtn3.setOnClickListener(v -> {
-            alarmManager.cancel(pendingIntent);
         });
 
     }
