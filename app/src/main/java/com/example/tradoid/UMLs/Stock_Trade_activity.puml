@@ -1,0 +1,31 @@
+@startuml
+
+'(*) --> === Start ===
+'=== Start === --> Trade
+'=== Start === --> Display Graph
+
+(*) --> === TradeStart ===
+
+=== TradeStart === ---> if (Amount by Currency) then
+--> "USD"
+---> === TradeEnd ===
+else
+--> "Stocks"
+---> === TradeEnd ===
+
+=== TradeStart === ---> if (Buy or Sell) then
+--> "Buy"
+---> === TradeEnd ===
+else
+--> "Sell"
+---> === TradeEnd ===
+
+=== TradeEnd === --> Transaction
+
+'"Display Graph" --> === End ===
+'Transaction --> === End ===
+'=== End === --> (*)
+
+Transaction --> (*)
+
+@enduml
