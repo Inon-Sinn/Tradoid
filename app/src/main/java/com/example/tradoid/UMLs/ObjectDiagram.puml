@@ -1,0 +1,98 @@
+@startuml
+
+left to right direction
+
+package Users{
+object user1 {
+    # userId = "9nyd5yno3yy2d01"
+    __
+    username = "user1"
+    email = "user1@email.com"
+    password = "****"
+    balance = 383.22
+    __
+    Bookmarked: document of Stocks
+    __
+    Portfolio: document of Stocks, amount
+}
+
+object banned {
+    # userId = "x3mxwl29llk3535"
+    __
+    username = "banned"
+    email = "banned@email.com"
+    password = "****"
+    balance = 10.7
+    __
+    Bookmarked: document of Stocks
+    __
+    Portfolio: document of Stocks, amount
+}
+}
+
+package Stocks{
+object stock1{
+    #stockId = "04i1bc834k284od"
+    __
+    name = "FB"
+    full name = "Facebook, Inc."
+    price = 148.92
+    change = -11.3
+}
+object stock2{
+    #stockId = "f830fn39dm20900"
+    __
+    name = "AMZN"
+    full name = "Amazon.com, Inc."
+    price = 3450.0
+    change = 0.02
+}
+}
+
+package BannedUsers{
+object banned1{
+    #userId = "x3mxwl29llk3535"
+    reason = "suspocious activity"
+    }
+}
+
+object Portfolio{
+    #stockId = "f830fn39dm20900"
+    amount = 12.0
+}
+
+package Admins{
+object admin1 {
+    # adminId = "ll94hd03d9d234d"
+    __
+    username = "admin1"
+    email = "admin1@email.com"
+    password = "****"
+}
+}
+
+package Bookmarked{
+object stockRef1{
+    #stockId = "04i1bc834k284od"
+}
+object stockRef2{
+    #stockId = "f830fn39dm20900"
+    }
+}
+
+package Portfolio{
+object owned1{
+    #stockId = "f830fn39dm20900"
+    amount = 12.0
+}
+}
+
+user1::Bookmarked --> Bookmarked
+stockRef1::stockId --> stock1
+stockRef2::stockId --> stock2
+user1::Portfolio --> Portfolio
+owned1::stockId --> stock2
+
+banned1::userId --> banned::userId
+
+@enduml
