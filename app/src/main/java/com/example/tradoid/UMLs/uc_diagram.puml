@@ -4,31 +4,30 @@
 
 :Admin:
 
-User --> (sign in)
-(sign in) --> (regestration): <<include>>
-User --> (balance)
-Admin --> (balance)
+Admin ---> (add admin)
 
+User --> (sign up)
+Admin --> (sign in)
+User --> (sign in)
+(sign up) --> (registration): <<include>>
+
+User --> (balance)
 (balance) --> (withdraw): <<extend>>
 (balance) --> (deposit): <<extend>>
 
-Admin --> (sign in)
-Admin ----> (Ban)
-User --> (Ban)
-(Ban) --> (naughty list): <<include>>
+User --> (trade)
+(trade) --> (buy): <<extend>>
+(trade) --> (sell): <<extend>>
+(buy) --> (withdraw): <<include>>
+(sell) --> (deposit): <<include>>
 
-worm <---> (digs)
-worm <---> (digs)
-worm <---> (digs)
-worm <---> (digs)
-worm <---> (digs)
-worm <---> (digs)
-worm <---> (digs)
-worm <---> (digs)
-worm <---> (digs)
-worm <---> (digs)
-worm <---> (digs)
-worm <---> (digs)
+User --> (browse)
+(browse) --> (search): <<extend>>
+
+
+Admin ---> (Ban)
+User -- (Ban)
+(Ban) --> (banned list): <<include>>
 
 
 
