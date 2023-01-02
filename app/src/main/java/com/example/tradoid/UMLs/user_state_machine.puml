@@ -1,0 +1,10 @@
+@startuml
+'https://plantuml.com/state-diagram
+
+[*] --> Idle
+Idle --> Blocked: Banned
+Idle --> Opened: Sign In
+Opened --> Closed: log off
+Closed --> [*]
+
+@enduml

@@ -46,7 +46,7 @@ public class Sign_In extends AppCompatActivity {
 
         // Making the Text View "Forgot your password?" Clickable
         TextView tv_forgot_pass = findViewById(R.id.tv_forgot_pass_sign_in);
-        tv_forgot_pass.setOnClickListener(v -> sendMessage(String.valueOf(et_email.getText())));
+        tv_forgot_pass.setOnClickListener(v -> sendMail(String.valueOf(et_email.getText())));
 
         // Error Text Watchers for invalid input
         et_email.addTextChangedListener(new emailTextWatcher(email_layout));
@@ -124,7 +124,7 @@ public class Sign_In extends AppCompatActivity {
     }
 
     //send the email, second way
-    private void sendMessage(String email) {
+    private void sendMail(String email) {
         final ProgressDialog dialog = new ProgressDialog(this);
         dialog.setTitle("Sending Email");
         dialog.setMessage("Please wait");

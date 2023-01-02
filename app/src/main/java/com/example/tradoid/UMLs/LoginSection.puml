@@ -1,0 +1,97 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface TextWatcher
+
+rectangle LoginSection{
+    class login {
+        +onCreate()
+        +sendToActivity()
+    }
+    login --> Sign_In: Calls
+    login --> Sign_Up: Calls
+
+    class Sign_In {
+    +onCreate()
+    +sendToActivity()
+    +sendMail()
+    }
+
+    class Sign_Up {
+    String username, email, password, confirm;
+    +onCreate()
+    +sendToActivity()
+    }
+
+    class Reason{
+    String userId
+    +onCreate()
+    }
+
+    Sign_In ..> Reason: Banned
+
+    AppCompatActivity <|-- login
+    AppCompatActivity <|-- Sign_In
+    AppCompatActivity <|-- Sign_Up
+
+    Sign_In ...> Stock_Market: Sends To
+    Sign_Up ...> Stock_Market: Sends To
+
+    Sign_In ...> User_List: Sends To
+    Sign_Up ...> User_List: Sends To
+
+    class usernameTextWatcher{
+    TextInputLayout layout
+    +usernameTextWatcher()
+    +beforeTextChanged()
+    +onTextChanged()
+    +afterTextChanged()
+    }
+
+    class passwordTextWatcher{
+    TextInputLayout layout
+    +passwordTextWatcher()
+    +beforeTextChanged()
+    +onTextChanged()
+    +afterTextChanged()
+    }
+
+    class emailTextWatcher{
+    TextInputLayout layout
+    +emailTextWatcher()
+    +beforeTextChanged()
+    +onTextChanged()
+    +afterTextChanged()
+    }
+
+    class GMailSender{
+        private String mailhost = "smtp.gmail.com";
+        private String user;
+        private String password;
+        private Session session;
+
+        +GMailSender()
+        +ByteArrayDataSource()
+        +getInputStream()
+        +getOutputStream()
+    }
+
+    class JSSEProvider{
+        +JSSEProvider()
+    }
+
+    Sign_In --> emailTextWatcher: Uses
+    Sign_In --> passwordTextWatcher: Uses
+    Sign_In --> GMailSender: by sendMail
+    GMailSender --> JSSEProvider: uses
+
+    Sign_Up --> emailTextWatcher: Uses
+    Sign_Up --> passwordTextWatcher: Uses
+    Sign_Up --> usernameTextWatcher: Uses
+
+    TextWatcher <|-- usernameTextWatcher
+    TextWatcher <|-- passwordTextWatcher
+    TextWatcher <|-- emailTextWatcher
+}
+
+@enduml

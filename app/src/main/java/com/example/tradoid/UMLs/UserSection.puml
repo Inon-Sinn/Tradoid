@@ -1,0 +1,197 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+'User Area
+rectangle UserSection{
+
+    Stock_Market <-> StatusPage: Bottom Menu
+    Stock_Market <-> Profile: Bottom Menu
+    Profile <-> StatusPage: Bottom Menu
+
+    class Stock_Market{
+        SearchView searchView
+        stock_view_model view_model
+        ViewPager2 viewPager2
+        String user_ID
+
+        +getUserID()
+        +onCreateOptionsMenu()
+        +updateFragmentsAdapter()
+        +onCreate()
+        +sendToActivity()
+    }
+    class StatusPage{
+        String user_ID
+
+        +onCreate()
+        +sendToActivity()
+    }
+    class Profile{
+        String user_ID
+
+        +loadFromGallary()
+        +load_Sections()
+        +onCreate()
+        +sendToActivity()
+    }
+
+        AppCompatActivity <|-- Stock_Market
+        AppCompatActivity <|-- StatusPage
+        AppCompatActivity <|-- Profile
+
+    rectangle Stock_MarketSection{
+
+    class Stock_Market_TabsAdapter{
+    +Stock_Market_TabsAdapter()
+    +createFragment()
+    +getItemCount()
+    }
+
+    class Stock {
+        String user_ID;
+        RecyclerView recyclerView;
+        stock_view_model view_model;
+        Stock_Market_RecycleView_Adapter adapter;
+
+    +onCreateView()
+    +UpdateAdapter()
+    }
+    class Bookmarks {
+        String user_ID;
+        RecyclerView recyclerView;
+        stock_view_model view_model;
+        Stock_Market_RecycleView_Adapter adapter;
+
+        +onCreateView()
+        +UpdateAdapter()
+    }
+    class Portfolio {
+        RecyclerView recyclerView;
+        stock_view_model view_model;
+        Stock_Market_RecycleView_Adapter adapter;
+
+        +onCreateView()
+        +UpdateAdapter()
+    }
+
+    class Stock_Market_RecycleView_Adapter{
+        +Stock_Market_RecycleView_Adapter()
+        +onCreateViewHolder()
+        +onBindViewHolder()
+        +getItemCount()
+        +updateList()
+    }
+
+    class Stock_Page{
+        String user_ID
+
+        +onCreate()
+        +sendToActivity()
+        +bottomSheetClick()
+        +create_transaction()
+    }
+
+    Stock_Page <-- Stock_Market_RecycleView_Adapter: Sends To
+
+    Stock_Market --> Stock_Market_TabsAdapter
+    Stock_Market_TabsAdapter --|> FragmentStateAdapter
+
+    Stock_Market_TabsAdapter --* Stock: Fragment in TabLayout
+    Stock_Market_TabsAdapter --* Portfolio: Fragment in TabLayout
+    Stock_Market_TabsAdapter --* Bookmarks: Fragment in TabLayout
+
+        Portfolio --* Stock_Market_RecycleView_Adapter: For RecyclerView
+        Bookmarks --* Stock_Market_RecycleView_Adapter: For RecyclerView
+        Stock --* Stock_Market_RecycleView_Adapter: For RecyclerView
+
+    Fragment <|-- Stock
+    Fragment <|-- Portfolio
+    Fragment <|-- Bookmarks
+
+    AppCompatActivity <|-- Stock_Page
+
+    }
+
+    rectangle StatusPageSection{
+
+        class status_RecycleView_Adapter{
+            List<stock_data> item_list;
+            List<double[]> amount_list;
+            int[] colors;
+            boolean admin;
+            String user_ID;
+
+            +status_RecycleView_Adapter()
+            +onCreateViewHolder()
+            +onBindViewHolder()
+            +getItemCount()
+            +updateList()
+        }
+
+        StatusPage --* status_RecycleView_Adapter
+        status_RecycleView_Adapter --> Stock_Page: Sends To
+    }
+
+    rectangle ProfileSection{
+        class optionMenu_RecycleView_Adapter{
+            String[] section_names
+            int[] section_icons;
+            String user_ID;
+
+            +optionMenu_RecycleView_Adapter()
+            +onCreateViewHolder()
+            +onBindViewHolder()
+            +getItemCount()
+            +updateList()
+        }
+
+        class history_RecycleView_Adapter{
+            String[][] past_events;
+
+            +history_RecycleView_Adapter()
+            +onCreateViewHolder()
+            +onBindViewHolder()
+            +getItemCount()
+            +updateList()
+        }
+
+        class section_notification{
+        String user_ID;
+
+        +onCreate()
+        +createNotificationChannel()
+        +sendToActivity()
+        }
+
+        class section_history{
+            String user_ID;
+
+            +onCreate()
+            +sendToActivity()
+        }
+
+        class section_balance{
+            String user_ID;
+
+            +onCreate()
+            +sendToActivity()
+        }
+
+        Profile --* optionMenu_RecycleView_Adapter: RecyclerView
+        optionMenu_RecycleView_Adapter --> section_notification: Sends To
+        optionMenu_RecycleView_Adapter --> section_history: Sends To
+        optionMenu_RecycleView_Adapter --> section_balance: Sends To
+        optionMenu_RecycleView_Adapter --> login: Logout
+
+        history_RecycleView_Adapter <-- section_history: RecyclerView
+
+        AppCompatActivity <|-- section_notification
+        AppCompatActivity <|-- section_balance
+        AppCompatActivity <|-- section_history
+    }
+}
+
+
+
+@enduml
