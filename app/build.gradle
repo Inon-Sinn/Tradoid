@@ -68,5 +68,13 @@ dependencies {
     // Notification
     implementation "androidx.core:core:1.9.0"
 
+    //PinEntryCodeEditText
+    implementation ('com.alimuzaffar.lib:pinentryedittext:2.0.6') {
+        // Exclude is only needed if you already have
+        // any of the following as a dependency in your project.
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v13'
+    }
 
 }
