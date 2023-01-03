@@ -59,6 +59,7 @@
     <dimen name="row_text_size">14sp</dimen>
     <dimen name="dash_vertical_margin">15dp</dimen>
     <dimen name="dash_horizontal_margin">@dimen/dash_vertical_margin</dimen>
+    <dimen name="row_vertical_margin">10dp</dimen>
 
     <!-- Bottom sheet Dialog -->
     <dimen name="peek_height">80dp</dimen>

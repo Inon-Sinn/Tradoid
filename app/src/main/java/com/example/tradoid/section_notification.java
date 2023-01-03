@@ -12,12 +12,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
 
-import com.example.tradoid.receiver.ReminderBroadcast;
+import com.example.tradoid.receiver.DailyReminderBroadcast;
+import com.example.tradoid.receiver.WeeklyReminderBroadcast;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.Calendar;
@@ -26,6 +27,7 @@ public class section_notification extends AppCompatActivity {
 
     String user_ID;
 
+    // Remember each Broadcast has to be added to androidManifest
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,81 +43,68 @@ public class section_notification extends AppCompatActivity {
         TextView tv_back_arrow = findViewById(R.id.notification_back_arrow);
         tv_back_arrow.setOnClickListener(v -> sendToActivity(Profile.class));
 
-        Button btn = findViewById(R.id.notification_btn);
-        btn.setOnClickListener(v -> {
+        // initiate the Switches
+        SwitchMaterial dailySwitch = findViewById(R.id.Switch_daily);
+        SwitchMaterial weeklySwitch = findViewById(R.id.Switch_weekly);
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "IT WAS ONLY A TEESSSTTTT **runs away**")
-                    .setSmallIcon(R.drawable.ic_logout)
-                    .setContentTitle("Test")
-                    .setContentText("It was only a test Bro.. only a test calm down! Wait put that fucking Axe down")
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setAutoCancel(true);
-
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            notificationManager.notify(1, builder.build());
-        });
-
-        Button btn2 = findViewById(R.id.button2);
-        btn2.setOnClickListener(v -> {
-
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "Come her you ***")
-                    .setSmallIcon(R.drawable.ic_logout)
-                    .setContentTitle("Im Coming for you 2")
-                    .setContentText("Come don't run, my axe johny just wan't to talk about cutting edge technology")
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setAutoCancel(true);
-
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            notificationManager.notify(2, builder.build());
-        });
-
-
-        Intent intent = new Intent(section_notification.this, ReminderBroadcast.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(section_notification.this,0,intent,PendingIntent.FLAG_IMMUTABLE);
-
+        // Setting the Time for the notifications
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 3);
-        calendar.set(Calendar.MINUTE, 30);
-        calendar.set(Calendar.SECOND, 20);
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
 
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        // Daily Reminder
 
-        long timaAtButtonClick = System.currentTimeMillis();
+        // Creating a Pending Intent for a BroadCast
+        Intent daily_intent = new Intent(section_notification.this, DailyReminderBroadcast.class);
+        PendingIntent daily_pendingIntent = PendingIntent.getBroadcast(section_notification.this,0,daily_intent,PendingIntent.FLAG_IMMUTABLE);
 
-        // initiate a Switch
-        SwitchMaterial testSwitch = findViewById(R.id.switch1);
+        // Create a new Alarm Manager
+        AlarmManager dailyAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         //Save Switch State in shared preferences
-        SharedPreferences sharedPreferences = getSharedPreferences("testSwitch", MODE_PRIVATE );
-        testSwitch.setChecked(sharedPreferences.getBoolean("value", true));
+        SharedPreferences sharedPreferences = getSharedPreferences("Switch", MODE_PRIVATE );
+        dailySwitch.setChecked(sharedPreferences.getBoolean("value", true));
 
-        testSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    SharedPreferences.Editor editor = getSharedPreferences("testSwitch",MODE_PRIVATE).edit();
-                    editor.putBoolean("value",true);
-                    editor.apply();
-                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), 60 * 1000,pendingIntent);
-                }
-                else{
-                    SharedPreferences.Editor editor = getSharedPreferences("testSwitch",MODE_PRIVATE).edit();
-                    editor.putBoolean("value",false);
-                    editor.apply();
-                    alarmManager.cancel(pendingIntent);
-                }
+        dailySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked){
+                SharedPreferences.Editor editor = getSharedPreferences("Switch",MODE_PRIVATE).edit();
+                editor.putBoolean("value",true);
+                editor.apply();
+                dailyAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), 24 * 60 * 60 * 1000,daily_pendingIntent);
+            }
+            else{
+                SharedPreferences.Editor editor = getSharedPreferences("Switch",MODE_PRIVATE).edit();
+                editor.putBoolean("value",false);
+                editor.apply();
+                dailyAlarmManager.cancel(daily_pendingIntent);
             }
         });
 
+        // Weekly Reminder
 
-        Button btn3 = findViewById(R.id.button3);
-        btn3.setOnClickListener(v->{
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), 60 * 1000,pendingIntent);
-        });
+        // Creating a Pending Intent for a BroadCast
+        Intent weekly_intent = new Intent(section_notification.this, WeeklyReminderBroadcast.class);
+        PendingIntent weekly_pendingIntent = PendingIntent.getBroadcast(section_notification.this,0,weekly_intent,PendingIntent.FLAG_IMMUTABLE);
 
-        Button cancelBtn3 = findViewById(R.id.button4);
-        cancelBtn3.setOnClickListener(v -> {
+        // Create a new Alarm Manager
+        AlarmManager weeklyAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        //Save Switch State in shared preferences
+        weeklySwitch.setChecked(sharedPreferences.getBoolean("weekly_value", true));
+
+        weeklySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked){
+                SharedPreferences.Editor editor = getSharedPreferences("Switch",MODE_PRIVATE).edit();
+                editor.putBoolean("weekly_value",true);
+                editor.apply();
+                weeklyAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),7 * 24 * 60 * 60 * 1000,weekly_pendingIntent);
+            }
+            else{
+                SharedPreferences.Editor editor = getSharedPreferences("Switch",MODE_PRIVATE).edit();
+                editor.putBoolean("weekly_value",false);
+                editor.apply();
+                weeklyAlarmManager.cancel(weekly_pendingIntent);
+            }
         });
 
     }
@@ -123,19 +112,14 @@ public class section_notification extends AppCompatActivity {
     //Creates the Notification Channels
     public void createNotificationChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Test";
-            String description = "It was just a Test wuhuu ** cries **";
+
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel test_channel = new NotificationChannel("IT WAS ONLY A TEESSSTTTT **runs away**", name, importance);
-            NotificationChannel Come_channel = new NotificationChannel("Come her you ***", "Come", importance);
-            NotificationChannel rest_channel = new NotificationChannel("Shut UP", "FUCK", importance);
-            test_channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
+            NotificationChannel weekly_channel = new NotificationChannel("Weekly","Weekly Review" , importance);
+            NotificationChannel daily_channel = new NotificationChannel("Daily", "Daily Review", importance);
+
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(test_channel);
-            notificationManager.createNotificationChannel(Come_channel);
-            notificationManager.createNotificationChannel(rest_channel);
+            notificationManager.createNotificationChannel(weekly_channel);
+            notificationManager.createNotificationChannel(daily_channel);
         }
     }
 
@@ -145,21 +129,4 @@ public class section_notification extends AppCompatActivity {
         intent.putExtra("user_ID",user_ID);
         startActivity(intent);
     }
-
-//    private void createNotificationChannel() {
-//        // Create the NotificationChannel, but only on API 26+ because
-//        // the NotificationChannel class is new and not in the support library
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            CharSequence name = getString(R.string.channel_name);
-//            String description = getString(R.string.channel_description);
-//            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-//            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-//            channel.setDescription(description);
-//            // Register the channel with the system; you can't change the importance
-//            // or other notification behaviors after this
-//            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-//            notificationManager.createNotificationChannel(channel);
-//        }
-//    }
-
 }

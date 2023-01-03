@@ -156,7 +156,9 @@
                 android:value="" />
         </activity>
 
-        <receiver android:name=".receiver.ReminderBroadcast" />
+        <receiver android:name=".receiver.DailyReminderBroadcast" />
+
+        <receiver android:name=".receiver.WeeklyReminderBroadcast" />
     </application>
 
 </manifest>
