@@ -19,9 +19,12 @@ import com.example.tradoid.firebase.model.SignInViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.w3c.dom.Text;
+
 public class Sign_In extends AppCompatActivity {
 
     public String email, password;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +47,16 @@ public class Sign_In extends AppCompatActivity {
         TextInputEditText et_email = findViewById(R.id.edit_text_sign_in_email);
         TextInputEditText et_password = findViewById(R.id.edit_text_sign_in_password);
 
+        // Connecting to Error Msg Text view
+        TextView errortv = findViewById(R.id.tv_error_msg_sign_in);
+
         // Making the Text View "Forgot your password?" Clickable
         TextView tv_forgot_pass = findViewById(R.id.tv_forgot_pass_sign_in);
-        tv_forgot_pass.setOnClickListener(v -> sendMail(String.valueOf(et_email.getText())));
+        tv_forgot_pass.setOnClickListener(v -> sendMail(String.valueOf(et_email.getText()), errortv));
 
         // Error Text Watchers for invalid input
         et_email.addTextChangedListener(new emailTextWatcher(email_layout));
         et_password.addTextChangedListener(new passwordTextWatcher(password_layout));
-
-        // Connecting to Error Msg Text view
-        TextView errortv = findViewById(R.id.tv_error_msg_sign_in);
 
         //Connecting the Sign in Button
         Button btn_sign_up = findViewById(R.id.btn_sign_in);
@@ -124,7 +127,16 @@ public class Sign_In extends AppCompatActivity {
     }
 
     //send the email, second way
-    private void sendMail(String email) {
+    private void sendMail(String email, TextView errorTv) {
+
+        // check if the mail is valid
+        if(!validMail(email)){
+            String error = "No such a User exits";
+            errorTv.setText(error);
+            return;
+        }
+
+        // The user Exists
         final ProgressDialog dialog = new ProgressDialog(this);
         dialog.setTitle("Sending Email");
         dialog.setMessage("Please wait");
@@ -145,6 +157,11 @@ public class Sign_In extends AppCompatActivity {
             }
         });
         sender.start();
+    }
+
+    // checks if the users email is valid if the user forgot his password
+    public boolean validMail(String email){
+        return true;
     }
 
     // Sends to other screens

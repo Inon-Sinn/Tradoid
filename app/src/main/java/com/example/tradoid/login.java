@@ -22,6 +22,8 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+
         // Button that send to Sign in Activity
         Button to_Sign_In_btn = findViewById(R.id.login_To_sign_in);
         to_Sign_In_btn.setOnClickListener(v -> sendToActivity(Sign_In.class));
@@ -37,5 +39,10 @@ public class login extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        if (!getIntent().hasExtra("login")){
+            super.onBackPressed();
+        }
+    }
 }

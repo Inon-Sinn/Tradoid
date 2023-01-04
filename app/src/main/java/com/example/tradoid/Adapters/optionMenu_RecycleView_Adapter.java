@@ -57,6 +57,8 @@ public class optionMenu_RecycleView_Adapter extends RecyclerView.Adapter<optionM
             // start the chosen activity
             Intent intent = new Intent(context, section_classes[position]);
             intent.putExtra("user_ID",user_ID);
+            // to the login to disable back button
+            intent.putExtra("login","logout");
             context.startActivity(intent);
         });
     }
