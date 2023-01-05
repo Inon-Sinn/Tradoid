@@ -3,7 +3,7 @@ package com.example.tradoid;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
+import java.util.Random;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,11 +48,11 @@ public class Sign_In extends AppCompatActivity {
         TextInputEditText et_password = findViewById(R.id.edit_text_sign_in_password);
 
         // Connecting to Error Msg Text view
-        TextView errortv = findViewById(R.id.tv_error_msg_sign_in);
+        TextView error_tv = findViewById(R.id.tv_error_msg_sign_in);
 
         // Making the Text View "Forgot your password?" Clickable
         TextView tv_forgot_pass = findViewById(R.id.tv_forgot_pass_sign_in);
-        tv_forgot_pass.setOnClickListener(v -> sendMail(String.valueOf(et_email.getText()), errortv));
+        tv_forgot_pass.setOnClickListener(v -> sendMail(String.valueOf(et_email.getText()), error_tv));
 
         // Error Text Watchers for invalid input
         et_email.addTextChangedListener(new emailTextWatcher(email_layout));
@@ -114,7 +114,7 @@ public class Sign_In extends AppCompatActivity {
                                                 }
                                             });
                                         } else{
-                                            errortv.setText("Incorrect username or password");
+                                            error_tv.setText("Incorrect username or password");
                                         }
                                     }
                                 });
@@ -141,16 +141,34 @@ public class Sign_In extends AppCompatActivity {
         dialog.setTitle("Sending Email");
         dialog.setMessage("Please wait");
         dialog.show();
+        // Sending the Mail
         Thread sender = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
+                    // Random Validation number
+                    Random random = new Random();
+                    int val_code = random.nextInt(1000000);
+
+                    // Adding missing zero prefixes of the validation code
+                    StringBuilder code = new StringBuilder(String.valueOf(val_code));
+                    while( code.length() < 6){
+                        code.insert(0, "0");
+                    }
+
+                    // Send the email
                     GMailSender sender = new GMailSender(Utils.EMAIL, Utils.PASSWORD);
                     sender.sendMail("Forgotten Password",
-                            "Fuck me, why should i tell you?",
+                            "Validation code is " + code,
                             "tradoidapp@gmail.com",
                             email); // Who gets the email
                     dialog.dismiss();
+
+                    // Send the user to the Email Validation screen with the needed data
+                    Intent toEmailVal = new Intent(getApplicationContext(), EmailValidation.class);
+                    toEmailVal.putExtra("email",email);
+                    toEmailVal.putExtra("val_code",val_code);
+                    startActivity(toEmailVal);
                 } catch (Exception e) {
                     System.out.println("DID NOT WORK");
                 }

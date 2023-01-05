@@ -27,6 +27,12 @@
     <string name="have_an_account">Already have an Account?</string>
     <string name="sign_up_card_Title">Register</string>
 
+    // Email Validation Class
+    <string name="email_validation_msg">Please enter the verification code send to </string>
+    <string name="email_val_btn_text">Continue</string>
+    <string name="card_title_email_val">Validation</string>
+    <string name="resend">resend</string>
+
     // Ban msg Class
     <string name="user_blocked_msg">We are sorry to tell you that you have been banned for: </string>
     <string name="user_blocked">USER BLOCKED</string>
