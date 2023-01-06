@@ -19,6 +19,7 @@ public class EmailValidation extends AppCompatActivity {
 
     int val_code;
     String email;
+    Boolean confirmed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class EmailValidation extends AppCompatActivity {
 
         // Implementing the Back arrow
         TextView tv_back_arrow = findViewById(R.id.email_val_back_arrow);
-        tv_back_arrow.setOnClickListener(v -> sendToActivity(Sign_In.class, ""));
+        tv_back_arrow.setOnClickListener(v -> startActivity(new Intent(this,Sign_In.class)));
 
         // Get user email
         email ="";
@@ -38,9 +39,22 @@ public class EmailValidation extends AppCompatActivity {
         String msg_email = textMsg.getText() + " " + email;
         textMsg.setText(msg_email);
 
+        // Connecting to Error Msg Text view
+        TextView error_tv = findViewById(R.id.tv_error_msg_email_val);
+
         // Continue Button - TODO finish
         Button continue_btn = findViewById(R.id.btn_email_val);
-        continue_btn.setOnClickListener(v -> {});
+        continue_btn.setOnClickListener(v -> {
+            if (confirmed){
+                Intent to_res_password = new Intent(this,ResetPassword.class);
+                to_res_password.putExtra("email",email);
+                startActivity(to_res_password);
+            }
+            else{
+                String error_msg = "Please enter the validation code";
+                error_tv.setText(error_msg);
+            }
+        });
 
         // Get the validation code
         if (getIntent().hasExtra("val_code")){val_code = getIntent().getIntExtra("val_code",123456);}
@@ -51,6 +65,7 @@ public class EmailValidation extends AppCompatActivity {
             pinEntry.setOnPinEnteredListener(str -> {
                 if (Integer.parseInt(str.toString()) == val_code) {
                     Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
+                    confirmed = true;
                 } else {
                     Toast.makeText(getApplicationContext(), "FAIL", Toast.LENGTH_SHORT).show();
                     pinEntry.setText(null);
@@ -100,12 +115,5 @@ public class EmailValidation extends AppCompatActivity {
             }
         });
         sender.start();
-    }
-
-    // Sends to other screens
-    public void sendToActivity(Class cls, String userId){
-        Intent intent = new Intent(this,cls);
-        intent.putExtra("user_ID", userId);
-        startActivity(intent);
     }
 }

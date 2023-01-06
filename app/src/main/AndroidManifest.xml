@@ -17,6 +17,13 @@
         android:theme="@style/Theme.Tradoid"
         tools:targetApi="31">
         <activity
+            android:name=".ResetPassword"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".EmailValidation"
             android:exported="false">
             <meta-data
@@ -157,7 +164,6 @@
         </activity>
 
         <receiver android:name=".receiver.DailyReminderBroadcast" />
-
         <receiver android:name=".receiver.WeeklyReminderBroadcast" />
     </application>
 

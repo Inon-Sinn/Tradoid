@@ -33,6 +33,10 @@
     <string name="card_title_email_val">Validation</string>
     <string name="resend">resend</string>
 
+    // Reset Password Class
+    <string name="reset_password_card_title">New Password</string>
+    <string name="btn_reset_password">Update</string>
+
     // Ban msg Class
     <string name="user_blocked_msg">We are sorry to tell you that you have been banned for: </string>
     <string name="user_blocked">USER BLOCKED</string>
