@@ -54,9 +54,6 @@ public class ResetPassword extends AppCompatActivity {
             if(Objects.requireNonNull(et_confirm.getText()).length() == 0)
                 confirm_layout.setError("Field Required");
         });
-
-
-
     }
 
     // Sends to other screens

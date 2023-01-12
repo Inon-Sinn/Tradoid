@@ -16,7 +16,6 @@ import com.example.tradoid.Business_Logic.emailTextWatcher;
 import com.example.tradoid.Business_Logic.passwordTextWatcher;
 import com.example.tradoid.Business_Logic.usernameTextWatcher;
 import com.example.tradoid.backend.*;
-import com.example.tradoid.firebase.model.SignUpViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;

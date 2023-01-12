@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-import com.example.tradoid.firebase.model.BanMsgViewModel;
 
 public class Ban_msg extends AppCompatActivity {
 

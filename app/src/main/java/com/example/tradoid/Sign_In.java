@@ -20,7 +20,6 @@ import com.example.tradoid.Business_Logic.GMailSender;
 import com.example.tradoid.Business_Logic.Utils;
 import com.example.tradoid.Business_Logic.emailTextWatcher;
 import com.example.tradoid.Business_Logic.passwordTextWatcher;
-import com.example.tradoid.firebase.model.SignInViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.example.tradoid.backend.*;
@@ -93,7 +92,11 @@ public class Sign_In extends AppCompatActivity {
                         // getting log in data
                         LogInTry logInTry = new Gson().fromJson(response.getData(), LogInTry.class);
                         // if it is a user log in
-                        if (logInTry.getType().equals("user")){
+                        if (logInTry.getType() == null){
+                            // did not find user/admin
+                            error_tv.setText("wrong email or password!");
+                        }
+                        else if (logInTry.getType().equals("user")){
                             String userId = logInTry.getUserId();
                             // checking if the user is banned
                             Response isBannedResponse = client.sendGet("is_banned/" + userId);
@@ -134,9 +137,6 @@ public class Sign_In extends AppCompatActivity {
                             params.put("adminId", adminId);
 
                             sendToActivity(User_List.class, params);
-                        } else {
-                            // did not find user/admin
-                            error_tv.setText("wrong email or password!");
                         }
                     } else {
                         // request did not pass

@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tradoid.backend.*;
-import com.example.tradoid.firebase.model.BalanceViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
@@ -41,8 +40,6 @@ public class section_balance extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_section_balance);
 
-        // connect to view model
-        BalanceViewModel viewModel = new ViewModelProvider(this).get(BalanceViewModel.class);
         TextView tv_balance = findViewById(R.id.balance_tv);
 
         if (getIntent().hasExtra("user")) {
@@ -61,7 +58,7 @@ public class section_balance extends AppCompatActivity {
 
         // Connecting to the request button
         Button request_btn = findViewById(R.id.button_send_request_balance);
-        request_btn.setOnClickListener(v -> request(viewModel, tv_balance));
+        request_btn.setOnClickListener(v -> request(tv_balance));
 
         // Connecting to Action - Buy/Sell
         AutoCompleteTextView autoCompleteTextView = findViewById(R.id.autoComplete_tv_balance);
@@ -79,7 +76,7 @@ public class section_balance extends AppCompatActivity {
     }
 
     @SuppressLint("ResourceAsColor")
-    public void request(BalanceViewModel viewModel, TextView tv_balance){
+    public void request(TextView tv_balance){
         tv_error.setTextColor(Color.RED);
         String text = String.valueOf(editText_usd.getText());
         if(current_action == null || text.equals("")){

@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.example.tradoid.Adapters.optionMenu_RecycleView_Adapter;
 import com.example.tradoid.backend.*;
-import com.example.tradoid.firebase.model.ProfileViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 

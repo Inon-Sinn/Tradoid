@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutionException;
 
 public class HttpUtils {
 
-    private final String root = "http://10.12.11.28:8000/";
+    private final String root = "http://192.168.42.185:8000/";
 
     private class SendGetAsyncTask extends AsyncTask<String, Void, Response> {
 

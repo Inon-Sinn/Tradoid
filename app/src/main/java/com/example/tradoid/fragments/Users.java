@@ -15,7 +15,6 @@ import com.example.tradoid.Data_handling.user_data;
 import com.example.tradoid.Data_handling.user_view_model;
 import com.example.tradoid.R;
 import com.example.tradoid.backend.*;
-import com.example.tradoid.firebase.model.UserListViewModel;
 import com.google.gson.Gson;
 
 import java.util.List;

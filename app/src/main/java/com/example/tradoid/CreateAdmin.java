@@ -17,8 +17,6 @@ import com.example.tradoid.Business_Logic.usernameTextWatcher;
 import com.example.tradoid.backend.CreateUserTry;
 import com.example.tradoid.backend.HttpUtils;
 import com.example.tradoid.backend.Response;
-import com.example.tradoid.firebase.model.CreateAdminViewModel;
-import com.example.tradoid.firebase.model.SignUpViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
@@ -84,8 +82,6 @@ public class CreateAdmin extends AppCompatActivity {
         btn_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // connect to view model
-                CreateAdminViewModel viewModel = new ViewModelProvider(CreateAdmin.this).get(CreateAdminViewModel.class);
 
                 // Check if all fields are filled
                 if(et_name.getText().length() == 0)

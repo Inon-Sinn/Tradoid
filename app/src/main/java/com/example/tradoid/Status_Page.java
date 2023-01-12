@@ -18,8 +18,6 @@ import com.example.tradoid.Data_handling.stock_data;
 import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.Data_handling.user_data;
 import com.example.tradoid.backend.*;
-import com.example.tradoid.firebase.model.BalanceViewModel;
-import com.example.tradoid.backend.Stock;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
