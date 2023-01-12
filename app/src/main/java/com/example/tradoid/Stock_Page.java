@@ -39,13 +39,15 @@ import java.util.Map;
 public class Stock_Page extends AppCompatActivity {
 
     // Buy/Sell Action
-    String[] actions = {"Buy","Sell"};
+    String[] actions = {"Buy", "Sell"};
     String current_action;
-    double total_value;
     public boolean stopListening = false; // needed so don't have an infinite loop
 
     User user;
     Stock stock;
+    double price;
+    double amount;
+
     String formerScreen;
 
     Gson gson = new Gson();
@@ -79,10 +81,12 @@ public class Stock_Page extends AppCompatActivity {
         // Implementing the Back arrow in the Toolbar
         TextView back_arrow = findViewById(R.id.stock_page_status_back_arrow);
 
-        Map<String, String> params = new HashMap<>();
-        params.put("user", gson.toJson(user));
-        params.put("stock", gson.toJson(stock));
-        back_arrow.setOnClickListener(v -> sendToActivity(recognizeScreen(), params));
+        back_arrow.setOnClickListener(v -> {
+            Map<String, String> params = new HashMap<>();
+            params.put("user", gson.toJson(user));
+            params.put("stock", gson.toJson(stock));
+            sendToActivity(recognizeScreen(), params);
+        });
 
         // Implementing the Bookmark in the Toolbar
         ImageView bookmark = findViewById(R.id.bookmark_stock_pg);
@@ -128,13 +132,20 @@ public class Stock_Page extends AppCompatActivity {
                 if(!stopListening) {
                     stopListening = true;
                     if (s.length() != 0) {
-                        double num = Double.parseDouble(s.toString());
+                        double num;
+                        try {
+                            num = Double.parseDouble(s.toString());
+                        } catch (NumberFormatException e) {
+                            num = 0;
+                        }
                         DecimalFormat numberFormat = new DecimalFormat("#.000");
-                        editText_Stock.setText(numberFormat.format(num/stock.getCurrentPrice())); // The amount of Stock that can be bought
-                        total_value = num;
+                        price = num;
+                        amount = price/stock.getCurrentPrice();
+                        editText_Stock.setText(numberFormat.format(amount)); // The amount of Stock that can be bought
                     } else {
+                        price = 0;
+                        amount = 0;
                         editText_Stock.setText(""); // The amount of Stock that can be bought
-                        total_value = 0;
                     }
                 }
                 stopListening = false;
@@ -156,13 +167,20 @@ public class Stock_Page extends AppCompatActivity {
                 if(!stopListening) {
                     stopListening = true;
                     if (s.length() != 0) {
-                        double num = Double.parseDouble(s.toString());
+                        double num;
+                        try {
+                            num = Double.parseDouble(s.toString());
+                        } catch (NumberFormatException e) {
+                            num = 0;
+                        }
                         DecimalFormat numberFormat = new DecimalFormat("#.000");
-                        editText_usd.setText(numberFormat.format(num * stock.getCurrentPrice())); // The amount of Stock that can be bought
-                        total_value = num * stock.getCurrentPrice();
+                        amount = num;
+                        price = amount * stock.getCurrentPrice();
+                        editText_usd.setText(numberFormat.format(price)); // The amount of Stock that can be bought
                     } else {
+                        amount = 0;
+                        price = 0;
                         editText_usd.setText(""); // The amount of Stock that can be bought
-                        total_value = 0;
                     }
                 }
                 stopListening = false;
@@ -289,7 +307,7 @@ public class Stock_Page extends AppCompatActivity {
         tv_full_name.setText(stock.getFullName());
         tv_price.setText(String.valueOf(stock.getCurrentPrice()));
         if(stock.getChange()>0){
-            tv_price_change.setText(String.valueOf(stock.getChange()));
+            tv_price_change.setText("+" + stock.getChange());
             tv_price_change.setTextColor(Color.GREEN);
         }
         else {
@@ -302,11 +320,62 @@ public class Stock_Page extends AppCompatActivity {
 
     // The Function called when we Bookmark a stock
     public void Bookmark_stock(){
-        Toast.makeText(getApplicationContext(),"Bookmark: Still not implemented",Toast.LENGTH_SHORT).show();
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("userId", user.getUserId());
+        payload.put("stockId", stock.getStockId());
+
+        Response response = client.sendPost("bookmark_stock", payload);
+        if (response.passed()){
+            Success success = gson.fromJson(response.getData(), Success.class);
+            if (success.isSuccess()){
+                Toast.makeText(getApplicationContext(),stock.getStockId() + " bookmarked",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void create_transaction(){
-        Toast.makeText(getApplicationContext(),"Still not implemented",Toast.LENGTH_SHORT).show();
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("userId", user.getUserId());
+        payload.put("stockId", stock.getStockId());
+        payload.put("price", price);
+        payload.put("amount", amount);
+
+        DecimalFormat numberFormat = new DecimalFormat("#.000");
+
+        if (current_action == null){
+            Toast.makeText(getApplicationContext(),
+                    "Please choose an action",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (current_action.equals("Buy")){
+            Response response = client.sendPost("buy", payload);
+            if (response.passed()){
+                Toast.makeText(getApplicationContext(),
+                        "Bought " + numberFormat.format(amount) + " stocks of " + stock.getStockId() + " for $" + numberFormat.format(price),
+                        Toast.LENGTH_SHORT).show();
+                Balance balance = gson.fromJson(response.getData(), Balance.class);
+                user.setBalance(balance.getBalance());
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        "Not enough money in account",
+                        Toast.LENGTH_SHORT).show();
+            }
+        } else if (current_action.equals("Sell")){
+            Response response = client.sendPost("sell", payload);
+            if (response.passed()){
+                Toast.makeText(getApplicationContext(),
+                        "Sold " + numberFormat.format(amount) + " stocks of " + stock.getStockId() + " for $" + numberFormat.format(price),
+                        Toast.LENGTH_SHORT).show();
+                Balance balance = gson.fromJson(response.getData(), Balance.class);
+                user.setBalance(balance.getBalance());
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        "Not enough stocks in account",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public Class recognizeScreen(){

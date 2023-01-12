@@ -37,6 +37,8 @@ public class Status_Page extends AppCompatActivity {
 
     Gson gson = new Gson();
 
+    public HttpUtils client = new HttpUtils();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,18 +48,22 @@ public class Status_Page extends AppCompatActivity {
             user = gson.fromJson(getIntent().getStringExtra("user"), User.class);
         }
 
-        // display user balance
-        TextView tv_balance = findViewById(R.id.status_page_tv_amount);
-
-        tv_balance.setText("$" + user.getBalance());
-
-        // get user_data
-        user_data user_temp = new user_data("Temp","Temp",0, "Temp");
-
         // Connect to View Model and getting data
         stock_view_model view_model = new ViewModelProvider(this).get(stock_view_model.class);
-        List<Stock> data = view_model.getDataList();
-        List<double[]> stock_count = user_temp.getStock_amount();
+
+        Response response = client.sendGet("status/" + user.getUserId());
+        List<Owned> ownedList = new ArrayList<>();
+        double total = 0;
+        if (response.passed()){
+            OwnedList ownedListResponse = gson.fromJson(response.getData(), OwnedList.class);
+            total = ownedListResponse.getTotal();
+            ownedList = ownedListResponse.getOwnedList();
+        }
+
+        // display total amount
+        TextView tv_balance = findViewById(R.id.status_page_tv_amount);
+
+        tv_balance.setText("$" + total);
 
         // Creating a Bottom Navigation Bar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -67,10 +73,9 @@ public class Status_Page extends AppCompatActivity {
 
         // Perform item selected listener
 
-        Map<String, String> params = new HashMap<>();
-        params.put("user", gson.toJson(user));
-
         bottomNavigationView.setOnItemSelectedListener(item -> {
+            Map<String, String> params = new HashMap<>();
+            params.put("user", gson.toJson(user));
             if (item.getItemId() == R.id.bottom_menu_stock_market) {
                 sendToActivity(Stock_Market.class, params);
                 return true;
@@ -88,9 +93,9 @@ public class Status_Page extends AppCompatActivity {
         // Creating the Donut chart
         DonutProgressView donutView = findViewById(R.id.donut_char_status_page);
         donutView.setCap(1f);
-        float section_num = 0; //data.size()
+        float section_num = ownedList.size();
         List<DonutSection> sections = new ArrayList<>();
-        int[] colors = new int[0]; //data.size()
+        int[] colors = new int[ownedList.size()];
         String section_name;
         for (int i = 0; i < section_num; i++) {
             float hue = 0;
@@ -104,16 +109,20 @@ public class Status_Page extends AppCompatActivity {
             }
             colors[i] = Color.HSVToColor(new float[]{hue,(float)0.9,(float) 1});
             section_name = "Section " + i;
-            sections.add(new DonutSection(section_name, colors[i], (float) stock_count.get(i)[0]));
+            sections.add(new DonutSection(section_name, colors[i],
+                    (float) (ownedList.get(i).getAmount() * ownedList.get(i).getStock().getCurrentPrice())));
         }
         donutView.submitData(sections);
+
 
         // Creating the Recycle View - the list
         RecyclerView recyclerView = findViewById(R.id.recyclerView_status_page);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Calling the Adapter
-        status_RecycleView_Adapter adapter = new status_RecycleView_Adapter(this, data,stock_count,colors,false, gson.toJson(user));
+        Map<String, String> params = new HashMap<>();
+        params.put("user", gson.toJson(user));
+        status_RecycleView_Adapter adapter = new status_RecycleView_Adapter(this, ownedList,colors,false, params);
         recyclerView.setAdapter(adapter);
 
     }

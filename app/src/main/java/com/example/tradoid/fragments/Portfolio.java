@@ -44,8 +44,7 @@ public class Portfolio extends Fragment {
         view_model = new ViewModelProvider(this).get(stock_view_model.class);
 
         // get stock list
-        // TODO change to portfolio
-        Response response = client.sendGet("stock_list");
+        Response response = client.sendGet("portfolio/" + user.getUserId());
         if (response.passed()){
             StockList stockList = new Gson().fromJson(response.getData(), StockList.class);
             view_model.setStockList(stockList.getStockList());

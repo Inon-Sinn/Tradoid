@@ -32,7 +32,7 @@ public class User_List_RecycleView_Adapter extends RecyclerView.Adapter<User_Lis
     public User_List_RecycleView_Adapter(Context ct, List<User> newList, String adminId) {
         context = ct;
         item_list = newList;
-        adminId = adminId;
+        this.adminId = adminId;
     }
 
     @NonNull

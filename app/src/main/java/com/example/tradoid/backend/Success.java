@@ -1,9 +1,9 @@
 package com.example.tradoid.backend;
 
-public class BanUser {
+public class Success {
     private final boolean success;
 
-    public BanUser(boolean success){
+    public Success(boolean success){
         this.success = success;
     }
 

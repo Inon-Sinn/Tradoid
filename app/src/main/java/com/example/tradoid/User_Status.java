@@ -16,6 +16,7 @@ import com.example.tradoid.Adapters.status_RecycleView_Adapter;
 import com.example.tradoid.Data_handling.stock_data;
 import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.Data_handling.user_data;
+import com.example.tradoid.backend.*;
 import com.example.tradoid.backend.Stock;
 import com.example.tradoid.backend.User;
 import com.google.gson.Gson;
@@ -37,7 +38,11 @@ public class User_Status extends AppCompatActivity {
     User user;
     String adminId;
 
+    Map<String, Double> portfolio;
+
     Gson gson = new Gson();
+
+    public HttpUtils client = new HttpUtils();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +63,13 @@ public class User_Status extends AppCompatActivity {
 
         // Implementing connecting to user ban
         ImageView to_ban = findViewById(R.id.ban_user_status);
-        Map<String, String> params = new HashMap<>();
-        params.put("user", gson.toJson(user));
-        params.put("adminId", adminId);
-        to_ban.setOnClickListener(v->sendToActivity(user_ban.class, params));
+
+        to_ban.setOnClickListener(v->{
+            Map<String, String> params = new HashMap<>();
+            params.put("user", gson.toJson(user));
+            params.put("adminId", adminId);
+            sendToActivity(user_ban.class, params);
+        });
 
         // Implementing the Back arrow in the Toolbar
         TextView back_arrow = findViewById(R.id.user_status_back_arrow);
@@ -75,13 +83,15 @@ public class User_Status extends AppCompatActivity {
         tv_name.setText(user.getUsername());
         tv_balance.setText("$" + user.getBalance());
 
-        // get user_data
-        user_data user = new user_data("Temp","Temp",0, "Temp");
-
         // Connect to Stock View Model and getting data
         stock_view_model view_model = new ViewModelProvider(this).get(stock_view_model.class);
-        List<Stock> data = view_model.getDataList();
-        List<double[]> stock_count = user.getStock_amount();
+
+        Response response = client.sendGet("status/" + user.getUserId());
+        List<Owned> ownedList = new ArrayList<>();
+        if (response.passed()){
+            OwnedList ownedListResponse = gson.fromJson(response.getData(), OwnedList.class);
+            ownedList = ownedListResponse.getOwnedList();
+        }
 
         // Checking Light Mode
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -89,9 +99,9 @@ public class User_Status extends AppCompatActivity {
         // Creating the Donut chart
         DonutProgressView donutView = findViewById(R.id.donut_char_user_status);
         donutView.setCap(1f);
-        float section_num = 0; //data.size()
+        float section_num = ownedList.size();
         List<DonutSection> sections = new ArrayList<>();
-        int[] colors = new int[0]; //data.size()
+        int[] colors = new int[ownedList.size()];
         String section_name;
         for (int i = 0; i < section_num; i++) {
             float hue = 0;
@@ -105,7 +115,7 @@ public class User_Status extends AppCompatActivity {
             }
             colors[i] = Color.HSVToColor(new float[]{hue,(float)0.9,(float) 1});
             section_name = "Section " + i;
-            sections.add(new DonutSection(section_name, colors[i], (float) stock_count.get(i)[0]));
+            sections.add(new DonutSection(section_name, colors[i], (float) ownedList.get(i).getAmount()));
         }
         donutView.submitData(sections);
 
@@ -114,7 +124,10 @@ public class User_Status extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Calling the Adapter
-        status_RecycleView_Adapter adapter = new status_RecycleView_Adapter(this, data,stock_count,colors,true,"");
+        Map<String, String> params = new HashMap<>();
+        params.put("user", gson.toJson(user));
+        params.put("adminId", adminId);
+        status_RecycleView_Adapter adapter = new status_RecycleView_Adapter(this, ownedList,colors,true, params);
         recyclerView.setAdapter(adapter);
     }
 

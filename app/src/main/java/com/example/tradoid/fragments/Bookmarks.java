@@ -45,7 +45,7 @@ public class Bookmarks extends Fragment {
         view_model = new ViewModelProvider(this).get(stock_view_model.class);
 
         // TODO change to bookmarked
-        Response response = client.sendGet("stock_list");
+        Response response = client.sendGet("bookmarked/" + user.getUserId());
         if (response.passed()){
             StockList stockList = new Gson().fromJson(response.getData(), StockList.class);
             view_model.setStockList(stockList.getStockList());

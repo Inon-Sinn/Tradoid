@@ -25,7 +25,7 @@ import java.util.Map;
 public class section_balance extends AppCompatActivity {
 
     // Deposit/Withdraw Action
-    String[] actions = {"Deposit","Withdraw"};
+    String[] actions = {"Deposit", "Withdraw"};
     String current_action = null;
     TextInputEditText editText_usd;
     TextView tv_error;
@@ -95,7 +95,7 @@ public class section_balance extends AppCompatActivity {
                 if (response.passed()) {
                     Balance balance = new Gson().fromJson(response.getData(), Balance.class);
                     user.setBalance(balance.getBalance());
-                    tv_balance.setText("$" + balance.getBalance());
+                    tv_balance.setText("$" + user.getBalance());
                     tv_error.setTextColor(R.color.tv_error);
                     tv_error.setText("Deposit successful");
                 }
@@ -109,7 +109,7 @@ public class section_balance extends AppCompatActivity {
                 if (response.passed()) {
                     Balance balance = new Gson().fromJson(response.getData(), Balance.class);
                     user.setBalance(balance.getBalance());
-                    tv_balance.setText("$" + balance.getBalance());
+                    tv_balance.setText("$" + user.getBalance());
                     tv_error.setTextColor(R.color.tv_error);
                     tv_error.setText("Withdraw successful");
                 }

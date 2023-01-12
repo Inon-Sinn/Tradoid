@@ -1,7 +1,7 @@
 package com.example.tradoid;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tradoid.backend.*;
-import com.example.tradoid.firebase.model.BanUserViewModel;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -80,7 +79,7 @@ public class user_ban extends AppCompatActivity {
                 payload.put("reason", tv_reason.getText().toString());
                 Response response = client.sendPost("ban_user", payload);
                 if (response.passed()){
-                    BanUser banUser = new Gson().fromJson(response.getData(), BanUser.class);
+                    Success banUser = new Gson().fromJson(response.getData(), Success.class);
                     if (banUser.isSuccess()){
                         tv_error.setTextColor(R.color.tv_error);
                         String ban_msg = "User banned successfully";
@@ -92,7 +91,7 @@ public class user_ban extends AppCompatActivity {
                 payload.put("userId", user.getUserId());
                 Response response = client.sendPost("unban_user", payload);
                 if (response.passed()){
-                    BanUser unbanUser = new Gson().fromJson(response.getData(), BanUser.class);
+                    Success unbanUser = new Gson().fromJson(response.getData(), Success.class);
                     if (unbanUser.isSuccess()){
                         tv_error.setTextColor(R.color.tv_error);
                         String ban_msg = "User unbanned successfully";

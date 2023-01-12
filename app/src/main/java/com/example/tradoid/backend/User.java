@@ -1,5 +1,7 @@
 package com.example.tradoid.backend;
 
+import java.text.DecimalFormat;
+
 public class User {
     private final String userId;
     private final String username;
@@ -26,7 +28,8 @@ public class User {
     }
 
     public double getBalance() {
-        return balance;
+        DecimalFormat df = new DecimalFormat("#.##");
+        return Double.parseDouble(df.format(balance));
     }
 
     public void setBalance(double balance) {
