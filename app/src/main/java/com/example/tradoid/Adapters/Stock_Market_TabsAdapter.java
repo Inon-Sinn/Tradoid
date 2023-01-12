@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.tradoid.fragments.Portfolio;
-import com.example.tradoid.fragments.Stock;
+import com.example.tradoid.fragments.Stocks;
 import com.example.tradoid.fragments.Bookmarks;
 
 public class Stock_Market_TabsAdapter extends FragmentStateAdapter {
@@ -25,7 +25,7 @@ public class Stock_Market_TabsAdapter extends FragmentStateAdapter {
             case 2:
                 return new Portfolio();
             default:
-                return new Stock();
+                return new Stocks();
         }
     }
 

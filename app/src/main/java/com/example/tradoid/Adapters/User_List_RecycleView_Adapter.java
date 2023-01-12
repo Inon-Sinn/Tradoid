@@ -13,18 +13,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tradoid.Data_handling.user_data;
 import com.example.tradoid.R;
 import com.example.tradoid.User_Status;
+import com.example.tradoid.backend.User;
+import com.google.gson.Gson;
+
 import java.util.List;
 
 // The Adapter defines how the list look and its items
 public class User_List_RecycleView_Adapter extends RecyclerView.Adapter<User_List_RecycleView_Adapter.MyViewHolder> {
 
     Context context;
-    List<user_data> item_list;
+    List<User> item_list;
+
+    String adminId;
+
+    Gson gson = new Gson();
 
     //Constructor for the adapter
-    public User_List_RecycleView_Adapter(Context ct, List<user_data> newList) {
+    public User_List_RecycleView_Adapter(Context ct, List<User> newList, String adminId) {
         context = ct;
         item_list = newList;
+        adminId = adminId;
     }
 
     @NonNull
@@ -39,17 +47,16 @@ public class User_List_RecycleView_Adapter extends RecyclerView.Adapter<User_Lis
     @Override
     public void onBindViewHolder(@NonNull User_List_RecycleView_Adapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         // communicates with MyViewHolder
-        holder.tv1.setText(item_list.get(position).getName());
+        holder.tv1.setText(item_list.get(position).getUsername());
         holder.tv2.setText(item_list.get(position).getEmail());
-        holder.tv3.setText(String.valueOf(item_list.get(position).getTotal_worth()));
+        holder.tv3.setText(String.valueOf(item_list.get(position).getBalance()));
 
         // needed for onClick
         holder.rowLayout.setOnClickListener(v -> {
             Intent intent = new Intent(context, User_Status.class);
             // give it extra data
-            intent.putExtra("name", item_list.get(position).getName());
-            intent.putExtra("user_ID", item_list.get(position).getID());
-            intent.putExtra("balance", Double.toString(item_list.get(position).getTotal_worth()));
+            intent.putExtra("user", gson.toJson(item_list.get(position)));
+            intent.putExtra("adminId", adminId);
             // Still not implemented
 //            intent.putExtra("signed_up", item_list.get(position));
 //            intent.putExtra("last_seen", item_list.get(position));
@@ -65,7 +72,7 @@ public class User_List_RecycleView_Adapter extends RecyclerView.Adapter<User_Lis
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void updateList(List<user_data> update){
+    public void updateList(List<User> update){
         item_list.clear();
         item_list.addAll(update);
         notifyDataSetChanged();

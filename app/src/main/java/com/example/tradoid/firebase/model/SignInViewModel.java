@@ -1,6 +1,6 @@
 package com.example.tradoid.firebase.model;
 
-import static com.example.tradoid.Data_handling.MD5.getMd5;
+import static com.example.tradoid.backend.MD5.getMd5;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 

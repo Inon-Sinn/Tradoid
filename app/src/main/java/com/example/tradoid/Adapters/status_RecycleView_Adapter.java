@@ -16,29 +16,31 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tradoid.Data_handling.stock_data;
 import com.example.tradoid.R;
 import com.example.tradoid.Stock_Page;
+import com.example.tradoid.backend.Stock;
+import com.example.tradoid.backend.User;
+import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
 import java.util.List;
 
 public class status_RecycleView_Adapter extends RecyclerView.Adapter<status_RecycleView_Adapter.MyViewHolder>{
 
-
     Context context;
-    List<stock_data> item_list;
+    List<Stock> item_list;
     List<double[]> amount_list;
     int[] colors;
     boolean admin;
-    String user_ID;
+    User user;
 
     //Constructor for the adapter
-    public status_RecycleView_Adapter(Context ct, List<stock_data> newList, List<double[]> amount_list, int[] colors, boolean admin, String user_ID) {
+    public status_RecycleView_Adapter(Context ct, List<Stock> newList, List<double[]> amount_list, int[] colors, boolean admin, String params) {
         context = ct;
         item_list = newList;
         this.amount_list = amount_list;
         this.admin = admin;
         this.colors = colors;
         if (!admin){
-            this.user_ID = user_ID;
+            this.user = new Gson().fromJson(params, User.class);
         }
     }
 
@@ -58,8 +60,8 @@ public class status_RecycleView_Adapter extends RecyclerView.Adapter<status_Recy
         DecimalFormat numberFormat = new DecimalFormat("#.0");
 
         // communicates with MyViewHolder
-        holder.tv1.setText(item_list.get(position).getName());
-        holder.tv2.setText(item_list.get(position).getFull_name());
+        holder.tv1.setText(item_list.get(position).getStockId());
+        holder.tv2.setText(item_list.get(position).getFullName());
         holder.tv3.setText("$" + numberFormat.format(amount_list.get(position)[0]));
         holder.tv4.setText("Stocks: " + numberFormat.format(amount_list.get(position)[1]));
         //add colors
@@ -70,13 +72,13 @@ public class status_RecycleView_Adapter extends RecyclerView.Adapter<status_Recy
             holder.rowLayout.setOnClickListener(v -> {
                 Intent intent = new Intent(context, Stock_Page.class);
                 // give it extra data
-                intent.putExtra("name", item_list.get(position).getName());
-                intent.putExtra("full_name", item_list.get(position).getFull_name());
-                intent.putExtra("price", item_list.get(position).getTotal_Price());
-                intent.putExtra("price_change", item_list.get(position).getPrice_change());
+                intent.putExtra("name", item_list.get(position).getStockId());
+                intent.putExtra("full_name", item_list.get(position).getFullName());
+                intent.putExtra("price", item_list.get(position).getCurrentPrice());
+                intent.putExtra("price_change", item_list.get(position).getChange());
                 // give it the screen it came from
                 intent.putExtra("former Screen", "Status_Page");
-                intent.putExtra("user_ID",user_ID);
+                intent.putExtra("extra", new Gson().toJson(this.user));
                 // start the Stock Page activity
                 context.startActivity(intent);
             });
@@ -85,7 +87,8 @@ public class status_RecycleView_Adapter extends RecyclerView.Adapter<status_Recy
 
     @Override
     public int getItemCount() {
-        return item_list.size();
+        return 0;
+        //return item_list.size();
     }
 
     //Makes the row with layout we want

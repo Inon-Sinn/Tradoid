@@ -14,20 +14,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tradoid.Data_handling.stock_data;
 import com.example.tradoid.R;
 import com.example.tradoid.Stock_Page;
+import com.example.tradoid.backend.Stock;
+import com.example.tradoid.backend.User;
+import com.google.gson.Gson;
+
 import java.util.List;
 
 // The Adapter defines how the list look and its items
 public class Stock_Market_RecycleView_Adapter extends RecyclerView.Adapter<Stock_Market_RecycleView_Adapter.MyViewHolder> {
 
     Context context;
-    List<stock_data> item_list;
-    String user_ID;
+    List<Stock> item_list;
+    User user;
+
+    Gson gson = new Gson();
 
     //Constructor for the adapter
-    public Stock_Market_RecycleView_Adapter(Context ct, List<stock_data> newList, String user_ID) {
-        context = ct;
-        item_list = newList;
-        this.user_ID = user_ID;
+    public Stock_Market_RecycleView_Adapter(Context ct, List<Stock> newList, User user) {
+        this.context = ct;
+        this.item_list = newList;
+        this.user = user;
     }
 
     @NonNull
@@ -43,15 +49,15 @@ public class Stock_Market_RecycleView_Adapter extends RecyclerView.Adapter<Stock
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         String text;
         // communicates with MyViewHolder
-        holder.tv1.setText(item_list.get(position).getName());
-        holder.tv2.setText(item_list.get(position).getFull_name());
-        holder.tv3.setText(String.valueOf(item_list.get(position).getTotal_Price()));
-        if(item_list.get(position).getPrice_change()<0){
-            holder.tv4.setText(String.valueOf(item_list.get(position).getPrice_change()));
+        holder.tv1.setText(item_list.get(position).getStockId());
+        holder.tv2.setText(item_list.get(position).getFullName());
+        holder.tv3.setText(String.valueOf(item_list.get(position).getCurrentPrice()));
+        if(item_list.get(position).getChange()<0){
+            holder.tv4.setText(String.valueOf(item_list.get(position).getChange()));
             holder.tv4.setTextColor(Color.RED);
         }
         else {
-            text = "+" + item_list.get(position).getPrice_change();
+            text = "+" + item_list.get(position).getChange();
             holder.tv4.setText(text);
             holder.tv4.setTextColor(Color.GREEN);
         }
@@ -61,13 +67,10 @@ public class Stock_Market_RecycleView_Adapter extends RecyclerView.Adapter<Stock
         holder.rowLayout.setOnClickListener(v -> {
             Intent intent = new Intent(context, Stock_Page.class);
             // give it extra data
-            intent.putExtra("name", item_list.get(position).getName());
-            intent.putExtra("full_name", item_list.get(position).getFull_name());
-            intent.putExtra("price", item_list.get(position).getTotal_Price());
-            intent.putExtra("price_change", item_list.get(position).getPrice_change());
+            intent.putExtra("stock", gson.toJson(item_list.get(position)));
             // give it the screen it came from
-            intent.putExtra("former Screen","Stock_Market");
-            intent.putExtra("user_ID",user_ID);
+            intent.putExtra("formerScreen","Stock_Market");
+            intent.putExtra("user", gson.toJson(user));
             // start the Stock Page activity
             context.startActivity(intent);
 
@@ -80,7 +83,7 @@ public class Stock_Market_RecycleView_Adapter extends RecyclerView.Adapter<Stock
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void updateList(List<stock_data> update){
+    public void updateList(List<Stock> update){
         item_list.clear();
         item_list.addAll(update);
         notifyDataSetChanged();

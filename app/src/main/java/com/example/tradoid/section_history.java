@@ -8,22 +8,34 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.tradoid.Adapters.history_RecycleView_Adapter;
+import com.example.tradoid.backend.User;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class section_history extends AppCompatActivity {
 
-    String user_ID;
+    User user;
+
+    Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_section_history);
 
-        // get User ID
-        if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
+        if (getIntent().hasExtra("user")) {
+            user = gson.fromJson(getIntent().getStringExtra("user"), User.class);
+        }
 
         // Implementing the Back arrow
         TextView tv_back_arrow = findViewById(R.id.history_back_arrow);
-        tv_back_arrow.setOnClickListener(v -> sendToActivity(Profile.class));
+
+        Map<String, String> params = new HashMap<>();
+        params.put("user", gson.toJson(user));
+
+        tv_back_arrow.setOnClickListener(v -> sendToActivity(Profile.class, params));
 
         // Creating the Recycle View - the list
         RecyclerView recyclerView = findViewById(R.id.recyclerView_history);
@@ -37,9 +49,15 @@ public class section_history extends AppCompatActivity {
     }
 
     // Sends to other screens
+    public void sendToActivity(Class cls, Map<String, String> params){
+        Intent intent = new Intent(this, cls);
+        for (Map.Entry<String, String> param: params.entrySet()){
+            intent.putExtra(param.getKey(), param.getValue());
+        }
+        startActivity(intent);
+    }
     public void sendToActivity(Class cls){
-        Intent intent = new Intent(this,cls);
-        intent.putExtra("user_ID",user_ID);
+        Intent intent = new Intent(this, cls);
         startActivity(intent);
     }
 }

@@ -1,5 +1,7 @@
 package com.example.tradoid;
 
+import static com.example.tradoid.backend.MD5.getMd5;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -12,20 +14,33 @@ import android.widget.TextView;
 import com.example.tradoid.Business_Logic.emailTextWatcher;
 import com.example.tradoid.Business_Logic.passwordTextWatcher;
 import com.example.tradoid.Business_Logic.usernameTextWatcher;
+import com.example.tradoid.backend.CreateUserTry;
+import com.example.tradoid.backend.HttpUtils;
+import com.example.tradoid.backend.Response;
 import com.example.tradoid.firebase.model.CreateAdminViewModel;
 import com.example.tradoid.firebase.model.SignUpViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class CreateAdmin extends AppCompatActivity {
 
-    public String username, email, password, confirm;
+    String adminId;
+
+    public HttpUtils client = new HttpUtils();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        if (getIntent().hasExtra("adminId")) {
+            adminId = getIntent().getStringExtra("adminId");
+        }
 
         // Changing the Title
         TextView title = findViewById(R.id.tv_card_title_sign_up);
@@ -87,46 +102,32 @@ public class CreateAdmin extends AppCompatActivity {
                         password_layout.getError() == null && confirm_layout.getError() == null ){
                     //check that passwords are equal
                     if (et_password.getText().toString().equals(et_confirm.getText().toString())) {
+                        String username, email, password;
                         username = et_name.getText().toString();
                         email = et_email.getText().toString();
                         password = et_password.getText().toString();
-                        confirm = et_confirm.getText().toString();
 
                         // checking if username and email are available
-                        viewModel.reset();
+                        Map<String, Object> payload = new HashMap<>();
+                        payload.put("username", username);
+                        payload.put("email", email);
+                        payload.put("password", getMd5(password));
 
-                        viewModel.createTryUsers(username, email);
-                        viewModel.createTryAdmins(username, email);
+                        Response response = client.sendPost("create_admin", payload);
+                        if (response.passed()) {
+                            CreateUserTry createAdminTry = new Gson().fromJson(response.getData(), CreateUserTry.class);
+                            if (createAdminTry.getAvailabilityStatus() == 1) {
+                                email_layout.setError("email already in user!");
+                            } else if (createAdminTry.getAvailabilityStatus() == 2) {
+                                name_layout.setError("username already taken!");
+                            } else {
 
-                        viewModel.getUserStatus().observe(CreateAdmin.this, new Observer<Integer>() {
-                            @Override
-                            public void onChanged(Integer integer) {
-                                if (integer == SignUpViewModel.Availability.EMAIL_TAKEN.ordinal()) {
-                                    email_layout.setError("email already in use!");
-                                } else if (integer == SignUpViewModel.Availability.USERNAME_TAKEN.ordinal()) {
-                                    name_layout.setError("username already taken!");
-                                } else {
-                                    viewModel.getAdminStatus().observe(CreateAdmin.this, new Observer<Integer>() {
-                                        @Override
-                                        public void onChanged(Integer integer) {
-                                            if (integer == SignUpViewModel.Availability.EMAIL_TAKEN.ordinal()) {
-                                                email_layout.setError("email already in use!");
-                                            } else if (integer == SignUpViewModel.Availability.USERNAME_TAKEN.ordinal()) {
-                                                name_layout.setError("username already taken!");
-                                            } else {
-                                                viewModel.createNewAdmin(username, email, password);
-                                                viewModel.getAdminId().observe(CreateAdmin.this, new Observer<String>() {
-                                                    @Override
-                                                    public void onChanged(String s) {
-                                                        sendToActivity(User_List.class, s);
-                                                    }
-                                                });
-                                            }
-                                        }
-                                    });
-                                }
+                                Map<String, String> params = new HashMap<>();
+                                params.put("adminId", adminId);
+
+                                sendToActivity(admin_options.class, params);
                             }
-                        });
+                        }
                     }
                     else{
                         confirm_layout.setError("Passwords must be equal"); //TODO change
@@ -137,9 +138,15 @@ public class CreateAdmin extends AppCompatActivity {
     }
 
     // Sends to other screens
-    public void sendToActivity(Class cls, String userId){
-        Intent intent = new Intent(this,cls);
-        intent.putExtra("user_ID", userId);
+    public void sendToActivity(Class cls, Map<String, String> params){
+        Intent intent = new Intent(this, cls);
+        for (Map.Entry<String, String> param: params.entrySet()){
+            intent.putExtra(param.getKey(), param.getValue());
+        }
+        startActivity(intent);
+    }
+    public void sendToActivity(Class cls){
+        Intent intent = new Intent(this, cls);
         startActivity(intent);
     }
 }

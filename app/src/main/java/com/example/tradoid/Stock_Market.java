@@ -1,29 +1,30 @@
 package com.example.tradoid;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
+
+import com.example.tradoid.backend.User;
 import com.example.tradoid.fragments.Portfolio;
-import com.example.tradoid.fragments.Stock;
+import com.example.tradoid.fragments.Stocks;
 import com.example.tradoid.Adapters.Stock_Market_TabsAdapter;
 import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.fragments.Bookmarks;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Stock_Market extends AppCompatActivity {
@@ -32,15 +33,18 @@ public class Stock_Market extends AppCompatActivity {
     stock_view_model view_model;
     ViewPager2 viewPager2;
 
-    String user_ID;
+    User user;
+
+    Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_market);
 
-        // get User ID
-        if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
+        if (getIntent().hasExtra("user")) {
+            user = gson.fromJson(getIntent().getStringExtra("user"), User.class);
+        }
 
         // Connect to View Model
         view_model = new ViewModelProvider(this).get(stock_view_model.class);
@@ -58,13 +62,17 @@ public class Stock_Market extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.bottom_menu_stock_market);
 
         // Perform item selected listener
+
+        Map<String, String> params = new HashMap<>();
+        params.put("user", gson.toJson(user));
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.bottom_menu_status_pg) {
-                sendToActivity(Status_Page.class);
+                sendToActivity(Status_Page.class, params);
                 return true;
             }
             else if (item.getItemId() == R.id.bottom_menu_profile) {
-                sendToActivity(Profile.class);
+                sendToActivity(Profile.class, params);
                 return true;
             }
             return true;
@@ -87,15 +95,11 @@ public class Stock_Market extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager2.setCurrentItem(tab.getPosition());
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
 
@@ -107,9 +111,6 @@ public class Stock_Market extends AppCompatActivity {
                 Objects.requireNonNull(tabLayout.getTabAt(position)).select();
             }
         });
-
-
-
     }
 
     // Creates the menu
@@ -154,13 +155,13 @@ public class Stock_Market extends AppCompatActivity {
     }
 
     // Used by fragments
-    public String getUserID(){
-        return user_ID;
+    public User getUser(){
+        return user;
     }
 
     // Updates the Fragments ViewModel
     public void updateFragmentsAdapter(String newText){
-        Stock stock_frag = (Stock) getSupportFragmentManager().findFragmentByTag("f0" );
+        Stocks stock_frag = (Stocks) getSupportFragmentManager().findFragmentByTag("f0" );
         Bookmarks watch_frag = (Bookmarks) getSupportFragmentManager().findFragmentByTag("f1");
         Portfolio portfolio_frag = (Portfolio) getSupportFragmentManager().findFragmentByTag("f2");
         // Update the fragments
@@ -173,11 +174,15 @@ public class Stock_Market extends AppCompatActivity {
     }
 
     // Sends to other screens
-    public void sendToActivity(Class cls){
-        Intent intent = new Intent(this,cls);
-        intent.putExtra("user_ID",user_ID);
+    public void sendToActivity(Class cls, Map<String, String> params){
+        Intent intent = new Intent(this, cls);
+        for (Map.Entry<String, String> param: params.entrySet()){
+            intent.putExtra(param.getKey(), param.getValue());
+        }
         startActivity(intent);
     }
-
-
+    public void sendToActivity(Class cls){
+        Intent intent = new Intent(this, cls);
+        startActivity(intent);
+    }
 }

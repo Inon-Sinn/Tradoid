@@ -17,50 +17,47 @@ import com.example.tradoid.Adapters.status_RecycleView_Adapter;
 import com.example.tradoid.Data_handling.stock_data;
 import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.Data_handling.user_data;
+import com.example.tradoid.backend.*;
 import com.example.tradoid.firebase.model.BalanceViewModel;
-import com.example.tradoid.fragments.Stock;
+import com.example.tradoid.backend.Stock;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import app.futured.donut.DonutProgressView;
 import app.futured.donut.DonutSection;
 
 public class Status_Page extends AppCompatActivity {
 
-    String user_ID;
+    User user;
+
+    Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status_page);
 
-        // get User id and balance
-        if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
+        if (getIntent().hasExtra("user")) {
+            user = gson.fromJson(getIntent().getStringExtra("user"), User.class);
+        }
 
         // display user balance
         TextView tv_balance = findViewById(R.id.status_page_tv_amount);
 
-        BalanceViewModel balanceViewModel = new ViewModelProvider(this).get(BalanceViewModel.class);
-        balanceViewModel.reset();
-
-        balanceViewModel.loadBalance(user_ID);
-        balanceViewModel.getBalance().observe(this, new Observer<Float>() {
-            @Override
-            public void onChanged(Float aFloat) {
-                tv_balance.setText("$" + aFloat);
-            }
-        });
+        tv_balance.setText("$" + user.getBalance());
 
         // get user_data
-        user_data user = new user_data("Temp","Temp",0, "Temp");
+        user_data user_temp = new user_data("Temp","Temp",0, "Temp");
 
         // Connect to View Model and getting data
         stock_view_model view_model = new ViewModelProvider(this).get(stock_view_model.class);
-        view_model.setUser(user,"status page");
-        List<stock_data> data = view_model.getData_list();
-        List<double[]> stock_count = user.getStock_amount();
+        List<Stock> data = view_model.getDataList();
+        List<double[]> stock_count = user_temp.getStock_amount();
 
         // Creating a Bottom Navigation Bar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -69,13 +66,17 @@ public class Status_Page extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.bottom_menu_status_pg);
 
         // Perform item selected listener
+
+        Map<String, String> params = new HashMap<>();
+        params.put("user", gson.toJson(user));
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.bottom_menu_stock_market) {
-                sendToActivity(Stock_Market.class);
+                sendToActivity(Stock_Market.class, params);
                 return true;
             }
             else if (item.getItemId() == R.id.bottom_menu_profile) {
-                sendToActivity(Profile.class);
+                sendToActivity(Profile.class, params);
                 return true;
             }
             return true;
@@ -87,9 +88,9 @@ public class Status_Page extends AppCompatActivity {
         // Creating the Donut chart
         DonutProgressView donutView = findViewById(R.id.donut_char_status_page);
         donutView.setCap(1f);
-        float section_num = (float) data.size();
+        float section_num = 0; //data.size()
         List<DonutSection> sections = new ArrayList<>();
-        int[] colors = new int[data.size()];
+        int[] colors = new int[0]; //data.size()
         String section_name;
         for (int i = 0; i < section_num; i++) {
             float hue = 0;
@@ -112,15 +113,21 @@ public class Status_Page extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Calling the Adapter
-        status_RecycleView_Adapter adapter = new status_RecycleView_Adapter(this, data,stock_count,colors,false,user_ID);
+        status_RecycleView_Adapter adapter = new status_RecycleView_Adapter(this, data,stock_count,colors,false, gson.toJson(user));
         recyclerView.setAdapter(adapter);
 
     }
 
     // Sends to other screens
+    public void sendToActivity(Class cls, Map<String, String> params){
+        Intent intent = new Intent(this, cls);
+        for (Map.Entry<String, String> param: params.entrySet()){
+            intent.putExtra(param.getKey(), param.getValue());
+        }
+        startActivity(intent);
+    }
     public void sendToActivity(Class cls){
-        Intent intent = new Intent(this,cls);
-        intent.putExtra("user_ID",user_ID);
+        Intent intent = new Intent(this, cls);
         startActivity(intent);
     }
 }

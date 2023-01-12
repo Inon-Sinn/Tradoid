@@ -10,6 +10,9 @@ import android.os.Bundle;
 import com.example.tradoid.Adapters.optionMenu_RecycleView_Adapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class admin_options extends AppCompatActivity {
 
     // for Adapter
@@ -17,10 +20,16 @@ public class admin_options extends AppCompatActivity {
     String[] section_names;
     Class[] section_classes;
 
+    String adminId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_options);
+
+        if (getIntent().hasExtra("adminId")) {
+            adminId = getIntent().getStringExtra("adminId");
+        }
 
         // Creating a Bottom Navigation Bar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationViewAdmin);
@@ -30,12 +39,14 @@ public class admin_options extends AppCompatActivity {
 
         // Perform item selected listener
         bottomNavigationView.setOnItemSelectedListener(item -> {
+            Map<String, String> params = new HashMap<>();
+            params.put("adminId", adminId);
             if (item.getItemId() == R.id.bottom_menu_dashboard) {
-                sendToActivity(Dashboard.class);
+                sendToActivity(Dashboard.class, params);
                 return true;
             }
             if (item.getItemId() == R.id.bottom_menu_user_list) {
-                sendToActivity(User_List.class);
+                sendToActivity(User_List.class, params);
                 return true;
             }
             return true;
@@ -47,7 +58,11 @@ public class admin_options extends AppCompatActivity {
 
         // Calling the Adapter
         load_Sections();
-        optionMenu_RecycleView_Adapter adapter = new optionMenu_RecycleView_Adapter(section_names,section_icons,section_classes,this,"none");
+
+        Map<String, String> params = new HashMap<>();
+        params.put("adminId", adminId);
+
+        optionMenu_RecycleView_Adapter adapter = new optionMenu_RecycleView_Adapter(section_names,section_icons,section_classes,this,params);
         recyclerView.setAdapter(adapter);
     }
 
@@ -58,8 +73,15 @@ public class admin_options extends AppCompatActivity {
     }
 
     // Sends to other screens
+    public void sendToActivity(Class cls, Map<String, String> params){
+        Intent intent = new Intent(this, cls);
+        for (Map.Entry<String, String> param: params.entrySet()){
+            intent.putExtra(param.getKey(), param.getValue());
+        }
+        startActivity(intent);
+    }
     public void sendToActivity(Class cls){
-        Intent intent = new Intent(this,cls);
+        Intent intent = new Intent(this, cls);
         startActivity(intent);
     }
 }

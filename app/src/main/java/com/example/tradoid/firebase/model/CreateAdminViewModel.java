@@ -1,6 +1,6 @@
 package com.example.tradoid.firebase.model;
 
-import static com.example.tradoid.Data_handling.MD5.getMd5;
+import static com.example.tradoid.backend.MD5.getMd5;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;

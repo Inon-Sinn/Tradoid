@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.tradoid.backend.*;
 import com.github.mikephil.charting.charts.CandleStickChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -27,22 +29,28 @@ import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Stock_Page extends AppCompatActivity {
-
-    String user_ID;
-
-    // The Dynamic values
-    String name, full_name, formerScreen;
-    double price, price_change;
 
     // Buy/Sell Action
     String[] actions = {"Buy","Sell"};
     String current_action;
     double total_value;
     public boolean stopListening = false; // needed so don't have an infinite loop
+
+    User user;
+    Stock stock;
+    String formerScreen;
+
+    Gson gson = new Gson();
+
+    public HttpUtils client = new HttpUtils();
 
     // bottom sheet dialog
     private BottomSheetBehavior sheetBehavior;
@@ -52,11 +60,17 @@ public class Stock_Page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_page);
 
-        // get User ID
-        if (getIntent().hasExtra("user_ID")){ user_ID = getIntent().getStringExtra("user_ID");}
+        if (getIntent().hasExtra("user")) {
+            user = gson.fromJson(getIntent().getStringExtra("user"), User.class);
+        }
 
-        // Get the data form the row it was clicked on
-        getData();
+        if (getIntent().hasExtra("stock")) {
+            stock = gson.fromJson(getIntent().getStringExtra("stock"), Stock.class);
+        }
+
+        if (getIntent().hasExtra("formerScreen")) {
+            formerScreen = getIntent().getStringExtra("formerScreen");
+        }
 
         // Creating a custom Toolbar
         Toolbar stock_page_toolbar = findViewById(R.id.toolbar_stock_page);
@@ -64,7 +78,11 @@ public class Stock_Page extends AppCompatActivity {
 
         // Implementing the Back arrow in the Toolbar
         TextView back_arrow = findViewById(R.id.stock_page_status_back_arrow);
-        back_arrow.setOnClickListener(v -> sendToActivity(recognizeScreen()));
+
+        Map<String, String> params = new HashMap<>();
+        params.put("user", gson.toJson(user));
+        params.put("stock", gson.toJson(stock));
+        back_arrow.setOnClickListener(v -> sendToActivity(recognizeScreen(), params));
 
         // Implementing the Bookmark in the Toolbar
         ImageView bookmark = findViewById(R.id.bookmark_stock_pg);
@@ -112,7 +130,7 @@ public class Stock_Page extends AppCompatActivity {
                     if (s.length() != 0) {
                         double num = Double.parseDouble(s.toString());
                         DecimalFormat numberFormat = new DecimalFormat("#.000");
-                        editText_Stock.setText(numberFormat.format(num/price)); // The amount of Stock that can be bought
+                        editText_Stock.setText(numberFormat.format(num/stock.getCurrentPrice())); // The amount of Stock that can be bought
                         total_value = num;
                     } else {
                         editText_Stock.setText(""); // The amount of Stock that can be bought
@@ -140,8 +158,8 @@ public class Stock_Page extends AppCompatActivity {
                     if (s.length() != 0) {
                         double num = Double.parseDouble(s.toString());
                         DecimalFormat numberFormat = new DecimalFormat("#.000");
-                        editText_usd.setText(numberFormat.format(num * price)); // The amount of Stock that can be bought
-                        total_value = num * price;
+                        editText_usd.setText(numberFormat.format(num * stock.getCurrentPrice())); // The amount of Stock that can be bought
+                        total_value = num * stock.getCurrentPrice();
                     } else {
                         editText_usd.setText(""); // The amount of Stock that can be bought
                         total_value = 0;
@@ -220,40 +238,38 @@ public class Stock_Page extends AppCompatActivity {
         l.setEnabled(false);
 
         // Creating Data points
-        ArrayList<CandleEntry> yvalCandleStick = new ArrayList<>();
-        yvalCandleStick.add(new CandleEntry((float) 0, (float) 225.0, (float) 219.84, (float) 224.94, (float) 221.07));
-        yvalCandleStick.add(new CandleEntry((float)1, (float) 228.35, (float)222.57, (float)223.52, (float)226.41));
-        yvalCandleStick.add(new CandleEntry((float)2,(float)226.84,(float)222.52,(float)225.75,(float)223.84));
-        yvalCandleStick.add(new CandleEntry((float)3, (float)222.95, (float)217.27, (float)222.15, (float)217.88));
+        Response response = client.sendGet("get_stock_chart/" + stock.getStockId());
+        if (response.passed()){
+            StockChart stockChart = new Gson().fromJson(response.getData(), StockChart.class);
+            ArrayList<CandleEntry> yvalCandleStick = new ArrayList<>();
+            for (int i = 0; i < stockChart.getHigh().size(); i++){
+                yvalCandleStick.add(new CandleEntry(i,
+                        (float) stockChart.getHigh().get(i).getPrice(),
+                        (float) stockChart.getLow().get(i).getPrice(),
+                        (float) stockChart.getOpen().get(i).getPrice(),
+                        (float) stockChart.getClose().get(i).getPrice()));
+            }
 
-        yvalCandleStick.add(new CandleEntry((float) 4, (float) 218, (float) 214, (float) 217, (float) 215));
-        yvalCandleStick.add(new CandleEntry((float)5, (float) 216, (float)210, (float)215, (float)211));
-        yvalCandleStick.add(new CandleEntry((float)6,(float)212,(float)198,(float)211,(float)200));
-        yvalCandleStick.add(new CandleEntry((float)7, (float)210, (float)180, (float)200, (float)180));
+            // Creating and getting dataSet
+            CandleDataSet set1 = new CandleDataSet(yvalCandleStick,"DataSet1");
+            set1.setColor(Color.rgb(80, 80, 80));
+            set1.setShadowColor(getResources().getColor(R.color.gray));
+            set1.setShadowWidth(0.8f);
+            set1.setDecreasingColor(getResources().getColor(R.color.red));
+            set1.setDecreasingPaintStyle(Paint.Style.FILL);
+            set1.setIncreasingColor(getResources().getColor(R.color.money_green));
+            set1.setIncreasingPaintStyle(Paint.Style.FILL);
+            set1.setNeutralColor(Color.LTGRAY);
+            set1.setDrawValues(false);
 
-        yvalCandleStick.add(new CandleEntry((float) 8, (float) 225.0, (float) 219.84, (float) 180, (float) 179));
-        yvalCandleStick.add(new CandleEntry((float)9, (float) 179, (float)178, (float) 179, (float)178));
-        yvalCandleStick.add(new CandleEntry((float)10,(float)190,(float)178,(float)178,(float)190));
-        yvalCandleStick.add(new CandleEntry((float)11, (float)222.95, (float)190, (float)190, (float)217.88));
+            // create a data object with the datasets
+            CandleData data = new CandleData(set1);
 
-        // Creating and getting dataSet
-        CandleDataSet set1 = new CandleDataSet(yvalCandleStick,"DataSet1");
-        set1.setColor(Color.rgb(80, 80, 80));
-        set1.setShadowColor(getResources().getColor(R.color.gray));
-        set1.setShadowWidth(0.8f);
-        set1.setDecreasingColor(getResources().getColor(R.color.red));
-        set1.setDecreasingPaintStyle(Paint.Style.FILL);
-        set1.setIncreasingColor(getResources().getColor(R.color.money_green));
-        set1.setIncreasingPaintStyle(Paint.Style.FILL);
-        set1.setNeutralColor(Color.LTGRAY);
-        set1.setDrawValues(false);
+            // set data
+            candleStickChart.setData(data);
+            candleStickChart.invalidate();
 
-        // create a data object with the datasets
-        CandleData data = new CandleData(set1);
-
-        // set data
-        candleStickChart.setData(data);
-        candleStickChart.invalidate();
+        }
 
         //---------------------------------------------------------------------------------------------------------------------------------------
     }
@@ -267,34 +283,17 @@ public class Stock_Page extends AppCompatActivity {
         }
     }
 
-    // getting the data from the intent
-    private void getData(){
-        // Check if it received the data
-        if (getIntent().hasExtra("name") && getIntent().hasExtra("full_name") && getIntent().hasExtra("price") && getIntent().hasExtra("price_change")){
-            name = getIntent().getStringExtra("name");
-            full_name = getIntent().getStringExtra("full_name");
-            price = getIntent().getDoubleExtra("price",0);
-            price_change = getIntent().getDoubleExtra("price_change",0);
-        }else{
-            // In Case something went wrong
-            Toast.makeText(this,"Error: No data",Toast.LENGTH_SHORT).show();
-        }
-
-        if (getIntent().hasExtra("former Screen"))
-            formerScreen = getIntent().getStringExtra("former Screen");
-    }
-
     // setting the data to our elements(image and text views)
     private void setData(TextView tv_name, TextView tv_full_name, TextView tv_price,TextView tv_price_change){
-        tv_name.setText(name);
-        tv_full_name.setText(full_name);
-        tv_price.setText(String.valueOf(price));
-        if(price_change>0){
-            tv_price_change.setText(String.valueOf(price_change));
+        tv_name.setText(stock.getStockId());
+        tv_full_name.setText(stock.getFullName());
+        tv_price.setText(String.valueOf(stock.getCurrentPrice()));
+        if(stock.getChange()>0){
+            tv_price_change.setText(String.valueOf(stock.getChange()));
             tv_price_change.setTextColor(Color.GREEN);
         }
         else {
-            tv_price_change.setText(String.valueOf(price_change));
+            tv_price_change.setText(String.valueOf(stock.getChange()));
             tv_price_change.setTextColor(Color.RED);
         }
 
@@ -319,9 +318,15 @@ public class Stock_Page extends AppCompatActivity {
     }
 
     // Sends to other screens
+    public void sendToActivity(Class cls, Map<String, String> params){
+        Intent intent = new Intent(this, cls);
+        for (Map.Entry<String, String> param: params.entrySet()){
+            intent.putExtra(param.getKey(), param.getValue());
+        }
+        startActivity(intent);
+    }
     public void sendToActivity(Class cls){
-        Intent intent = new Intent(this,cls);
-        intent.putExtra("user_ID",user_ID);
+        Intent intent = new Intent(this, cls);
         startActivity(intent);
     }
 }

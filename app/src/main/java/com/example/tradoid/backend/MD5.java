@@ -1,4 +1,4 @@
-package com.example.tradoid.Data_handling;
+package com.example.tradoid.backend;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
