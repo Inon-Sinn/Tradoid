@@ -1,8 +1,13 @@
 package com.example.tradoid;
 
+import static com.example.tradoid.backend.MD5.getMd5;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,16 +20,16 @@ import com.example.tradoid.Business_Logic.GMailSender;
 import com.example.tradoid.Business_Logic.Utils;
 import com.example.tradoid.Business_Logic.emailTextWatcher;
 import com.example.tradoid.Business_Logic.passwordTextWatcher;
-import com.example.tradoid.firebase.model.SignInViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.example.tradoid.backend.*;
+import com.google.gson.Gson;
 
 import org.w3c.dom.Text;
 
 public class Sign_In extends AppCompatActivity {
 
-    public String email, password;
-
+    public HttpUtils client = new HttpUtils();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +38,11 @@ public class Sign_In extends AppCompatActivity {
 
         // Implementing the Back arrow
         TextView tv_back_arrow = findViewById(R.id.sign_in_back_arrow);
-        tv_back_arrow.setOnClickListener(v -> sendToActivity(login.class, ""));
+        tv_back_arrow.setOnClickListener(v -> sendToActivity(login.class));
 
         // Making Text View "Sign Up" Clickable
         TextView tv_sign_up = findViewById(R.id.tv_from_sign_in_to_sign_up);
-        tv_sign_up.setOnClickListener(v -> sendToActivity(Sign_Up.class, ""));
+        tv_sign_up.setOnClickListener(v -> sendToActivity(Sign_Up.class));
 
         // TextInputLayouts
         TextInputLayout email_layout = findViewById(R.id.textInputLayout_email_sign_in);
@@ -63,9 +68,6 @@ public class Sign_In extends AppCompatActivity {
         btn_sign_up.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // connect to view model
-                SignInViewModel viewModel = new ViewModelProvider(Sign_In.this).get(SignInViewModel.class);
-
                 // Check if all fields are filled
                 if(et_email.getText().length() == 0)
                     email_layout.setError("Field Required");
@@ -74,53 +76,72 @@ public class Sign_In extends AppCompatActivity {
 
                 // Check if all fields have no error TODO change to setting a tv
                 if(email_layout.getError() == null && password_layout.getError() == null){
+                    String email, password;
                     email = et_email.getText().toString();
                     password = et_password.getText().toString();
 
+                    // preparing data to send
+                    Map<String, Object> userData = new HashMap<>();
+                    userData.put("email", email);
+                    userData.put("password", getMd5(password));
+
                     // checking if the user exists
-                    viewModel.reset();
-
-                    viewModel.signInTryUsers(email, password);
-                    viewModel.singInTryAdmins(email, password);
-
-                    viewModel.getIsUser().observe(Sign_In.this, new Observer<Boolean>() {
-                        @Override
-                        public void onChanged(Boolean aBoolean) {
-                            if (aBoolean){
-                                viewModel.getUserId().observe(Sign_In.this, new Observer<String>() {
-                                    @Override
-                                    public void onChanged(String s) {
-                                        viewModel.getIsBanned().observe(Sign_In.this, new Observer<Boolean>() {
-                                            @Override
-                                            public void onChanged(Boolean aBoolean) {
-                                                if (aBoolean){
-                                                    sendToActivity(Ban_msg.class, s);
-                                                } else {
-                                                    sendToActivity(Stock_Market.class, s);
-                                                }
-                                            }
-                                        });
-                                    }
-                                });
-                            } else {
-                                viewModel.getIsAdmin().observe(Sign_In.this, new Observer<Boolean>() {
-                                    @Override
-                                    public void onChanged(Boolean aBoolean) {
-                                        if (aBoolean){
-                                            viewModel.getUserId().observe(Sign_In.this, new Observer<String>() {
-                                                @Override
-                                                public void onChanged(String s) {
-                                                    sendToActivity(User_List.class, s);
-                                                }
-                                            });
-                                        } else{
-                                            error_tv.setText("Incorrect username or password");
-                                        }
-                                    }
-                                });
-                            }
+                    Response response = client.sendPost("log_in", userData);
+                    // checking for errors
+                    if (response.passed()){
+                        // getting log in data
+                        LogInTry logInTry = new Gson().fromJson(response.getData(), LogInTry.class);
+                        // if it is a user log in
+                        if (logInTry.getType() == null){
+                            // did not find user/admin
+                            error_tv.setText("wrong email or password!");
                         }
-                    });
+                        else if (logInTry.getType().equals("user")){
+                            String userId = logInTry.getUserId();
+                            // checking if the user is banned
+                            Response isBannedResponse = client.sendGet("is_banned/" + userId);
+                            // checking for errors
+                            if (response.passed()){
+                                // getting banned user data
+                                IsBanned isBanned = new Gson().fromJson(isBannedResponse.getData(), IsBanned.class);
+                                // if the user is banned
+                                if (isBanned.getIsBanned()){
+                                    // sending to ban page
+
+                                    Map<String, String> params = new HashMap<>();
+                                    params.put("reason", isBanned.getReason());
+
+                                    sendToActivity(Ban_msg.class, params);
+                                } else {
+                                    // getting user data
+                                    Response userResponse = client.sendGet("get_user/" + userId);
+                                    if (userResponse.passed()){
+                                        // sending the main user page
+
+                                        Map<String, String> params = new HashMap<>();
+                                        params.put("user", userResponse.getData());
+
+                                        sendToActivity(Stock_Market.class, params);
+                                    }
+                                }
+                            } else {
+                                // request did not pass
+                                error_tv.setText("server error. please try again later.");
+                            }
+                            // if it is an admin
+                        } else if (logInTry.getType().equals("admin")){
+                            String adminId = logInTry.getUserId();
+                            // sending to main admin page
+
+                            Map<String, String> params = new HashMap<>();
+                            params.put("adminId", adminId);
+
+                            sendToActivity(User_List.class, params);
+                        }
+                    } else {
+                        // request did not pass
+                        error_tv.setText("server error. please try again later.");
+                    }
                 }
             }
         });
@@ -183,9 +204,15 @@ public class Sign_In extends AppCompatActivity {
     }
 
     // Sends to other screens
-    public void sendToActivity(Class cls, String userId){
-        Intent intent = new Intent(this,cls);
-        intent.putExtra("user_ID", userId);
+    public void sendToActivity(Class cls, Map<String, String> params){
+        Intent intent = new Intent(this, cls);
+        for (Map.Entry<String, String> param: params.entrySet()){
+            intent.putExtra(param.getKey(), param.getValue());
+        }
+        startActivity(intent);
+    }
+    public void sendToActivity(Class cls){
+        Intent intent = new Intent(this, cls);
         startActivity(intent);
     }
 }

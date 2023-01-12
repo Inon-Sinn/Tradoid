@@ -9,17 +9,20 @@ import com.example.tradoid.fragments.Users;
 
 public class User_List_TabsAdapter extends FragmentStateAdapter {
 
-    public User_List_TabsAdapter(@NonNull FragmentActivity fragmentActivity) {
+    String adminId;
+
+    public User_List_TabsAdapter(@NonNull FragmentActivity fragmentActivity, String adminId) {
         super(fragmentActivity);
+        this.adminId = adminId;
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
         if (position == 1) {
-            return new Banned_users();
+            return new Banned_users(adminId);
         }
-        return new Users();
+        return new Users(adminId);
     }
 
     @Override

@@ -11,10 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.tradoid.R;
+import com.example.tradoid.backend.User;
 import com.example.tradoid.login;
 import com.example.tradoid.section_balance;
 import com.example.tradoid.section_history;
 import com.example.tradoid.section_notification;
+import com.google.gson.Gson;
+
+import java.util.Map;
 
 
 public class optionMenu_RecycleView_Adapter extends RecyclerView.Adapter<optionMenu_RecycleView_Adapter.MyViewHolder>{
@@ -23,19 +27,21 @@ public class optionMenu_RecycleView_Adapter extends RecyclerView.Adapter<optionM
     int[] section_icons = {R.drawable.ic_notification,R.drawable.ic_history,R.drawable.ic_balance,R.drawable.ic_logout};
     Class[] section_classes = new Class[]{section_notification.class,section_history.class, section_balance.class, login.class};
     Context context;
-    String user_ID;
+    Map<String, String> params;
 
-    public optionMenu_RecycleView_Adapter(Context ct, String user_ID) {
+    Gson gson = new Gson();
+
+    public optionMenu_RecycleView_Adapter(Context ct, Map<String, String> params) {
         this.context = ct;
-        this.user_ID = user_ID;
+        this.params = params;
     }
 
-    public optionMenu_RecycleView_Adapter(String[] section_names, int[] section_icons, Class[] section_classes, Context context, String user_ID) {
+    public optionMenu_RecycleView_Adapter(String[] section_names, int[] section_icons, Class[] section_classes, Context context, Map<String, String> params) {
         this.section_names = section_names;
         this.section_icons = section_icons;
         this.section_classes = section_classes;
         this.context = context;
-        this.user_ID = user_ID;
+        this.params = params;
     }
 
     @NonNull
@@ -56,8 +62,9 @@ public class optionMenu_RecycleView_Adapter extends RecyclerView.Adapter<optionM
         holder.rowLayout.setOnClickListener(v -> {
             // start the chosen activity
             Intent intent = new Intent(context, section_classes[position]);
-            intent.putExtra("user_ID",user_ID);
-            // to the login to disable back button
+            for (Map.Entry<String, String> param : params.entrySet()){
+                intent.putExtra(param.getKey(), param.getValue());
+            }
             intent.putExtra("login","logout");
             context.startActivity(intent);
         });

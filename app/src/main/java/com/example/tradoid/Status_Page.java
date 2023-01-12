@@ -17,50 +17,51 @@ import com.example.tradoid.Adapters.status_RecycleView_Adapter;
 import com.example.tradoid.Data_handling.stock_data;
 import com.example.tradoid.Data_handling.stock_view_model;
 import com.example.tradoid.Data_handling.user_data;
-import com.example.tradoid.firebase.model.BalanceViewModel;
-import com.example.tradoid.fragments.Stock;
+import com.example.tradoid.backend.*;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import app.futured.donut.DonutProgressView;
 import app.futured.donut.DonutSection;
 
 public class Status_Page extends AppCompatActivity {
 
-    String user_ID;
+    User user;
+
+    Gson gson = new Gson();
+
+    public HttpUtils client = new HttpUtils();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status_page);
 
-        // get User id and balance
-        if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
-
-        // display user balance
-        TextView tv_balance = findViewById(R.id.status_page_tv_amount);
-
-        BalanceViewModel balanceViewModel = new ViewModelProvider(this).get(BalanceViewModel.class);
-        balanceViewModel.reset();
-
-        balanceViewModel.loadBalance(user_ID);
-        balanceViewModel.getBalance().observe(this, new Observer<Float>() {
-            @Override
-            public void onChanged(Float aFloat) {
-                tv_balance.setText("$" + aFloat);
-            }
-        });
-
-        // get user_data
-        user_data user = new user_data("Temp","Temp",0, "Temp");
+        if (getIntent().hasExtra("user")) {
+            user = gson.fromJson(getIntent().getStringExtra("user"), User.class);
+        }
 
         // Connect to View Model and getting data
         stock_view_model view_model = new ViewModelProvider(this).get(stock_view_model.class);
-        view_model.setUser(user,"status page");
-        List<stock_data> data = view_model.getData_list();
-        List<double[]> stock_count = user.getStock_amount();
+
+        Response response = client.sendGet("status/" + user.getUserId());
+        List<Owned> ownedList = new ArrayList<>();
+        double total = 0;
+        if (response.passed()){
+            OwnedList ownedListResponse = gson.fromJson(response.getData(), OwnedList.class);
+            total = ownedListResponse.getTotal();
+            ownedList = ownedListResponse.getOwnedList();
+        }
+
+        // display total amount
+        TextView tv_balance = findViewById(R.id.status_page_tv_amount);
+
+        tv_balance.setText("$" + total);
 
         // Creating a Bottom Navigation Bar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -69,13 +70,16 @@ public class Status_Page extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.bottom_menu_status_pg);
 
         // Perform item selected listener
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
+            Map<String, String> params = new HashMap<>();
+            params.put("user", gson.toJson(user));
             if (item.getItemId() == R.id.bottom_menu_stock_market) {
-                sendToActivity(Stock_Market.class);
+                sendToActivity(Stock_Market.class, params);
                 return true;
             }
             else if (item.getItemId() == R.id.bottom_menu_profile) {
-                sendToActivity(Profile.class);
+                sendToActivity(Profile.class, params);
                 return true;
             }
             return true;
@@ -87,9 +91,9 @@ public class Status_Page extends AppCompatActivity {
         // Creating the Donut chart
         DonutProgressView donutView = findViewById(R.id.donut_char_status_page);
         donutView.setCap(1f);
-        float section_num = (float) data.size();
+        float section_num = ownedList.size();
         List<DonutSection> sections = new ArrayList<>();
-        int[] colors = new int[data.size()];
+        int[] colors = new int[ownedList.size()];
         String section_name;
         for (int i = 0; i < section_num; i++) {
             float hue = 0;
@@ -103,24 +107,34 @@ public class Status_Page extends AppCompatActivity {
             }
             colors[i] = Color.HSVToColor(new float[]{hue,(float)0.9,(float) 1});
             section_name = "Section " + i;
-            sections.add(new DonutSection(section_name, colors[i], (float) stock_count.get(i)[0]));
+            sections.add(new DonutSection(section_name, colors[i],
+                    (float) (ownedList.get(i).getAmount() * ownedList.get(i).getStock().getCurrentPrice())));
         }
         donutView.submitData(sections);
+
 
         // Creating the Recycle View - the list
         RecyclerView recyclerView = findViewById(R.id.recyclerView_status_page);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Calling the Adapter
-        status_RecycleView_Adapter adapter = new status_RecycleView_Adapter(this, data,stock_count,colors,false,user_ID);
+        Map<String, String> params = new HashMap<>();
+        params.put("user", gson.toJson(user));
+        status_RecycleView_Adapter adapter = new status_RecycleView_Adapter(this, ownedList,colors,false, params);
         recyclerView.setAdapter(adapter);
 
     }
 
     // Sends to other screens
+    public void sendToActivity(Class cls, Map<String, String> params){
+        Intent intent = new Intent(this, cls);
+        for (Map.Entry<String, String> param: params.entrySet()){
+            intent.putExtra(param.getKey(), param.getValue());
+        }
+        startActivity(intent);
+    }
     public void sendToActivity(Class cls){
-        Intent intent = new Intent(this,cls);
-        intent.putExtra("user_ID",user_ID);
+        Intent intent = new Intent(this, cls);
         startActivity(intent);
     }
 }

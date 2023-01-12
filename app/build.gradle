@@ -45,6 +45,10 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.5.3'
     implementation 'com.google.firebase:firebase-database:20.1.0'
     implementation 'com.google.firebase:firebase-firestore:24.4.1'
+
+    // Add the dependency for Gson
+    implementation 'com.google.code.gson:gson:2.10.1'
+
     implementation files('libs/activation.jar')
     implementation files('libs/additionnal.jar')
     testImplementation 'junit:junit:4.13.2'

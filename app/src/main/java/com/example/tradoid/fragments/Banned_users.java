@@ -14,7 +14,8 @@ import com.example.tradoid.Adapters.User_List_RecycleView_Adapter;
 import com.example.tradoid.Data_handling.user_data;
 import com.example.tradoid.Data_handling.user_view_model;
 import com.example.tradoid.R;
-import com.example.tradoid.firebase.model.UserListViewModel;
+import com.example.tradoid.backend.*;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -24,6 +25,14 @@ public class Banned_users extends Fragment {
     user_view_model view_model;
     User_List_RecycleView_Adapter adapter;
     boolean build = false;
+
+    String adminId;
+
+    public HttpUtils client = new HttpUtils();
+
+    public Banned_users(String adminId){
+        this.adminId = adminId;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,19 +46,19 @@ public class Banned_users extends Fragment {
 
         // Connect to View Model
         view_model = new ViewModelProvider(this).get(user_view_model.class);
-        UserListViewModel listViewModel = new ViewModelProvider(this).get(UserListViewModel.class);
-        listViewModel.reset();
 
-        listViewModel.loadBannedUserList();
-        listViewModel.getBannedList().observe(getViewLifecycleOwner(), user_data -> {
-            view_model.setUserList(user_data);
+        // getting banned user list
+        Response response = client.sendGet("banned_list");
+        if (response.passed()){
+            UserList bannedUserList = new Gson().fromJson(response.getData(), UserList.class);
+            view_model.setUserList(bannedUserList.getUserList());
 
             // Calling the Adapter
-            adapter = new User_List_RecycleView_Adapter(getActivity(),view_model.getData_list());
+            adapter = new User_List_RecycleView_Adapter(getActivity(),view_model.getData_list(), adminId);
             recyclerView.setAdapter(adapter);
 
             build = true;
-        });
+        }
         return view;
     }
 

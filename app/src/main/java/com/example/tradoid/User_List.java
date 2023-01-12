@@ -13,11 +13,15 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
 import com.example.tradoid.Adapters.User_List_TabsAdapter;
 import com.example.tradoid.Data_handling.user_view_model;
+import com.example.tradoid.backend.User;
 import com.example.tradoid.fragments.Banned_users;
 import com.example.tradoid.fragments.Users;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class User_List extends AppCompatActivity {
@@ -26,10 +30,16 @@ public class User_List extends AppCompatActivity {
     user_view_model view_model;
     ViewPager2 viewPager2;
 
+    String adminId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
+
+        if (getIntent().hasExtra("adminId")) {
+            adminId = getIntent().getStringExtra("adminId");
+        }
 
         // Connect to View Model
         view_model = new ViewModelProvider(this).get(user_view_model.class);
@@ -46,12 +56,16 @@ public class User_List extends AppCompatActivity {
 
         // Perform item selected listener
         bottomNavigationView.setOnItemSelectedListener(item -> {
+
+            Map<String, String> params = new HashMap<>();
+            params.put("adminId", adminId);
+
             if (item.getItemId() == R.id.bottom_menu_dashboard) {
-                sendToActivity(Dashboard.class);
+                sendToActivity(Dashboard.class, params);
                 return true;
             }
             if (item.getItemId() == R.id.bottom_menu_options) {
-                sendToActivity(admin_options.class);
+                sendToActivity(admin_options.class, params);
                 return true;
             }
             return true;
@@ -65,7 +79,7 @@ public class User_List extends AppCompatActivity {
         viewPager2.setOffscreenPageLimit(2);
 
         // Creating new Tabs adapter - connects tab to fragment
-        User_List_TabsAdapter user_list_tabsAdapter = new User_List_TabsAdapter(this);
+        User_List_TabsAdapter user_list_tabsAdapter = new User_List_TabsAdapter(this, adminId);
         viewPager2.setAdapter(user_list_tabsAdapter);
 
         // Define what to do in case a tab was Selected
@@ -146,8 +160,15 @@ public class User_List extends AppCompatActivity {
     }
 
     // Sends to other screens
+    public void sendToActivity(Class cls, Map<String, String> params){
+        Intent intent = new Intent(this, cls);
+        for (Map.Entry<String, String> param: params.entrySet()){
+            intent.putExtra(param.getKey(), param.getValue());
+        }
+        startActivity(intent);
+    }
     public void sendToActivity(Class cls){
-        Intent intent = new Intent(this,cls);
+        Intent intent = new Intent(this, cls);
         startActivity(intent);
     }
 }

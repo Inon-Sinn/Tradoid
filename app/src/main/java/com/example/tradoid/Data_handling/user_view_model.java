@@ -4,21 +4,23 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import androidx.lifecycle.ViewModel;
 
+import com.example.tradoid.backend.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class user_view_model extends ViewModel implements Filterable {
 
-    List<user_data> data_list = new ArrayList<>();
-    List<user_data> full_data_list = new ArrayList<>();
+    List<User> data_list = new ArrayList<>();
+    List<User> full_data_list = new ArrayList<>();
 
-    public void setUserList(List<user_data> userList){
+    public void setUserList(List<User> userList){
         data_list = new ArrayList<>(userList);
         full_data_list = new ArrayList<>(userList);
     }
 
     // getter for the list of data
-    public List<user_data> getData_list(){
+    public List<User> getData_list(){
         return data_list;
     }
 
@@ -36,7 +38,7 @@ public class user_view_model extends ViewModel implements Filterable {
     private final Filter userFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<user_data> filteredList = new ArrayList<>();
+            List<User> filteredList = new ArrayList<>();
 
             // if there was the search length was 0 or null(no search) just return everything
             if (constraint == null || constraint.length() == 0){
@@ -44,9 +46,9 @@ public class user_view_model extends ViewModel implements Filterable {
             }
             else{
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                for (user_data item: full_data_list) {
-                    if (item.toFilterBy().toLowerCase().contains(filterPattern)){
-                        filteredList.add(item);
+                for (User user: full_data_list) {
+                    if (user.getUsername().toLowerCase().contains(filterPattern)){
+                        filteredList.add(user);
                     }
                 }
             }
@@ -59,7 +61,6 @@ public class user_view_model extends ViewModel implements Filterable {
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-
         }
     };
 }

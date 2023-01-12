@@ -14,39 +14,51 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tradoid.firebase.model.BalanceViewModel;
+import com.example.tradoid.backend.*;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class section_balance extends AppCompatActivity {
 
-    String user_ID;
-
     // Deposit/Withdraw Action
-    String[] actions = {"Deposit","Withdraw"};
+    String[] actions = {"Deposit", "Withdraw"};
     String current_action = null;
     TextInputEditText editText_usd;
     TextView tv_error;
-    Float balance;
+
+    User user;
+
+    Gson gson = new Gson();
+
+    public HttpUtils client = new HttpUtils();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_section_balance);
 
-        // connect to view model
-        BalanceViewModel viewModel = new ViewModelProvider(this).get(BalanceViewModel.class);
         TextView tv_balance = findViewById(R.id.balance_tv);
 
-        // get User ID
-        if (getIntent().hasExtra("user_ID")){user_ID = getIntent().getStringExtra("user_ID");}
+        if (getIntent().hasExtra("user")) {
+            user = gson.fromJson(getIntent().getStringExtra("user"), User.class);
+        }
 
         // Implementing the Back arrow
         TextView tv_back_arrow = findViewById(R.id.balance_back_arrow);
-        tv_back_arrow.setOnClickListener(v -> sendToActivity(Profile.class));
+
+        tv_back_arrow.setOnClickListener(v -> {
+            Map<String, String> params = new HashMap<>();
+            params.put("user", gson.toJson(user));
+
+            sendToActivity(Profile.class, params);
+        });
 
         // Connecting to the request button
         Button request_btn = findViewById(R.id.button_send_request_balance);
-        request_btn.setOnClickListener(v -> request(viewModel, tv_balance));
+        request_btn.setOnClickListener(v -> request(tv_balance));
 
         // Connecting to Action - Buy/Sell
         AutoCompleteTextView autoCompleteTextView = findViewById(R.id.autoComplete_tv_balance);
@@ -60,20 +72,11 @@ public class section_balance extends AppCompatActivity {
         // Connecting to the Error Text View
         tv_error = findViewById(R.id.tv_error_msg_balance);
 
-        viewModel.reset();
-
-        viewModel.loadBalance(user_ID);
-
-        viewModel.getBalance().observe(this, new Observer<Float>() {
-            @Override
-            public void onChanged(Float aFloat) {
-                balance = aFloat;
-                tv_balance.setText("$" + aFloat.toString());
-            }
-        });
+        tv_balance.setText("$" + user.getBalance());
     }
 
-    public void request(BalanceViewModel viewModel, TextView tv_balance){
+    @SuppressLint("ResourceAsColor")
+    public void request(TextView tv_balance){
         tv_error.setTextColor(Color.RED);
         String text = String.valueOf(editText_usd.getText());
         if(current_action == null || text.equals("")){
@@ -81,32 +84,46 @@ public class section_balance extends AppCompatActivity {
         }
         else{
             tv_error.setText("");
-            if (current_action.equals("Deposit")){
-                viewModel.updateBalance(user_ID, balance + Float.parseFloat(text));
-            } else if (current_action.equals("Withdraw")){
-                if (Float.parseFloat(text) > balance){
+            Map<String, Object> payload = new HashMap<>();
+            payload.put("userId", user.getUserId());
+            if (current_action.equals("Deposit")) {
+                payload.put("amount", user.getBalance() + Double.parseDouble(text));
+                Response response = client.sendPost("update_balance", payload);
+                if (response.passed()) {
+                    Balance balance = new Gson().fromJson(response.getData(), Balance.class);
+                    user.setBalance(balance.getBalance());
+                    tv_balance.setText("$" + user.getBalance());
+                    tv_error.setTextColor(R.color.tv_error);
+                    tv_error.setText("Deposit successful");
+                }
+            } else if (current_action.equals("Withdraw")) {
+                if (Double.parseDouble(text) > user.getBalance()) {
                     tv_error.setText("Not enough balance in account!");
                     return;
-                } else {
-                    viewModel.updateBalance(user_ID, balance - Float.parseFloat(text));
+                }
+                payload.put("amount", user.getBalance() - Double.parseDouble(text));
+                Response response = client.sendPost("update_balance", payload);
+                if (response.passed()) {
+                    Balance balance = new Gson().fromJson(response.getData(), Balance.class);
+                    user.setBalance(balance.getBalance());
+                    tv_balance.setText("$" + user.getBalance());
+                    tv_error.setTextColor(R.color.tv_error);
+                    tv_error.setText("Withdraw successful");
                 }
             }
-            viewModel.getBalance().observe(this, new Observer<Float>() {
-                @SuppressLint("ResourceAsColor")
-                @Override
-                public void onChanged(Float aFloat) {
-                    tv_balance.setText("$" + aFloat);
-                    tv_error.setTextColor(R.color.tv_error);
-                    tv_error.setText(current_action + " successful");
-                }
-            });
         }
     }
 
     // Sends to other screens
+    public void sendToActivity(Class cls, Map<String, String> params){
+        Intent intent = new Intent(this, cls);
+        for (Map.Entry<String, String> param: params.entrySet()){
+            intent.putExtra(param.getKey(), param.getValue());
+        }
+        startActivity(intent);
+    }
     public void sendToActivity(Class cls){
-        Intent intent = new Intent(this,cls);
-        intent.putExtra("user_ID",user_ID);
+        Intent intent = new Intent(this, cls);
         startActivity(intent);
     }
 }

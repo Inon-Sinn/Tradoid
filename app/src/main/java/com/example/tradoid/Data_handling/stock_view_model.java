@@ -5,6 +5,10 @@ import android.widget.Filterable;
 
 import androidx.lifecycle.ViewModel;
 
+import com.example.tradoid.backend.HttpUtils;
+import com.example.tradoid.backend.Stock;
+import com.example.tradoid.backend.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,28 +16,17 @@ import java.util.List;
 
 public class stock_view_model extends ViewModel implements Filterable {
 
-    //TODO test usign static
-    user_data user;
-    Data_Layer data;
-    List<stock_data> data_list;
-    List<stock_data> full_data_list;
+    List<Stock> data_list;
+    List<Stock> full_data_list;
 
     // when we want list that
-    public void all_stocks(String fragment) {
-        this.data = new Data_Layer(fragment);
-        this.data_list = data.get_Stocks_data();
-        this.full_data_list = new ArrayList<>(data_list);
-    }
-
-    public void setUser(user_data user, String fragment){
-        this.user = user;
-        this.data = new Data_Layer(user, fragment);
-        this.data_list = data.get_Stocks_data();
+    public void setStockList(List<Stock> stockList) {
+        this.data_list = stockList;
         this.full_data_list = new ArrayList<>(data_list);
     }
 
     // getter for the list of data
-    public List<stock_data> getData_list(){
+    public List<Stock> getDataList(){
         return data_list;
     }
 
@@ -51,7 +44,7 @@ public class stock_view_model extends ViewModel implements Filterable {
     private final Filter stockFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<stock_data> filteredList = new ArrayList<>();
+            List<Stock> filteredList = new ArrayList<>();
 
             // if there was the search length was 0 or null(no search) just return everything
             if (constraint == null || constraint.length() == 0){
@@ -59,8 +52,8 @@ public class stock_view_model extends ViewModel implements Filterable {
             }
             else{
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                for (stock_data item: full_data_list) {
-                    if (item.toFilterBy().toLowerCase().contains(filterPattern)){
+                for (Stock item: full_data_list) {
+                    if (item.getStockId().toLowerCase().contains(filterPattern)){
                         filteredList.add(item);
                     }
                 }
@@ -74,8 +67,6 @@ public class stock_view_model extends ViewModel implements Filterable {
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-
         }
     };
-
 }
