@@ -12,14 +12,30 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tradoid.R;
+import com.example.tradoid.backend.HttpUtils;
+import com.example.tradoid.backend.*;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class history_RecycleView_Adapter extends RecyclerView.Adapter<history_RecycleView_Adapter.MyViewHolder>{
 
-    String[][] past_events = {{"TSLA","21/12/22","Bought $15"},{"AAPL","25/12/2022","Sold $2200"}};
     Context context;
 
-    public history_RecycleView_Adapter(Context ct) {
+    User user;
+
+    Gson gson = new Gson();
+
+    List<String[]> historyList = new ArrayList<>();
+
+    public HttpUtils client = new HttpUtils();
+
+    public history_RecycleView_Adapter(Context ct, List<String[]> historyList, Map<String, String> params) {
         this.context = ct;
+        this.historyList = historyList;
+        this.user = gson.fromJson(params.get("user"), User.class);
     }
 
     @NonNull
@@ -33,16 +49,15 @@ public class history_RecycleView_Adapter extends RecyclerView.Adapter<history_Re
 
     @Override
     public void onBindViewHolder(@NonNull history_RecycleView_Adapter.MyViewHolder holder, int position) {
-        // communicates with MyViewHolder
-        holder.tv1.setText(past_events[position][0]);
-        holder.tv2.setText(past_events[position][1]);
-        holder.tv3.setText(past_events[position][2]);
+        holder.tv1.setText(historyList.get(position)[0]);
+        holder.tv2.setText(historyList.get(position)[1]);
+        holder.tv3.setText(historyList.get(position)[2]);
     }
 
 
     @Override
     public int getItemCount() {
-        return past_events.length;
+        return historyList.size();
     }
 
     //Makes the row with layout we want

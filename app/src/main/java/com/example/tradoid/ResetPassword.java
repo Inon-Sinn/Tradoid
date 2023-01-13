@@ -1,26 +1,39 @@
 package com.example.tradoid;
 
+import static com.example.tradoid.backend.MD5.getMd5;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.tradoid.Business_Logic.passwordTextWatcher;
+import com.example.tradoid.backend.HttpUtils;
+import com.example.tradoid.backend.*;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class ResetPassword extends AppCompatActivity {
+
+    Gson gson = new Gson();
+
+    String email;
+
+    public HttpUtils client = new HttpUtils();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
 
-        // Get user email
-        String email ="";
         if (getIntent().hasExtra("email")){email = getIntent().getStringExtra("email");}
 
         // Implementing the Back arrow
@@ -47,19 +60,42 @@ public class ResetPassword extends AppCompatActivity {
         //Connecting the Update Button TODO
         Button btn_sign_up = findViewById(R.id.btn_res_password);
         btn_sign_up.setOnClickListener(v -> {
-
             // Check if all fields are filled
             if(Objects.requireNonNull(et_password.getText()).length() == 0)
                 password_layout.setError("Field Required");
             if(Objects.requireNonNull(et_confirm.getText()).length() == 0)
                 confirm_layout.setError("Field Required");
+
+            if (password_layout.getError() == null && confirm_layout.getError() == null){
+                String password = et_password.getText().toString();
+
+                Map<String, Object> payload = new HashMap<>();
+                payload.put("email", email);
+                payload.put("newPassword", getMd5(password));
+
+                Response response = client.sendPost("reset_password", payload);
+                if (response.passed()){
+                    Success success = gson.fromJson(response.getData(), Success.class);
+                    if (success.isSuccess()){
+                        Toast.makeText(getApplicationContext(),"Password was reset successfully",Toast.LENGTH_SHORT).show();
+                        sendToActivity(Sign_In.class);
+                    }
+                }
+
+            }
         });
     }
 
     // Sends to other screens
-    public void sendToActivity(Class cls, String userId){
-        Intent intent = new Intent(this,cls);
-        intent.putExtra("user_ID", userId);
+    public void sendToActivity(Class cls, Map<String, String> params){
+        Intent intent = new Intent(this, cls);
+        for (Map.Entry<String, String> param: params.entrySet()){
+            intent.putExtra(param.getKey(), param.getValue());
+        }
+        startActivity(intent);
+    }
+    public void sendToActivity(Class cls){
+        Intent intent = new Intent(this, cls);
         startActivity(intent);
     }
 }

@@ -1,8 +1,11 @@
 package com.example.tradoid;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -26,8 +29,8 @@ public class login extends AppCompatActivity {
         Button to_Sign_Up_btn = findViewById(R.id.login_To_sign_up);
         to_Sign_Up_btn.setOnClickListener(v -> sendToActivity(Sign_Up.class));
 
-        Response response = client.sendGet("");
-        System.out.println(response.getData());
+//        Response response = client.sendGet("");
+//        System.out.println(response.getData());
 
     }
 

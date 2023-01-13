@@ -329,6 +329,8 @@ public class Stock_Page extends AppCompatActivity {
             Success success = gson.fromJson(response.getData(), Success.class);
             if (success.isSuccess()){
                 Toast.makeText(getApplicationContext(),stock.getStockId() + " bookmarked",Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(),stock.getStockId() + " is no longer bookmarked",Toast.LENGTH_SHORT).show();
             }
         }
     }

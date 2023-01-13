@@ -54,7 +54,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/toolbar_stock_page"
-                app:srcCompat="@drawable/ic_bookmark_add"
+                app:srcCompat="@drawable/ic_bookmark"
                 app:tint="@color/white" />
 
             <TextView

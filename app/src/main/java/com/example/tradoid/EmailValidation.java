@@ -12,7 +12,12 @@ import android.widget.Toast;
 import com.alimuzaffar.lib.pin.PinEntryEditText;
 import com.example.tradoid.Business_Logic.GMailSender;
 import com.example.tradoid.Business_Logic.Utils;
+import com.example.tradoid.backend.HttpUtils;
+import com.example.tradoid.backend.*;
+import com.google.gson.Gson;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class EmailValidation extends AppCompatActivity {
@@ -20,6 +25,8 @@ public class EmailValidation extends AppCompatActivity {
     int val_code;
     String email;
     Boolean confirmed = false;
+
+    public HttpUtils client = new HttpUtils();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +38,6 @@ public class EmailValidation extends AppCompatActivity {
         tv_back_arrow.setOnClickListener(v -> startActivity(new Intent(this,Sign_In.class)));
 
         // Get user email
-        email ="";
         if (getIntent().hasExtra("email")){email = getIntent().getStringExtra("email");}
 
         // Add Email to text msg
@@ -42,36 +48,33 @@ public class EmailValidation extends AppCompatActivity {
         // Connecting to Error Msg Text view
         TextView error_tv = findViewById(R.id.tv_error_msg_email_val);
 
-        // Continue Button - TODO finish
-        Button continue_btn = findViewById(R.id.btn_email_val);
-        continue_btn.setOnClickListener(v -> {
-            if (confirmed){
-                Intent to_res_password = new Intent(this,ResetPassword.class);
-                to_res_password.putExtra("email",email);
-                startActivity(to_res_password);
-            }
-            else{
-                String error_msg = "Please enter the validation code";
-                error_tv.setText(error_msg);
-            }
-        });
-
         // Get the validation code
-        if (getIntent().hasExtra("val_code")){val_code = getIntent().getIntExtra("val_code",123456);}
+        if (getIntent().hasExtra("val_code")){val_code = getIntent().getIntExtra("val_code",1234567);}
 
         // Test Pin value
         final PinEntryEditText pinEntry = findViewById(R.id.validation_pin);
         if (pinEntry != null) {
             pinEntry.setOnPinEnteredListener(str -> {
                 if (Integer.parseInt(str.toString()) == val_code) {
-                    Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
                     confirmed = true;
-                } else {
-                    Toast.makeText(getApplicationContext(), "FAIL", Toast.LENGTH_SHORT).show();
-                    pinEntry.setText(null);
                 }
             });
         }
+
+        // Continue Button - TODO finish
+        Button continue_btn = findViewById(R.id.btn_email_val);
+        continue_btn.setOnClickListener(v -> {
+            if (confirmed){
+                Intent to_res_password = new Intent(this, ResetPassword.class);
+                to_res_password.putExtra("email",email);
+                startActivity(to_res_password);
+            } else{
+                String error_msg = "Wrong validation code. Please try again.";
+                error_tv.setText(error_msg);
+                assert pinEntry != null;
+                pinEntry.setText(null);
+            }
+        });
 
         // Implementing the resend
         TextView tv_resend = findViewById(R.id.tv_resend_email_val);

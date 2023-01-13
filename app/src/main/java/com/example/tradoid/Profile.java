@@ -1,15 +1,27 @@
 package com.example.tradoid;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,23 +38,24 @@ import java.util.Map;
 
 public class Profile extends AppCompatActivity {
 
+    private static final int GALLERY_REQUEST_CODE = 1000;
     // for Adapter
     int[] section_icons;
     String[] section_names;
     Class[] section_classes;
 
-    ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     ImageView profileIMG;
 
     User user;
 
     Gson gson = new Gson();
 
+    public HttpUtils client = new HttpUtils();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
 
         if (getIntent().hasExtra("user")) {
             user = gson.fromJson(getIntent().getStringExtra("user"), User.class);
@@ -58,7 +71,7 @@ public class Profile extends AppCompatActivity {
         Map<String, String> params = new HashMap<>();
         params.put("user", gson.toJson(user));
 
-        optionMenu_RecycleView_Adapter adapter = new optionMenu_RecycleView_Adapter(section_names,section_icons,section_classes,this, params);
+        optionMenu_RecycleView_Adapter adapter = new optionMenu_RecycleView_Adapter(section_names, section_icons, section_classes, this, params);
         recyclerView.setAdapter(adapter);
 
         // Creating a Bottom Navigation Bar
@@ -73,8 +86,7 @@ public class Profile extends AppCompatActivity {
             if (item.getItemId() == R.id.bottom_menu_status_pg) {
                 sendToActivity(Status_Page.class, params);
                 return true;
-            }
-            else if (item.getItemId() == R.id.bottom_menu_stock_market) {
+            } else if (item.getItemId() == R.id.bottom_menu_stock_market) {
                 sendToActivity(Stock_Market.class, params);
                 return true;
             }
@@ -83,7 +95,7 @@ public class Profile extends AppCompatActivity {
 
 //        //Connect to profile_image
         profileIMG = findViewById(R.id.profileImage);
-        profileIMG.setOnClickListener(v -> loadFromGallary());
+        profileIMG.setOnClickListener(v -> pickProfilePicture());
 
         // Connect to Text Views for Name and Email
         TextView tv_username = findViewById(R.id.profile_tv_username);
@@ -93,30 +105,48 @@ public class Profile extends AppCompatActivity {
         tv_username.setText(user.getUsername());
         tv_email.setText(user.getEmail());
 
-        pickMedia =
-                registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
-                    // Callback is invoked after the user selects a media item or closes the
-                    // photo picker.
-                    if (uri != null) {
-                        profileIMG.setImageURI(uri);
-                        Log.d("PhotoPicker", "Selected URI: " + uri);
-                    } else {
-                        Log.d("PhotoPicker", "No media selected");
-                    }
-                });
-
+        Response pfpResponse = client.sendGet("load_pfp/" + user.getUserId());
+        if (pfpResponse.passed()) {
+            PFP pfp = gson.fromJson(pfpResponse.getData(), PFP.class);
+            profileIMG.setImageURI(pfp.getPfpPath());
+        }
     }
 
-    public void loadFromGallary( ){
-        // Works but shows error, its a new feature that came out just 2 months ago so it still has bugs
-        // Thank you Inon, I stated panicking lmao
-        pickMedia.launch(new PickVisualMediaRequest.Builder().setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE).build());
+    public void pickProfilePicture(){
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                PackageManager.PERMISSION_GRANTED);
+
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, GALLERY_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK){
+            if (requestCode == GALLERY_REQUEST_CODE){
+                assert data != null;
+                Map<String, Object> payload = new HashMap<>();
+                payload.put("userId", user.getUserId());
+                payload.put("pfpPath", data.getData().toString());
+
+                Response response = client.sendPost("set_pfp", payload);
+                if (response.passed()) {
+                    Success success = gson.fromJson(response.getData(), Success.class);
+                    if (success.isSuccess()){
+                        profileIMG.setImageURI(data.getData());
+                    }
+                }
+            }
+        }
     }
 
     public void load_Sections(){
-        section_names = new String[]{"Notification","History","Balance","Log Out","test"};
-        section_icons = new int[]{R.drawable.ic_notification,R.drawable.ic_history,R.drawable.ic_balance,R.drawable.ic_logout,R.drawable.ic_menu};
-        section_classes = new Class[]{section_notification.class,section_history.class, section_balance.class, login.class, test_bottom_sheet_dialog.class};
+        section_names = new String[]{"Notification","History","Balance","Log Out"};
+        section_icons = new int[]{R.drawable.ic_notification,R.drawable.ic_history,R.drawable.ic_balance,R.drawable.ic_logout};
+        section_classes = new Class[]{section_notification.class,section_history.class, section_balance.class, login.class};
     }
 
     // Sends to other screens

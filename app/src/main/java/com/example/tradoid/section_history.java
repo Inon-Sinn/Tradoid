@@ -8,10 +8,15 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.tradoid.Adapters.history_RecycleView_Adapter;
+import com.example.tradoid.backend.History;
+import com.example.tradoid.backend.HttpUtils;
+import com.example.tradoid.backend.Response;
 import com.example.tradoid.backend.User;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class section_history extends AppCompatActivity {
@@ -19,6 +24,8 @@ public class section_history extends AppCompatActivity {
     User user;
 
     Gson gson = new Gson();
+
+    public HttpUtils client = new HttpUtils();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +49,15 @@ public class section_history extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Calling the Adapter
-        history_RecycleView_Adapter adapter = new history_RecycleView_Adapter(this);
+        List<String[]> historyList = new ArrayList<>();
+        Response response = client.sendGet("get_history/" + user.getUserId());
+        if (response.passed()) {
+            History history = gson.fromJson(response.getData(), History.class);
+            historyList = history.getHistoryFormatted();
+        }
+
+        history_RecycleView_Adapter adapter = new history_RecycleView_Adapter(this, historyList, params);
         recyclerView.setAdapter(adapter);
-
-
     }
 
     // Sends to other screens

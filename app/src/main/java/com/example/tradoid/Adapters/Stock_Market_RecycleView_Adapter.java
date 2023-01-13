@@ -79,6 +79,9 @@ public class Stock_Market_RecycleView_Adapter extends RecyclerView.Adapter<Stock
 
     @Override
     public int getItemCount() {
+        if (item_list.isEmpty()){
+            return 0;
+        }
         return item_list.size();
     }
 

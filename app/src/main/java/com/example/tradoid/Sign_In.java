@@ -6,11 +6,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +35,8 @@ import com.google.gson.Gson;
 import org.w3c.dom.Text;
 
 public class Sign_In extends AppCompatActivity {
+
+    Gson gson = new Gson();
 
     public HttpUtils client = new HttpUtils();
 
@@ -90,7 +99,7 @@ public class Sign_In extends AppCompatActivity {
                     // checking for errors
                     if (response.passed()){
                         // getting log in data
-                        LogInTry logInTry = new Gson().fromJson(response.getData(), LogInTry.class);
+                        LogInTry logInTry = gson.fromJson(response.getData(), LogInTry.class);
                         // if it is a user log in
                         if (logInTry.getType() == null){
                             // did not find user/admin
@@ -103,7 +112,7 @@ public class Sign_In extends AppCompatActivity {
                             // checking for errors
                             if (response.passed()){
                                 // getting banned user data
-                                IsBanned isBanned = new Gson().fromJson(isBannedResponse.getData(), IsBanned.class);
+                                IsBanned isBanned = gson.fromJson(isBannedResponse.getData(), IsBanned.class);
                                 // if the user is banned
                                 if (isBanned.getIsBanned()){
                                     // sending to ban page
@@ -117,6 +126,21 @@ public class Sign_In extends AppCompatActivity {
                                     Response userResponse = client.sendGet("get_user/" + userId);
                                     if (userResponse.passed()){
                                         // sending the main user page
+
+                                        Map<String, Object> payload = new HashMap<>();
+                                        payload.put("userId", userId);
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                            @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX");
+                                            try {
+                                                payload.put("lastSeen", dateFormat.parse(ZonedDateTime.now().toString()));
+                                            } catch (ParseException e) {
+                                                payload.put("lastSeen", new Date());
+                                            }
+                                        } else {
+                                            payload.put("lastSeen", new Date());
+                                        }
+
+                                        client.sendPost("update_last_seen", payload);
 
                                         Map<String, String> params = new HashMap<>();
                                         params.put("user", userResponse.getData());
@@ -152,7 +176,7 @@ public class Sign_In extends AppCompatActivity {
 
         // check if the mail is valid
         if(!validMail(email)){
-            String error = "No such a User exits";
+            String error = "Email does not belong to any user";
             errorTv.setText(error);
             return;
         }
@@ -179,7 +203,7 @@ public class Sign_In extends AppCompatActivity {
 
                     // Send the email
                     GMailSender sender = new GMailSender(Utils.EMAIL, Utils.PASSWORD);
-                    sender.sendMail("Forgotten Password",
+                    sender.sendMail("Password Reset",
                             "Validation code is " + code,
                             "tradoidapp@gmail.com",
                             email); // Who gets the email
@@ -200,7 +224,12 @@ public class Sign_In extends AppCompatActivity {
 
     // checks if the users email is valid if the user forgot his password
     public boolean validMail(String email){
-        return true;
+        Response response = client.sendGet("email_exists/" + email);
+        if (response.passed()){
+            Success success = gson.fromJson(response.getData(), Success.class);
+            return success.isSuccess();
+        }
+        return false;
     }
 
     // Sends to other screens

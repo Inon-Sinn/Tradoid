@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import static com.example.tradoid.backend.MD5.getMd5;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +23,10 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,6 +96,16 @@ public class Sign_Up extends AppCompatActivity {
                         payload.put("username", username);
                         payload.put("email", email);
                         payload.put("password", getMd5(password));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX");
+                            try {
+                                payload.put("dateCreated", dateFormat.parse(ZonedDateTime.now().toString()));
+                            } catch (ParseException e) {
+                                payload.put("dateCreated", new Date());
+                            }
+                        } else {
+                            payload.put("dateCreated", new Date());
+                        }
 
                         Response response = client.sendPost("create_user", payload);
                         if (response.passed()) {

@@ -61,6 +61,16 @@ public class User_Status extends AppCompatActivity {
         Toolbar user_status_toolbar = findViewById(R.id.toolbar_user_status);
         setSupportActionBar(user_status_toolbar);
 
+        TextView tv_dateCreated = findViewById(R.id.dateCreated);
+        TextView tv_lastSeen = findViewById(R.id.lastSeen);
+
+        Response dateResponse = client.sendGet("get_dates/" + user.getUserId());
+        if (dateResponse.passed()){
+            Dates dates = gson.fromJson(dateResponse.getData(), Dates.class);
+            tv_dateCreated.setText("Signed Up: " + dates.getDateCreated());
+            tv_lastSeen.setText("Last Seen : " + dates.getLastSeen());
+        }
+
         // Implementing connecting to user ban
         ImageView to_ban = findViewById(R.id.ban_user_status);
 
