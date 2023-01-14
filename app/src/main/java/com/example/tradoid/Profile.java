@@ -107,8 +107,12 @@ public class Profile extends AppCompatActivity {
 
         Response pfpResponse = client.sendGet("load_pfp/" + user.getUserId());
         if (pfpResponse.passed()) {
-            PFP pfp = gson.fromJson(pfpResponse.getData(), PFP.class);
-            profileIMG.setImageURI(pfp.getPfpPath());
+            try {
+                PFP pfp = gson.fromJson(pfpResponse.getData(), PFP.class);
+                profileIMG.setImageURI(pfp.getPfpPath());
+            } catch (Exception e) {
+                profileIMG = findViewById(R.id.profileImage);
+            }
         }
     }
 
