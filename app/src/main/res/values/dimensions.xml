@@ -51,7 +51,7 @@
 
     <!-- Dashboard -->
     <dimen name="dash_card_corner_radius">20dp</dimen>
-    <dimen name="small_dashboard_x">170dp</dimen>
+    <dimen name="small_dashboard_x">160dp</dimen>
     <dimen name="small_dashboard_y">100dp</dimen>
 
     <!-- Row Items -->

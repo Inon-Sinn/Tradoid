@@ -16,7 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/admin_bottom_navigation_menu" >
+        app:menu="@menu/admin_bottom_navigation_menu">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -27,38 +27,91 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView6"
-        android:layout_width="@dimen/small_dashboard_x"
+        android:layout_width="0dp"
         android:layout_height="@dimen/small_dashboard_y"
         android:layout_marginStart="@dimen/dash_horizontal_margin"
-        android:layout_marginTop="@dimen/dash_vertical_margin"
+        android:layout_marginEnd="15dp"
         app:cardCornerRadius="@dimen/dash_card_corner_radius"
-        app:layout_constraintEnd_toStartOf="@+id/cardView5"
+        app:layout_constraintBottom_toTopOf="@+id/cardView7"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_total_revenue_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Revenue: "
+                android:layout_marginStart="25dp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_total_revenue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="25dp"
+                android:text="1000"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_total_revenue_text"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView5"
-        android:layout_width="@dimen/small_dashboard_x"
+        android:layout_width="0dp"
         android:layout_height="@dimen/small_dashboard_y"
-        android:layout_marginTop="@dimen/dash_vertical_margin"
-        android:layout_marginEnd="@dimen/horizontal_margin"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         app:cardCornerRadius="@dimen/dash_card_corner_radius"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationViewAdmin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/cardView6"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView7">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_total_users_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Users: "
+                android:layout_marginStart="25dp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_total_users"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="25dp"
+                android:text="1000"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_total_users_text"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -66,38 +119,100 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView7"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         app:cardCornerRadius="@dimen/dash_card_corner_radius"
-        android:layout_marginTop="@dimen/dash_vertical_margin"
-        app:layout_constraintBottom_toTopOf="@+id/cardView8"
+        app:layout_constraintBottom_toTopOf="@+id/cardView5"
         app:layout_constraintEnd_toEndOf="@+id/cardView5"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/cardView6"
-        app:layout_constraintTop_toBottomOf="@+id/cardView6" >
+        app:layout_constraintTop_toBottomOf="@+id/cardView6">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+            <app.futured.donut.DonutProgressView
+                android:id="@+id/dashboard_user_donut"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="100dp"
+                android:layout_marginBottom="25dp"
+                app:donut_animationDuration="1500"
+                app:donut_gapAngle="-90"
+                app:donut_gapWidth="00"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView8"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:cardCornerRadius="@dimen/dash_card_corner_radius"
-        android:layout_marginTop="@dimen/dash_vertical_margin"
-        android:layout_marginBottom="@dimen/dash_vertical_margin"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationViewAdmin"
-        app:layout_constraintEnd_toEndOf="@+id/cardView7"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/cardView7"
-        app:layout_constraintTop_toBottomOf="@+id/cardView7" >
+            <ImageView
+                android:id="@+id/dashboard_admin_color_dot"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="@string/status_dot_desc"
+                app:layout_constraintBottom_toBottomOf="@+id/dashbaord_admin_amount"
+                app:layout_constraintEnd_toStartOf="@+id/dashbaord_admin_amount"
+                app:layout_constraintTop_toTopOf="@+id/dashbaord_admin_amount"
+                app:srcCompat="@drawable/ic_circle" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/dashbaord_admin_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="35dp"
+                android:text="Admins:"
+                android:textColor="?android:attr/textColorPrimary"
+                app:layout_constraintBottom_toTopOf="@+id/dashbaord_user_amount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/dashboard_user_color_dot"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="@string/status_dot_desc"
+                app:layout_constraintBottom_toBottomOf="@+id/dashbaord_user_amount"
+                app:layout_constraintEnd_toStartOf="@+id/dashbaord_user_amount"
+                app:layout_constraintTop_toTopOf="@+id/dashbaord_user_amount"
+                app:srcCompat="@drawable/ic_circle" />
+
+            <TextView
+                android:id="@+id/dashbaord_user_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Users:"
+                android:textColor="?android:attr/textColorPrimary"
+                app:layout_constraintBottom_toTopOf="@+id/dashbaord_banned_amount"
+                app:layout_constraintStart_toStartOf="@+id/dashbaord_admin_amount"
+                app:layout_constraintTop_toBottomOf="@+id/dashbaord_admin_amount" />
+
+            <ImageView
+                android:id="@+id/dashboard_banned_color_dot"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="@string/status_dot_desc"
+                android:textColor="?android:attr/textColorPrimary"
+                app:layout_constraintBottom_toBottomOf="@+id/dashbaord_banned_amount"
+                app:layout_constraintEnd_toStartOf="@+id/dashbaord_banned_amount"
+                app:layout_constraintTop_toTopOf="@+id/dashbaord_banned_amount"
+                app:srcCompat="@drawable/ic_circle" />
+
+            <TextView
+                android:id="@+id/dashbaord_banned_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Banned:"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/dashbaord_admin_amount"
+                app:layout_constraintTop_toBottomOf="@+id/dashbaord_user_amount" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

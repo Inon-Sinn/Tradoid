@@ -5,14 +5,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.tradoid.backend.Owned;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import app.futured.donut.DonutProgressView;
+import app.futured.donut.DonutSection;
 
 public class Dashboard extends AppCompatActivity {
 
@@ -51,7 +62,71 @@ public class Dashboard extends AppCompatActivity {
             }
             return true;
         });
+
+        // Total Amount of Revenue
+        TextView total_revenue = findViewById(R.id.tv_total_revenue);
+        String total_revenue_txt = "SomeNumber" + "$"; //TODO - Get the total revenue
+        total_revenue.setText(total_revenue_txt);
+
+        // Checking Light Mode
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+
+        // Getting the amount of user,admins and banned users
+        List<Integer> user_donut_values = new ArrayList<>();
+        // TODO get the amount of user,admins and banned users
+        user_donut_values.add(1); // admins
+        user_donut_values.add(10); // user
+        user_donut_values.add(3); // banned
+
+        // TextView of the user,admin,banned options
+        TextView admin_amount = findViewById(R.id.dashbaord_admin_amount);
+        TextView user_amount = findViewById(R.id.dashbaord_user_amount);
+        TextView banned_amount = findViewById(R.id.dashbaord_banned_amount);
+
+        // Set The amount of user
+        String admin_txt = "Admins: " + String.valueOf(user_donut_values.get(0));
+        admin_amount.setText(admin_txt);
+        String user_txt = "User: " + String.valueOf(user_donut_values.get(1));
+        admin_amount.setText(user_txt);
+        String Banned_txt = "Banned: " + String.valueOf(user_donut_values.get(2));
+        admin_amount.setText(Banned_txt);
+
+        // Total Amount of user
+        TextView total_user = findViewById(R.id.tv_total_users);
+        String total_user_txt = String.valueOf(user_donut_values.get(0)+ user_donut_values.get(1)+user_donut_values.get(2));
+        total_user.setText(total_user_txt);
+
+        // Creating the user Donut chart
+        DonutProgressView donutView = findViewById(R.id.dashboard_user_donut);
+        donutView.setCap(1f);
+        List<DonutSection> sections = new ArrayList<>();
+        int[] colors = new int[user_donut_values.size()];
+        String section_name;
+        for (int i = 0; i < user_donut_values.size(); i++) {
+            float hue = 0;
+            switch (currentNightMode) {
+                case Configuration.UI_MODE_NIGHT_NO:
+                    hue = (120/(user_donut_values.size()))*i + 180;//we're using the light theme
+                    break;
+                case Configuration.UI_MODE_NIGHT_YES:
+                    hue = (60/(user_donut_values.size()))*i + 0;// we're using dark theme
+                    break;
+            }
+            colors[i] = Color.HSVToColor(new float[]{hue,(float)0.9,(float) 1});
+            section_name = "Section " + i;
+            sections.add(new DonutSection(section_name, colors[i], (float) user_donut_values.get(i)));
+        }
+        donutView.submitData(sections);
+
+        // Add the section colors
+        ImageView admin_color = findViewById(R.id.dashboard_admin_color_dot);
+        admin_color.setColorFilter(colors[0]);
+        ImageView user_color = findViewById(R.id.dashboard_user_color_dot);
+        user_color.setColorFilter(colors[1]);
+        ImageView banned_color = findViewById(R.id.dashboard_banned_color_dot);
+        banned_color.setColorFilter(colors[2]);
     }
+
 
     // Sends to other screens
     public void sendToActivity(Class cls, Map<String, String> params){
