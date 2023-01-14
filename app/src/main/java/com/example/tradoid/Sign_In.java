@@ -21,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.tradoid.Business_Logic.GMailSender;
@@ -72,6 +73,8 @@ public class Sign_In extends AppCompatActivity {
         et_email.addTextChangedListener(new emailTextWatcher(email_layout));
         et_password.addTextChangedListener(new passwordTextWatcher(password_layout));
 
+        ProgressBar progressBar = findViewById(R.id.progressBar);
+
         //Connecting the Sign in Button
         Button btn_sign_up = findViewById(R.id.btn_sign_in);
         btn_sign_up.setOnClickListener(new View.OnClickListener(){
@@ -98,12 +101,14 @@ public class Sign_In extends AppCompatActivity {
                     Response response = client.sendPost("log_in", userData);
                     // checking for errors
                     if (response.passed()){
+                        progressBar.setVisibility(View.VISIBLE);
                         // getting log in data
                         LogInTry logInTry = gson.fromJson(response.getData(), LogInTry.class);
                         // if it is a user log in
                         if (logInTry.getType() == null){
                             // did not find user/admin
                             error_tv.setText("wrong email or password!");
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                         else if (logInTry.getType().equals("user")){
                             String userId = logInTry.getUserId();
@@ -151,6 +156,7 @@ public class Sign_In extends AppCompatActivity {
                             } else {
                                 // request did not pass
                                 error_tv.setText("server error. please try again later.");
+                                progressBar.setVisibility(View.INVISIBLE);
                             }
                             // if it is an admin
                         } else if (logInTry.getType().equals("admin")){
@@ -165,6 +171,7 @@ public class Sign_In extends AppCompatActivity {
                     } else {
                         // request did not pass
                         error_tv.setText("server error. please try again later.");
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
                 }
             }

@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -105,22 +106,21 @@ public class Profile extends AppCompatActivity {
         tv_username.setText(user.getUsername());
         tv_email.setText(user.getEmail());
 
-        Response pfpResponse = client.sendGet("load_pfp/" + user.getUserId());
-        if (pfpResponse.passed()) {
-            try {
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            Response pfpResponse = client.sendGet("load_pfp/" + user.getUserId());
+            if (pfpResponse.passed()) {
                 PFP pfp = gson.fromJson(pfpResponse.getData(), PFP.class);
                 profileIMG.setImageURI(pfp.getPfpPath());
-            } catch (Exception e) {
-                profileIMG = findViewById(R.id.profileImage);
             }
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    PackageManager.PERMISSION_GRANTED);
         }
     }
 
     public void pickProfilePicture(){
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                PackageManager.PERMISSION_GRANTED);
-
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, GALLERY_REQUEST_CODE);
     }
