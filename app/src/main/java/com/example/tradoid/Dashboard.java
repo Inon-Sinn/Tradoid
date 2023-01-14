@@ -13,9 +13,11 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.tradoid.backend.HttpUtils;
 import com.example.tradoid.backend.Owned;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
+import com.google.gson.Gson;
+import com.example.tradoid.backend.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -31,6 +33,10 @@ public class Dashboard extends AppCompatActivity {
     //https://www.youtube.com/watch?v=kGs7e4Wb67I&t=23s&ab_channel=IJApps
 
     String adminId;
+
+    public HttpUtils client = new HttpUtils();
+
+    Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,20 +69,26 @@ public class Dashboard extends AppCompatActivity {
             return true;
         });
 
-        // Total Amount of Revenue
-        TextView total_revenue = findViewById(R.id.tv_total_revenue);
-        String total_revenue_txt = "SomeNumber" + "$"; //TODO - Get the total revenue
-        total_revenue.setText(total_revenue_txt);
-
         // Checking Light Mode
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
 
         // Getting the amount of user,admins and banned users
         List<Integer> user_donut_values = new ArrayList<>();
-        // TODO get the amount of user,admins and banned users
-        user_donut_values.add(1); // admins
-        user_donut_values.add(10); // user
-        user_donut_values.add(3); // banned
+
+        Response response = client.sendGet("get_amounts");
+        Amounts amounts = new Amounts(0, 0, 0, 0, 0);
+        if (response.passed()) {
+            amounts = gson.fromJson(response.getData(), Amounts.class);
+        }
+
+        user_donut_values.add(amounts.getAdminAmount()); // admins
+        user_donut_values.add(amounts.getUnbannedAmount()); // user
+        user_donut_values.add(amounts.getBannedAmount()); // banned
+
+        // Total Amount of Revenue
+        TextView total_revenue = findViewById(R.id.tv_total_revenue);
+        String total_revenue_txt = "$" + amounts.getTotalRevenue();
+        total_revenue.setText(total_revenue_txt);
 
         // TextView of the user,admin,banned options
         TextView admin_amount = findViewById(R.id.dashbaord_admin_amount);
@@ -84,16 +96,16 @@ public class Dashboard extends AppCompatActivity {
         TextView banned_amount = findViewById(R.id.dashbaord_banned_amount);
 
         // Set The amount of user
-        String admin_txt = "Admins: " + String.valueOf(user_donut_values.get(0));
+        String admin_txt = "Admins: " + user_donut_values.get(0);
         admin_amount.setText(admin_txt);
-        String user_txt = "User: " + String.valueOf(user_donut_values.get(1));
-        admin_amount.setText(user_txt);
-        String Banned_txt = "Banned: " + String.valueOf(user_donut_values.get(2));
-        admin_amount.setText(Banned_txt);
+        String user_txt = "User: " + user_donut_values.get(1);
+        user_amount.setText(user_txt);
+        String Banned_txt = "Banned: " + user_donut_values.get(2);
+        banned_amount.setText(Banned_txt);
 
         // Total Amount of user
         TextView total_user = findViewById(R.id.tv_total_users);
-        String total_user_txt = String.valueOf(user_donut_values.get(0)+ user_donut_values.get(1)+user_donut_values.get(2));
+        String total_user_txt = String.valueOf(user_donut_values.get(0) + user_donut_values.get(1) + user_donut_values.get(2));
         total_user.setText(total_user_txt);
 
         // Creating the user Donut chart
@@ -106,17 +118,18 @@ public class Dashboard extends AppCompatActivity {
             float hue = 0;
             switch (currentNightMode) {
                 case Configuration.UI_MODE_NIGHT_NO:
-                    hue = (120/(user_donut_values.size()))*i + 180;//we're using the light theme
+                    hue = (120 / (user_donut_values.size())) * i + 180;//we're using the light theme
                     break;
                 case Configuration.UI_MODE_NIGHT_YES:
-                    hue = (60/(user_donut_values.size()))*i + 0;// we're using dark theme
+                    hue = (60 / (user_donut_values.size())) * i + 0;// we're using dark theme
                     break;
             }
-            colors[i] = Color.HSVToColor(new float[]{hue,(float)0.9,(float) 1});
+            colors[i] = Color.HSVToColor(new float[]{hue, (float) 0.9, (float) 1});
             section_name = "Section " + i;
             sections.add(new DonutSection(section_name, colors[i], (float) user_donut_values.get(i)));
         }
         donutView.submitData(sections);
+
 
         // Add the section colors
         ImageView admin_color = findViewById(R.id.dashboard_admin_color_dot);

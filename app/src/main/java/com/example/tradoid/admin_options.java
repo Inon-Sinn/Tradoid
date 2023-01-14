@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -42,6 +43,7 @@ public class admin_options extends AppCompatActivity {
             Map<String, String> params = new HashMap<>();
             params.put("adminId", adminId);
             if (item.getItemId() == R.id.bottom_menu_dashboard) {
+                ProgressDialog.show(this, "Loading Data", "please wait");
                 sendToActivity(Dashboard.class, params);
                 return true;
             }
