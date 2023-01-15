@@ -105,3 +105,11 @@ class History(Response):
 class PFP(Response):
     def __init__(self, pfp_path: str) -> None:
         self.pfpPath = pfp_path
+
+class Amounts(Response):
+    def __init__(self, total_users, total_revenue, unbanned_amount, banned_amount, admin_amount):
+        self.totalUsers = total_users
+        self.totalRevenue = total_revenue
+        self.unbannedAmount = unbanned_amount
+        self.bannedAmount = banned_amount
+        self.adminAmount = admin_amount

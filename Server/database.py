@@ -222,6 +222,30 @@ async def get_pfp(user_id: str):
     except Exception:
         return Response().respond()
 
+@app.get("/get_amounts/")
+async def get_amounts():
+    try:
+        total_users, total_revenue, unbanned_amount, banned_amount, admin_amount = 0, 0, 0, 0, 0
+        
+        for user_data in db.collection("users").get():
+            total_users += 1
+            user_dict = user_data.to_dict()
+            if "portfolio" in user_dict:
+                for stock, amount in user_dict["portfolio"].items():
+                    total_revenue += db.collection("stocks").document(stock).get().to_dict()["currentPrice"] * amount
+            total_revenue += user_dict["balance"]
+        
+        banned_amount = len(db.collection("banned").get())
+        
+        unbanned_amount = total_users - banned_amount
+
+        admin_amount = len(db.collection("admins").get())
+        
+        return Response(Amounts(total_users, total_revenue, unbanned_amount, banned_amount, admin_amount))
+
+    except Exception:
+        return Response().respond()
+
 # POST methods
 
 @app.post("/create_user/")
